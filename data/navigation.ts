@@ -2,13 +2,14 @@ import { Navigation } from "@/types";
 
 export const navigationData: Navigation = {
   mainNav: [
-    { label: "New Arrivals", href: "/collections/new-arrivals" },
-    { label: "Collections", href: "/collections" },
-    { label: "About Us", href: "/about" },
+    { label: "Collection", href: "/collections" },
+    { label: "About", href: "/about" },
+    { label: "Journal", href: "/journal" },
+    { label: "Contact", href: "/contact" },
   ],
   utilityNav: [
     { label: "Search", href: "/search" },
+    { label: "Wishlist", href: "/wishlist" },
     { label: "Cart", href: "/cart" },
-    { label: "Account", href: "/account" },
   ],
 };

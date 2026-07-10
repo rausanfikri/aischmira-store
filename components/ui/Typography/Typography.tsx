@@ -68,7 +68,7 @@ const defaultElementMapping: Record<NonNullable<VariantProps<typeof typographyVa
 };
 
 export interface TypographyProps
-  extends React.HTMLAttributes<HTMLElement>,
+  extends Omit<React.HTMLAttributes<HTMLElement>, "color">,
     VariantProps<typeof typographyVariants> {
   as?: React.ElementType; // Prop untuk override elemen HTML
 }
