@@ -3,23 +3,9 @@ import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
 import { footerData } from "@/data/footer";
 
-const InstagramIcon = ({ size = 16, strokeWidth = 1.5 }: { size?: number; strokeWidth?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={strokeWidth}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
+import { socialMediaLinks } from "@/data/socials";
+import Image from "next/image";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export function Footer() {
   return (
@@ -31,9 +17,15 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <Link
               href="/"
-              className="block font-heading text-2xl font-light tracking-[0.4em] uppercase text-background hover:text-primary transition-colors"
+              className="block relative w-40 h-10 mb-4"
+              aria-label="AISCHMIRA Home"
             >
-              AISCHMIRA
+              <Image 
+                src="/logo/logo-secondary.png" 
+                alt="AISCHMIRA Logo" 
+                fill
+                className="object-contain object-left" 
+              />
             </Link>
             <p className="font-body text-sm leading-relaxed text-background/60 max-w-xs">
               {footerData.brandDescription}
@@ -48,19 +40,36 @@ export function Footer() {
             </div>
 
             {/* Social */}
-            <div className="flex gap-4 pt-2">
-              {footerData.socialLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.label}
-                  className="h-9 w-9 flex items-center justify-center border border-background/20 hover:border-primary hover:text-primary text-background/50 transition-all duration-300"
-                >
-                  <InstagramIcon size={16} strokeWidth={1.5} />
-                </a>
-              ))}
+            <div className="flex gap-4 pt-2 flex-wrap">
+              {socialMediaLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.href}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.ariaLabel}
+                    title={social.name}
+                    className="h-9 w-9 flex items-center justify-center border border-background/20 hover:border-primary hover:text-primary text-background/50 transition-all duration-300 rounded-full"
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* WhatsApp CTA */}
+            <div className="pt-4">
+              <a
+                href="https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-sm font-body text-sm hover:bg-[#20bd5a] transition-colors"
+              >
+                <FaWhatsapp size={18} />
+                <span>Chat via WhatsApp</span>
+              </a>
             </div>
           </div>
 

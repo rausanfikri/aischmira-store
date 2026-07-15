@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigationData } from "@/data/navigation";
+import Image from "next/image";
+import { socialMediaLinks } from "@/data/socials";
 
 export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
@@ -38,9 +40,17 @@ export function Navbar() {
             {/* Logo */}
             <Link
               href="/"
-              className="font-heading text-xl font-light tracking-[0.3em] uppercase text-text hover:text-primary transition-colors shrink-0"
+              className="relative shrink-0 flex items-center justify-center"
+              aria-label="AISCHMIRA Home"
             >
-              AISCHMIRA
+              <Image 
+                src="/logo/logo-primary.png" 
+                alt="AISCHMIRA Logo" 
+                width={140} 
+                height={40} 
+                className="object-contain w-auto h-8 sm:h-10"
+                priority
+              />
             </Link>
 
             {/* Desktop Nav */}
@@ -55,6 +65,26 @@ export function Navbar() {
                   <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
+              
+              {/* Desktop Socials */}
+              <div className="flex items-center gap-3 ml-4 border-l border-border pl-4">
+                {socialMediaLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.ariaLabel}
+                      title={social.name}
+                      className="text-text/50 hover:text-primary transition-colors"
+                    >
+                      <Icon size={14} />
+                    </a>
+                  );
+                })}
+              </div>
             </nav>
 
             {/* Utility Icons */}
@@ -128,6 +158,29 @@ export function Navbar() {
               >
                 Wishlist
               </Link>
+            </div>
+            
+            <div className="h-px w-full bg-border my-2" />
+            
+            {/* Mobile Socials */}
+            <div className="flex flex-wrap gap-6 mt-4">
+              {socialMediaLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.ariaLabel}
+                    title={social.name}
+                    className="text-text/60 hover:text-primary transition-colors flex items-center gap-2"
+                  >
+                    <Icon size={18} />
+                    <span className="font-body text-xs tracking-widest uppercase">{social.name}</span>
+                  </a>
+                );
+              })}
             </div>
           </nav>
         </div>

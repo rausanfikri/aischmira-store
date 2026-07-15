@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,8 +18,26 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aischmira.store"),
   title: "AISCHMIRA | Elegant Women's Fashion",
-  description: "AISCHMIRA menghadirkan fashion wanita elegan dengan kualitas premium untuk perempuan modern Indonesia.",
+  description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
+  authors: [{ name: "AISCHMIRA" }],
+  openGraph: {
+    siteName: "AISCHMIRA",
+    title: "AISCHMIRA | Elegant Women's Fashion",
+    description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
+    images: ["/logo/logo-primary.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AISCHMIRA | Elegant Women's Fashion",
+    description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
+    images: ["/logo/logo-primary.png"],
+  },
+  alternates: {
+    canonical: "https://aischmira.store",
+  }
 };
 
 export default function RootLayout({
@@ -28,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="id-ID"
       className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body">
@@ -38,6 +57,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <FloatingWhatsApp />
       </body>
     </html>
   );

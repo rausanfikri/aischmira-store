@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { productsData } from "@/data/products";
 
 export function ProductHighlight() {
-  const WHATSAPP_URL = "https://wa.me/6285121344848";
+  const WHATSAPP_URL = "https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website.";
 
   return (
     <section className="py-20 lg:py-32 bg-white">
