@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "@/styles/globals.css";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -14,8 +17,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "AISCHMIRA.STORE",
-  description: "Official Website of AISCHMIRA Premium Women's Fashion",
+  title: "AISCHMIRA | Elegant Women's Fashion",
+  description: "AISCHMIRA menghadirkan fashion wanita elegan dengan kualitas premium untuk perempuan modern Indonesia.",
 };
 
 export default function RootLayout({
@@ -28,7 +31,14 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body">{children}</body>
+      <body className="min-h-full flex flex-col font-body">
+        <AnnouncementBar />
+        <Navbar />
+        <main className="flex-1 pt-[104px]">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }
