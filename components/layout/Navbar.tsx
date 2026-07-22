@@ -37,7 +37,7 @@ function NavLogo({ inverted = false }: { inverted?: boolean }) {
   return (
     <span className="relative block">
       <Image
-        src="/logo/logo-primary.png"
+        src="/logo.png"
         alt="AISCHMIRA"
         width={160}
         height={44}

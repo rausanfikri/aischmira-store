@@ -28,12 +28,12 @@ export const metadata: Metadata = {
   keywords: ["fashion wanita", "baju muslim", "modest fashion", "aischmira", "busana elegan"],
   icons: {
     icon: [
-      { url: "/logo/logo-icon.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
     ],
     apple: [
-      { url: "/logo/logo-icon.png" },
+      { url: "/favicon.png" },
     ],
-    shortcut: "/logo/logo-icon.png",
+    shortcut: "/favicon.png",
   },
   openGraph: {
     siteName: "AISCHMIRA",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
       "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
     images: [
       {
-        url: "/logo/logo-primary.png",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "AISCHMIRA — Elegant Women's Fashion",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "AISCHMIRA | Elegant Women's Fashion",
     description:
       "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
-    images: ["/logo/logo-primary.png"],
+    images: ["/logo.png"],
   },
   alternates: {
     canonical: "https://aischmira.store",

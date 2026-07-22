@@ -40,7 +40,7 @@ export function Footer() {
                 </span>
               ) : (
                 <Image
-                  src="/logo/logo-primary.png"
+                  src="/logo.png"
                   alt="AISCHMIRA"
                   width={160}
                   height={44}
