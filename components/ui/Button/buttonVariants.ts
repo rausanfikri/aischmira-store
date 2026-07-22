@@ -10,8 +10,8 @@ export const buttonVariants = cva(
         outline: "border border-border bg-transparent hover:bg-accent hover:text-text",
         ghost: "hover:bg-accent hover:text-text",
         link: "text-primary underline-offset-4 hover:underline",
-        danger: "bg-danger text-white hover:opacity-90 shadow-sm",
-        success: "bg-success text-white hover:opacity-90 shadow-sm",
+        danger: "bg-danger text-surface hover:opacity-90 shadow-sm",
+        success: "bg-success text-surface hover:opacity-90 shadow-sm",
       },
       size: {
         xs: "h-7 rounded-sm px-2 text-xs",

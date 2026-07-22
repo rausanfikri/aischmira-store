@@ -29,7 +29,7 @@ export function Hero() {
           aria-hidden="true"
         />
         {/* Gradient overlay — bottom heavy for elegant editorial look */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-text/20 via-text/40 to-text/60" />
       </div>
 
       {/* Content — centered editorial */}
@@ -41,7 +41,7 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="font-body text-[10px] tracking-[0.3em] uppercase text-white/70 mb-8 block"
+          className="font-body text-[10px] tracking-[0.3em] uppercase text-surface/70 mb-8 block"
         >
           New Collection — 2025
         </motion.span>
@@ -52,7 +52,7 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white leading-[1.05] tracking-tight mb-6"
+          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.05] tracking-tight mb-6"
         >
           Crafted to comfort,
           <br />
@@ -64,7 +64,7 @@ export function Hero() {
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="w-16 h-px bg-[var(--color-accent)] mb-6 origin-left"
+          className="w-16 h-px bg-accent mb-6 origin-left"
         />
 
         {/* Subheadline */}
@@ -73,7 +73,7 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
-          className="font-body text-base sm:text-lg text-white/75 font-light tracking-wide max-w-xl mb-10"
+          className="font-body text-base sm:text-lg text-surface/75 font-light tracking-wide max-w-xl mb-10"
         >
           Elegance in every curve and every moment.
         </motion.p>
@@ -88,7 +88,7 @@ export function Hero() {
         >
           <Link
             href="#featured-collections"
-            className="btn-primary bg-white text-[var(--color-text)] hover:bg-white/90 rounded-lg px-8 py-3.5 text-[12px] tracking-[0.15em]"
+            className="btn-primary bg-primary text-primary-foreground hover:bg-primary-hover rounded-lg px-8 py-3.5 text-[12px] tracking-[0.15em]"
             aria-label="Jelajahi koleksi AISCHMIRA"
           >
             Explore Collection
@@ -97,7 +97,7 @@ export function Hero() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-white/60 text-white rounded-lg px-8 py-3.5 font-body text-[12px] tracking-[0.15em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300"
+            className="inline-flex items-center gap-2 border border-surface/60 text-surface rounded-lg px-8 py-3.5 font-body text-[12px] tracking-[0.15em] uppercase hover:bg-surface/10 hover:border-surface transition-all duration-300"
             aria-label="Belanja via WhatsApp"
           >
             Shop via WhatsApp
@@ -111,13 +111,13 @@ export function Hero() {
           transition={{ duration: 1, delay: 1.2 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="font-body text-[9px] tracking-[0.3em] uppercase text-white/40">
+          <span className="font-body text-[9px] tracking-[0.3em] uppercase text-surface/40">
             Scroll
           </span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-px h-8 bg-white/30"
+            className="w-px h-8 bg-surface/30"
           />
         </motion.div>
       </div>

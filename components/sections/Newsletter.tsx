@@ -25,7 +25,7 @@ export function Newsletter() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="font-body text-[10px] tracking-[0.3em] uppercase text-[var(--color-primary)] mb-4 block"
+          className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4 block"
         >
           Stay Connected
         </motion.span>
@@ -57,7 +57,7 @@ export function Newsletter() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="p-4 bg-[var(--color-primary-light)] text-[var(--color-primary-hover)] rounded-xl font-body text-sm max-w-md mx-auto border border-[var(--color-primary)]/20"
+            className="p-4 bg-primary-light text-primary-hover rounded-xl font-body text-sm max-w-md mx-auto border border-primary/20"
           >
             Terima kasih telah berlangganan newsletter AISCHMIRA.
           </motion.div>
@@ -77,7 +77,7 @@ export function Newsletter() {
               placeholder="Alamat email Anda"
               required
               aria-label="Alamat email untuk newsletter"
-              className="flex-1 bg-white border border-border px-5 py-3.5 rounded-lg font-body text-sm text-text placeholder:text-text/40 focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] transition-all shadow-xs"
+              className="flex-1 bg-surface border border-border px-5 py-3.5 rounded-lg font-body text-sm text-text placeholder:text-text/40 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-xs"
             />
             <button
               type="submit"

@@ -16,7 +16,7 @@ export function BrandStory() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-body text-[10px] tracking-[0.3em] uppercase text-[var(--color-primary)] mb-4 block"
+            className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4 block"
           >
             Our Story
           </motion.span>
@@ -56,7 +56,7 @@ export function BrandStory() {
 
             <Link
               href="/about"
-              className="btn-ghost text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
+              className="btn-ghost text-primary hover:text-primary-hover"
             >
               Discover More
             </Link>
@@ -84,7 +84,7 @@ export function BrandStory() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="absolute bottom-0 left-0 w-2/3 h-[52%] rounded-2xl overflow-hidden shadow-xl z-20 border-8 border-[#FAFAF8]"
+              className="absolute bottom-0 left-0 w-2/3 h-[52%] rounded-2xl overflow-hidden shadow-xl z-20 border-8 border-background"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-2/800/800"
@@ -95,7 +95,7 @@ export function BrandStory() {
             </motion.div>
 
             {/* Accent dot */}
-            <div className="absolute top-[68%] right-[24%] w-3 h-3 rounded-full bg-[var(--color-accent)] z-30" />
+            <div className="absolute top-[68%] right-[24%] w-3 h-3 rounded-full bg-accent z-30" />
           </div>
         </div>
       </div>

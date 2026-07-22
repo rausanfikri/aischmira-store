@@ -14,7 +14,7 @@ export function FloatingWhatsApp() {
         rel="noopener noreferrer"
         aria-label="Contact us on WhatsApp"
         title="Contact us on WhatsApp"
-        className="flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
+        className="flex items-center justify-center w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-floating hover:bg-primary-hover hover:scale-110 transition-all duration-300"
       >
         <FaWhatsapp size={28} />
       </Link>

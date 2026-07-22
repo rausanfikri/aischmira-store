@@ -2,49 +2,55 @@
   styles/theme.css
   Design Token Foundation — AISCHMIRA
   Source of Truth for all design decisions.
-  Primary: #2596BE  |  Accent Gold: #D4AF37 (limited use)
+  Primary: #D9AE20  |  Accent Gold: #D19D28 (limited use)
 */
 
 :root {
   /* =========================================
-     1. BRAND COLOR PALETTE — #2596BE Scale
+     1. BRAND COLOR PALETTE — #D9AE20 Scale
      ========================================= */
-  --color-primary-50:  #EAF7FC;
-  --color-primary-100: #C5EAEF;
-  --color-primary-200: #9FD9E6;
-  --color-primary-300: #6FC5D9;
-  --color-primary-400: #44B0CE;
-  --color-primary-500: #2596BE;  /* Brand Primary */
-  --color-primary-600: #1F7FA0;  /* Hover */
-  --color-primary-700: #1A6880;
-  --color-primary-800: #145161;
-  --color-primary-900: #0E3A45;
+  --color-primary-50:  #F9F2D8;
+  --color-primary-100: #F3E5B5;
+  --color-primary-200: #ECD58A;
+  --color-primary-300: #E5C65F;
+  --color-primary-400: #DEB83C;
+  --color-primary-500: #D9AE20;  /* Brand Primary */
+  --color-primary-600: #C08E18;  /* Hover */
+  --color-primary-700: #A97815;
+  --color-primary-800: #8C6210;
+  --color-primary-900: #704A0B;
 
   /* =========================================
      2. SEMANTIC COLOR TOKENS
      ========================================= */
-  --color-primary:            #2596BE;
-  --color-primary-hover:      #1F7FA0;
-  --color-primary-light:      #EAF7FC;
+  --color-primary:            #D9AE20;
+  --color-primary-hover:      #C08E18;
+  --color-primary-light:      #F9F2D8;
   --color-primary-foreground: #FFFFFF;
 
-  --color-background: #FCFCFC;
+  --color-secondary: #D5A12A;
+  --color-accent:    #D19D28;
+
+  --color-background: #FAFAF8;
   --color-surface:    #FFFFFF;
 
-  --color-text:           #2A2A2A;
-  --color-text-secondary: #6B7280;
+  --color-text:           #2B2B2B;
+  --color-text-secondary: #6D6D6D;
 
-  --color-border: #E5E7EB;
+  --color-border: #ECE8DE;
+  --color-accent-light: #F9F2D8;
 
-  --color-accent: #D4AF37;  /* Gold — use sparingly: badges, small highlights */
-  --color-accent-light: #FBF5E0;
+  /* Brand-adjacent platform token; keep WhatsApp recognizable without literals in components. */
+  --color-whatsapp:       #25D366;
+  --color-whatsapp-hover: #20BD5A;
 
   /* =========================================
      3. LEGACY TOKENS (mapped to new palette)
      Kept for backward compat with existing components
      ========================================= */
   --primary:    var(--color-primary);
-  --secondary:  var(--color-primary-light);
+  --secondary:  var(--color-secondary);
+  --accent:     var(--color-accent);
   --background: var(--color-background);
   --surface:    var(--color-surface);
   --text:       var(--color-text);
@@ -92,8 +98,8 @@
   --shadow-md:       0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-lg:       0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
   --shadow-xl:       0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
-  --shadow-soft:     0 4px 24px -4px rgba(37, 150, 190, 0.08);
-  --shadow-floating: 0 12px 40px -10px rgba(37, 150, 190, 0.15);
+  --shadow-soft:     0 4px 24px -4px rgba(192, 142, 24, 0.12);
+  --shadow-floating: 0 12px 40px -10px rgba(192, 142, 24, 0.18);
 
   /* =========================================
      7. TRANSITION
@@ -119,11 +125,11 @@
   --container-padding: 1.5rem;
 }
 
-/* Light blue tint for alternating sections */
-.section-light-blue {
+/* Warm primary-light tint for alternating sections */
+.section-primary-light {
   background-color: var(--color-primary-50);
 }
 
 .section-cream {
-  background-color: #FAFAF8;
+  background-color: var(--color-background);
 }

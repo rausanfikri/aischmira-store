@@ -32,7 +32,7 @@ export function InstagramPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="inline-flex items-center gap-2 font-body text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] tracking-wider"
+            className="inline-flex items-center gap-2 font-body text-sm text-primary hover:text-primary-hover tracking-wider"
             aria-label="Kunjungi profil Instagram @aischmira"
           >
             <FaInstagram size={16} />
@@ -63,8 +63,8 @@ export function InstagramPreview() {
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 text-white font-body text-[10px] tracking-[0.2em] uppercase transition-opacity duration-300 flex items-center gap-1.5 border border-white/40 px-3 py-1.5 rounded-full backdrop-blur-xs">
+                <div className="absolute inset-0 bg-text/0 group-hover:bg-text/40 transition-colors duration-300 flex items-center justify-center">
+                  <span className="opacity-0 group-hover:opacity-100 text-surface font-body text-[10px] tracking-[0.2em] uppercase transition-opacity duration-300 flex items-center gap-1.5 border border-surface/40 px-3 py-1.5 rounded-full backdrop-blur-xs">
                     <FaInstagram size={12} />
                     View
                   </span>

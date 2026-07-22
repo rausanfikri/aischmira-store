@@ -48,19 +48,45 @@ Inter
 
 Primary
 
-Gold
+`#D9AE20`
 
 Secondary
 
-Cream
+`#D5A12A`
+
+Accent
+
+`#D19D28`
+
+Primary Hover
+
+`#C08E18`
+
+Primary Light
+
+`#F9F2D8`
 
 Background
 
-White
+`#FAFAF8`
+
+Surface
+
+`#FFFFFF`
 
 Text
 
-Dark Brown
+`#2B2B2B`
+
+Text Secondary
+
+`#6D6D6D`
+
+Border
+
+`#ECE8DE`
+
+All values are maintained as design tokens in `styles/theme.css`. Gold is used selectively for calls to action, dividers, labels, and small highlights. Page backgrounds remain off-white, warm white, white, or cream; black and full-gold backgrounds are not part of the brand system.
 
 ---
 

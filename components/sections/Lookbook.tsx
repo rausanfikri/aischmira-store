@@ -7,7 +7,7 @@ import { lookbookImages } from "@/data/homepage";
 
 export function Lookbook() {
   return (
-    <section className="section-padding bg-section-light-blue">
+    <section className="section-padding bg-section-primary-light">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Centered Header */}

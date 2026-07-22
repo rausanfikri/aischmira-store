@@ -15,7 +15,7 @@ function LogoMark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "font-heading font-light tracking-[0.3em] uppercase text-[var(--color-accent)]",
+        "font-heading font-light tracking-[0.3em] uppercase text-accent",
         className
       )}
       aria-hidden="true"
@@ -30,7 +30,7 @@ function NavLogo({ inverted = false }: { inverted?: boolean }) {
 
   if (imgError) {
     return (
-      <LogoMark className={inverted ? "text-white text-xl" : "text-[1.1rem]"} />
+      <LogoMark className={inverted ? "text-surface text-xl" : "text-[1.1rem]"} />
     );
   }
 
@@ -73,8 +73,8 @@ export function Navbar() {
         className={cn(
           "fixed left-0 right-0 z-40 transition-all duration-300",
           scrolled
-            ? "bg-white/97 backdrop-blur-md shadow-sm border-b border-border"
-            : "bg-white/90 backdrop-blur-sm"
+            ? "bg-surface/97 backdrop-blur-md shadow-sm border-b border-border"
+            : "bg-surface/90 backdrop-blur-sm"
         )}
         style={{ top: "40px" }}
         role="banner"
@@ -100,10 +100,10 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="font-body text-[12px] tracking-[0.15em] uppercase text-text/60 hover:text-[var(--color-primary)] transition-colors duration-200 relative group"
+                  className="font-body text-[12px] tracking-[0.15em] uppercase text-text/60 hover:text-primary transition-colors duration-200 relative group"
                 >
                   {item.label}
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--color-primary)] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </nav>
@@ -122,7 +122,7 @@ export function Navbar() {
                       rel="noopener noreferrer"
                       aria-label={social.ariaLabel}
                       title={social.name}
-                      className="h-8 w-8 flex items-center justify-center text-text/40 hover:text-[var(--color-primary)] transition-colors duration-200 rounded-full hover:bg-[var(--color-primary-light)]"
+                      className="h-8 w-8 flex items-center justify-center text-text/40 hover:text-primary transition-colors duration-200 rounded-full hover:bg-primary-light"
                     >
                       <Icon size={13} />
                     </a>
@@ -134,7 +134,7 @@ export function Navbar() {
               <Link
                 href="/search"
                 aria-label="Cari produk"
-                className="hidden sm:flex h-9 w-9 items-center justify-center text-text/50 hover:text-[var(--color-primary)] transition-colors rounded-full hover:bg-[var(--color-primary-light)]"
+                className="hidden sm:flex h-9 w-9 items-center justify-center text-text/50 hover:text-primary transition-colors rounded-full hover:bg-primary-light"
               >
                 <Search size={17} strokeWidth={1.5} />
               </Link>
@@ -145,7 +145,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Hubungi AISCHMIRA via WhatsApp"
-                className="hidden md:flex items-center gap-2 bg-[var(--color-primary)] text-white rounded-lg px-4 py-2 text-[11px] font-body tracking-widest uppercase hover:bg-[var(--color-primary-hover)] transition-colors duration-300 ml-2"
+                className="hidden md:flex items-center gap-2 bg-primary text-primary-foreground rounded-lg px-4 py-2 text-[11px] font-body tracking-widest uppercase hover:bg-primary-hover transition-colors duration-300 ml-2"
               >
                 Shop Now
               </a>
@@ -169,7 +169,7 @@ export function Navbar() {
       <div
         id="mobile-menu"
         className={cn(
-          "fixed inset-0 z-30 bg-white transition-all duration-300",
+          "fixed inset-0 z-30 bg-surface transition-all duration-300",
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         style={{ top: "calc(40px + 64px)" }}
@@ -184,7 +184,7 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className="font-heading text-3xl font-light tracking-wide text-text hover:text-[var(--color-primary)] transition-colors border-b border-border pb-4"
+              className="font-heading text-3xl font-light tracking-wide text-text hover:text-primary transition-colors border-b border-border pb-4"
             >
               {item.label}
             </Link>
@@ -218,7 +218,7 @@ export function Navbar() {
                     rel="noopener noreferrer"
                     aria-label={social.ariaLabel}
                     title={social.name}
-                    className="flex flex-col items-center gap-1.5 text-text/50 hover:text-[var(--color-primary)] transition-colors"
+                    className="flex flex-col items-center gap-1.5 text-text/50 hover:text-primary transition-colors"
                   >
                     <Icon size={20} />
                     <span className="font-body text-[9px] tracking-widest uppercase">{social.name}</span>

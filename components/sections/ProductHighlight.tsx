@@ -46,7 +46,7 @@ export function ProductHighlight() {
               className="group flex flex-col"
             >
               {/* Product Image */}
-              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl shadow-soft mb-4 bg-[var(--color-primary-50)]">
+              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl shadow-soft mb-4 bg-primary-light">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -56,7 +56,7 @@ export function ProductHighlight() {
 
                 {/* Best Seller Badge — gold accent */}
                 {product.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-[var(--color-accent)] text-white px-2.5 py-0.5 text-[9px] tracking-widest uppercase font-body rounded-sm">
+                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-2.5 py-0.5 text-[9px] tracking-widest uppercase font-body rounded-sm">
                     Best Seller
                   </div>
                 )}
@@ -68,7 +68,7 @@ export function ProductHighlight() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Order ${product.name} via WhatsApp`}
-                    className="flex w-full items-center justify-center bg-[var(--color-primary)] text-white py-3 font-body text-[11px] tracking-[0.15em] uppercase rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
+                    className="flex w-full items-center justify-center bg-primary text-primary-foreground py-3 font-body text-[11px] tracking-[0.15em] uppercase rounded-lg hover:bg-primary-hover transition-colors"
                   >
                     Order via WhatsApp
                   </a>
@@ -83,7 +83,7 @@ export function ProductHighlight() {
                 <h3 className="font-heading text-lg text-text tracking-wide leading-snug">
                   {product.name}
                 </h3>
-                <p className="font-body text-sm text-[var(--color-primary)] font-medium">
+                <p className="font-body text-sm text-primary font-medium">
                   Rp {product.basePrice.toLocaleString("id-ID")}
                 </p>
               </div>

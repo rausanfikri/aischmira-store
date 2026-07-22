@@ -16,7 +16,7 @@ export function Footer() {
 
   return (
     <footer
-      className="bg-[var(--color-text)] text-white/80"
+      className="bg-background text-text border-t border-border"
       role="contentinfo"
     >
       {/* Main Footer */}
@@ -33,7 +33,7 @@ export function Footer() {
             >
               {imgError ? (
                 <span
-                  className="font-heading text-2xl tracking-[0.3em] uppercase text-white"
+                  className="font-heading text-2xl tracking-[0.3em] uppercase text-text"
                   aria-hidden="true"
                 >
                   AISCHMIRA
@@ -44,27 +44,27 @@ export function Footer() {
                   alt="AISCHMIRA"
                   width={160}
                   height={44}
-                  className="object-contain h-10 w-auto brightness-0 invert opacity-90"
+                  className="object-contain h-10 w-auto opacity-90"
                   onError={() => setImgError(true)}
                 />
               )}
             </Link>
 
-            <p className="font-body text-sm leading-relaxed text-white/50 max-w-sm">
+            <p className="font-body text-sm leading-relaxed text-text-secondary max-w-sm">
               {footerData.brandDescription}
             </p>
 
             {/* Contact */}
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-white/40 text-sm">
+              <div className="flex items-center gap-2 text-text-secondary text-sm">
                 <MapPin size={13} strokeWidth={1.5} aria-hidden="true" />
                 <span className="font-body">Indonesia</span>
               </div>
-              <div className="flex items-center gap-2 text-white/40 text-sm">
+              <div className="flex items-center gap-2 text-text-secondary text-sm">
                 <Mail size={13} strokeWidth={1.5} aria-hidden="true" />
                 <span className="font-body">hello@aischmira.store</span>
               </div>
-              <div className="flex items-center gap-2 text-white/40 text-sm">
+              <div className="flex items-center gap-2 text-text-secondary text-sm">
                 <Phone size={13} strokeWidth={1.5} aria-hidden="true" />
                 <span className="font-body">+62 851-2134-4848</span>
               </div>
@@ -72,7 +72,7 @@ export function Footer() {
 
             {/* Social Icons */}
             <div>
-              <p className="font-body text-[10px] tracking-[0.15em] uppercase text-white/30 mb-3">
+              <p className="font-body text-[10px] tracking-[0.15em] uppercase text-text-secondary mb-3">
                 Ikuti Kami
               </p>
               <div className="flex gap-2 flex-wrap">
@@ -86,7 +86,7 @@ export function Footer() {
                       rel="noopener noreferrer"
                       aria-label={social.ariaLabel}
                       title={social.name}
-                      className="h-9 w-9 flex items-center justify-center border border-white/15 text-white/40 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-all duration-300 rounded-full"
+                      className="h-9 w-9 flex items-center justify-center border border-border text-text-secondary hover:border-primary hover:text-primary hover:bg-primary-light transition-all duration-300 rounded-full"
                     >
                       <Icon size={14} />
                     </a>
@@ -101,7 +101,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat dengan AISCHMIRA via WhatsApp"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-body text-sm hover:bg-[#20bd5a] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-lg font-body text-sm hover:bg-primary-hover transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
             >
               <FaWhatsapp size={18} aria-hidden="true" />
               <span>Chat via WhatsApp</span>
@@ -115,7 +115,7 @@ export function Footer() {
           <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
             {footerData.linkGroups.map((group) => (
               <div key={group.title} className="space-y-4">
-                <h3 className="font-body text-[10px] tracking-[0.2em] uppercase text-white/30 font-medium">
+                <h3 className="font-body text-[10px] tracking-[0.2em] uppercase text-text-secondary font-medium">
                   {group.title}
                 </h3>
                 <ul className="space-y-3">
@@ -123,7 +123,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="font-body text-sm text-white/50 hover:text-white transition-colors duration-200"
+                        className="font-body text-sm text-text-secondary hover:text-text transition-colors duration-200"
                       >
                         {link.label}
                       </Link>
@@ -138,12 +138,12 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/8">
+      <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
-          <p className="font-body text-xs text-white/25 tracking-wide">
+          <p className="font-body text-xs text-text-secondary tracking-wide">
             {footerData.copyright}
           </p>
-          <div className="hidden sm:flex items-center gap-1 text-white/15">
+          <div className="hidden sm:flex items-center gap-1 text-border">
             <span>·</span>
           </div>
           <div className="flex gap-5">
@@ -151,7 +151,7 @@ export function Footer() {
               <Link
                 key={item}
                 href="#"
-                className="font-body text-xs text-white/25 hover:text-white/50 transition-colors"
+                className="font-body text-xs text-text-secondary hover:text-text transition-colors"
               >
                 {item}
               </Link>

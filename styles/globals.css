@@ -12,6 +12,10 @@
   --color-primary-hover:      var(--color-primary-hover);
   --color-primary-light:      var(--color-primary-light);
   --color-primary-foreground: var(--color-primary-foreground);
+  --color-secondary:          var(--color-secondary);
+  --color-accent-light:       var(--color-accent-light);
+  --color-whatsapp:           var(--color-whatsapp);
+  --color-whatsapp-hover:     var(--color-whatsapp-hover);
 
   /* Color scale */
   --color-brand-50:  var(--color-primary-50);
@@ -32,8 +36,7 @@
   --color-border:     var(--color-border);
   --color-accent:     var(--color-accent);
 
-  /* Legacy tokens */
-  --color-secondary: var(--color-primary-light);
+  /* Legacy state tokens */
   --color-success:   var(--success);
   --color-warning:   var(--warning);
   --color-danger:    var(--danger);
@@ -150,9 +153,9 @@ body {
 
   /* Section backgrounds */
   .bg-section-white      { background-color: var(--color-surface); }
-  .bg-section-light-blue { background-color: var(--color-primary-50); }
-  .bg-section-cream      { background-color: #FAFAF8; }
-  .bg-section-dark       { background-color: var(--color-text); }
+  .bg-section-primary-light { background-color: var(--color-primary-light); }
+  .bg-section-cream      { background-color: var(--color-background); }
+  .bg-section-dark       { background-color: var(--color-surface); color: var(--color-text); }
 
   /* Primary Button */
   .btn-primary {
@@ -223,4 +226,8 @@ body {
   /* Gold accent — use sparingly */
   .accent-gold { color: var(--color-accent); }
   .bg-accent-gold { background-color: var(--color-accent); }
+
+  /* Platform CTA tokens */
+  .bg-whatsapp { background-color: var(--color-whatsapp); }
+  .hover-bg-whatsapp:hover { background-color: var(--color-whatsapp-hover); }
 }

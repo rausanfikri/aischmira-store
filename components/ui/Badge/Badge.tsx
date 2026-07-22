@@ -12,11 +12,11 @@ const badgeVariants = cva(
         secondary:
           "border-transparent bg-secondary text-text hover:bg-accent",
         success:
-          "border-transparent bg-success text-white hover:opacity-90 shadow-sm",
+          "border-transparent bg-success text-surface hover:opacity-90 shadow-sm",
         danger:
-          "border-transparent bg-danger text-white hover:opacity-90 shadow-sm",
+          "border-transparent bg-danger text-surface hover:opacity-90 shadow-sm",
         warning:
-          "border-transparent bg-warning text-white hover:opacity-90 shadow-sm",
+          "border-transparent bg-warning text-surface hover:opacity-90 shadow-sm",
         outline: "text-text border-border",
       },
     },

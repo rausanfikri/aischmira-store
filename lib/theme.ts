@@ -6,18 +6,21 @@
  */
 export const theme = {
   colors: {
-    primary: "var(--primary)",
-    secondary: "var(--secondary)",
-    background: "var(--background)",
-    surface: "var(--surface)",
-    text: "var(--text)",
-    border: "var(--border)",
+    primary: "var(--color-primary)",
+    primaryHover: "var(--color-primary-hover)",
+    primaryLight: "var(--color-primary-light)",
+    secondary: "var(--color-secondary)",
+    accent: "var(--color-accent)",
+    background: "var(--color-background)",
+    surface: "var(--color-surface)",
+    text: "var(--color-text)",
+    textSecondary: "var(--color-text-secondary)",
+    border: "var(--color-border)",
     success: "var(--success)",
     warning: "var(--warning)",
     danger: "var(--danger)",
     info: "var(--info)",
     muted: "var(--muted)",
-    accent: "var(--accent)",
   },
   spacing: {
     4: "var(--spacing-4)",

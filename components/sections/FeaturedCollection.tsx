@@ -43,7 +43,7 @@ export function FeaturedCollection() {
   return (
     <section
       id="featured-collections"
-      className="section-padding bg-section-light-blue"
+      className="section-padding bg-section-primary-light"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
@@ -72,7 +72,7 @@ export function FeaturedCollection() {
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-text/5 group-hover:bg-text/15 transition-colors duration-500" />
               </Link>
 
               <h3 className="font-heading text-2xl tracking-[0.2em] text-text mb-2 uppercase">
@@ -81,12 +81,12 @@ export function FeaturedCollection() {
               <p className="font-body text-sm text-[var(--color-text-secondary)] mb-4 px-2 line-clamp-2">
                 {collection.description}
               </p>
-              <p className="font-body text-xs text-[var(--color-primary)] tracking-wider uppercase mb-4">
+              <p className="font-body text-xs text-primary tracking-wider uppercase mb-4">
                 12 Products
               </p>
               <Link
                 href="#"
-                className="btn-ghost text-text hover:text-[var(--color-primary)]"
+                className="btn-ghost text-text hover:text-primary"
               >
                 Explore
               </Link>

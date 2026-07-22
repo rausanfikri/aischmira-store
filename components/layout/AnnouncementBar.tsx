@@ -26,17 +26,17 @@ export function AnnouncementBar() {
   return (
     <div
       className={cn(
-        "relative z-50 flex items-center justify-center bg-text px-4 py-2.5",
+        "relative z-50 flex items-center justify-center bg-background border-b border-border px-4 py-2.5",
         "min-h-[40px]"
       )}
     >
-      <p className="text-center text-xs font-body tracking-widest uppercase text-background transition-all duration-500">
+      <p className="text-center text-xs font-body tracking-widest uppercase text-text-secondary transition-all duration-500">
         {announcements[index]}
       </p>
       <button
         onClick={() => setVisible(false)}
         aria-label="Close announcement"
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-background/60 hover:text-background transition-colors"
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-primary transition-colors"
       >
         <X size={14} />
       </button>
