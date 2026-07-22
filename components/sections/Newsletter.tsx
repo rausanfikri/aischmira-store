@@ -5,60 +5,88 @@ import { useState } from "react";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // No backend required, just reset the form and show success (or simply reset)
-    alert("Thank you for subscribing to our newsletter!");
+    if (!email) return;
+    setSubmitted(true);
     setEmail("");
+    setTimeout(() => setSubmitted(false), 5000);
   };
 
   return (
-    <section className="py-24 bg-background border-t border-border/50">
+    <section className="section-padding bg-section-cream border-t border-border/50">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+
+        {/* Header */}
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="font-heading text-2xl sm:text-3xl text-text font-light tracking-[0.2em] uppercase mb-6"
+          className="font-body text-[10px] tracking-[0.3em] uppercase text-[var(--color-primary)] mb-4 block"
         >
-          Join The Insider
-        </motion.h2>
-        
-        <motion.p 
+          Stay Connected
+        </motion.span>
+
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-body text-text/70 mb-10 max-w-lg mx-auto"
+          className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text font-light tracking-widest uppercase mb-5"
         >
-          Subscribe to receive updates, access to exclusive deals, and more.
-        </motion.p>
-        
-        <motion.form 
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 20 }}
+          Join The Insider
+        </motion.h2>
+
+        <div className="section-divider mb-6" />
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col sm:flex-row max-w-md mx-auto gap-4 sm:gap-0"
+          className="font-body text-base text-[var(--color-text-secondary)] mb-10 max-w-md mx-auto"
         >
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email address"
-            required
-            className="flex-1 bg-transparent border-b border-text/30 px-4 py-3 font-body text-sm text-text placeholder:text-text/40 focus:outline-none focus:border-text transition-colors"
-          />
-          <button
-            type="submit"
-            className="sm:ml-4 px-8 py-3 bg-text text-background font-body text-sm tracking-widest uppercase hover:bg-text/90 transition-colors"
+          Subscribe to receive updates on new collections, exclusive private sales, and editorial lookbooks.
+        </motion.p>
+
+        {/* Form Container */}
+        {submitted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-4 bg-[var(--color-primary-light)] text-[var(--color-primary-hover)] rounded-xl font-body text-sm max-w-md mx-auto border border-[var(--color-primary)]/20"
           >
-            Subscribe
-          </button>
-        </motion.form>
+            Terima kasih telah berlangganan newsletter AISCHMIRA.
+          </motion.div>
+        ) : (
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row max-w-md mx-auto gap-3 items-stretch"
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Alamat email Anda"
+              required
+              aria-label="Alamat email untuk newsletter"
+              className="flex-1 bg-white border border-border px-5 py-3.5 rounded-lg font-body text-sm text-text placeholder:text-text/40 focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] transition-all shadow-xs"
+            />
+            <button
+              type="submit"
+              className="btn-primary shrink-0 px-7 py-3.5"
+            >
+              Subscribe
+            </button>
+          </motion.form>
+        )}
       </div>
     </section>
   );

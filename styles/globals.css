@@ -4,102 +4,223 @@
 @theme {
   /* ==============================
      TAILWIND v4 CONFIGURATION
-     Mendaftarkan Token ke Tailwind
+     Registering Design Tokens
      ============================== */
 
-  /* Colors */
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-text: var(--text);
-  --color-border: var(--border);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-  --color-info: var(--info);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
+  /* === COLORS === */
+  --color-primary:            var(--color-primary);
+  --color-primary-hover:      var(--color-primary-hover);
+  --color-primary-light:      var(--color-primary-light);
+  --color-primary-foreground: var(--color-primary-foreground);
 
-  /* Typography */
+  /* Color scale */
+  --color-brand-50:  var(--color-primary-50);
+  --color-brand-100: var(--color-primary-100);
+  --color-brand-200: var(--color-primary-200);
+  --color-brand-300: var(--color-primary-300);
+  --color-brand-400: var(--color-primary-400);
+  --color-brand-500: var(--color-primary-500);
+  --color-brand-600: var(--color-primary-600);
+  --color-brand-700: var(--color-primary-700);
+  --color-brand-800: var(--color-primary-800);
+  --color-brand-900: var(--color-primary-900);
+
+  --color-background: var(--color-background);
+  --color-surface:    var(--color-surface);
+  --color-text:       var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-border:     var(--color-border);
+  --color-accent:     var(--color-accent);
+
+  /* Legacy tokens */
+  --color-secondary: var(--color-primary-light);
+  --color-success:   var(--success);
+  --color-warning:   var(--warning);
+  --color-danger:    var(--danger);
+  --color-info:      var(--info);
+  --color-muted:     var(--muted);
+
+  /* === TYPOGRAPHY === */
   --font-heading: var(--font-cormorant);
-  --font-body: var(--font-inter);
+  --font-body:    var(--font-inter);
 
-  /* Spacing */
-  --spacing-4: var(--spacing-4);
-  --spacing-8: var(--spacing-8);
-  --spacing-12: var(--spacing-12);
-  --spacing-16: var(--spacing-16);
-  --spacing-20: var(--spacing-20);
-  --spacing-24: var(--spacing-24);
-  --spacing-32: var(--spacing-32);
-  --spacing-40: var(--spacing-40);
-  --spacing-48: var(--spacing-48);
-  --spacing-64: var(--spacing-64);
-  --spacing-80: var(--spacing-80);
-  --spacing-96: var(--spacing-96);
+  /* === SPACING === */
+  --spacing-4:   var(--spacing-4);
+  --spacing-8:   var(--spacing-8);
+  --spacing-12:  var(--spacing-12);
+  --spacing-16:  var(--spacing-16);
+  --spacing-20:  var(--spacing-20);
+  --spacing-24:  var(--spacing-24);
+  --spacing-32:  var(--spacing-32);
+  --spacing-40:  var(--spacing-40);
+  --spacing-48:  var(--spacing-48);
+  --spacing-64:  var(--spacing-64);
+  --spacing-72:  var(--spacing-72);
+  --spacing-80:  var(--spacing-80);
+  --spacing-96:  var(--spacing-96);
   --spacing-120: var(--spacing-120);
 
-  /* Radius */
-  --radius-xs: var(--radius-xs);
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: var(--radius-xl);
-  --radius-2xl: var(--radius-2xl);
+  /* === RADIUS === */
+  --radius-xs:   var(--radius-xs);
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-2xl:  var(--radius-2xl);
   --radius-full: var(--radius-full);
 
-  /* Shadow */
-  --shadow-sm: var(--shadow-sm);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-soft: var(--shadow-soft);
+  /* === SHADOW === */
+  --shadow-sm:       var(--shadow-sm);
+  --shadow-md:       var(--shadow-md);
+  --shadow-lg:       var(--shadow-lg);
+  --shadow-xl:       var(--shadow-xl);
+  --shadow-soft:     var(--shadow-soft);
   --shadow-floating: var(--shadow-floating);
 
-  /* Breakpoints */
-  --breakpoint-mobile: 480px;
-  --breakpoint-tablet: 768px;
+  /* === BREAKPOINTS === */
+  --breakpoint-mobile:  480px;
+  --breakpoint-tablet:  768px;
   --breakpoint-desktop: 1024px;
-  --breakpoint-wide: 1280px;
+  --breakpoint-wide:    1280px;
 }
 
+/* ===== BASE STYLES ===== */
 body {
-  background-color: var(--background);
-  color: var(--text);
+  background-color: var(--color-background);
+  color: var(--color-text);
   font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 @layer base {
-  /* Konfigurasi Global Typography - SEO Friendly */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 400;
     line-height: 1.2;
-    color: var(--text);
+    color: var(--color-text);
   }
 
   p {
     font-family: var(--font-body);
-    line-height: 1.6;
+    line-height: 1.7;
+  }
+
+  /* Focus states for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
 @layer utilities {
-  /* Utility Class Typography */
-  .text-h1 { font-family: var(--font-heading); font-size: 3rem; line-height: 1.1; letter-spacing: -0.02em; }
-  .text-h2 { font-family: var(--font-heading); font-size: 2.25rem; line-height: 1.2; letter-spacing: -0.01em; }
-  .text-h3 { font-family: var(--font-heading); font-size: 1.75rem; line-height: 1.3; }
-  .text-h4 { font-family: var(--font-heading); font-size: 1.5rem; line-height: 1.4; }
-  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.6; }
-  .text-body { font-family: var(--font-body); font-size: 1rem; line-height: 1.6; }
-  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.5; }
-  
+  /* Typography Utilities */
+  .text-h1 { font-family: var(--font-heading); font-size: 3.5rem; line-height: 1.1; letter-spacing: -0.02em; }
+  .text-h2 { font-family: var(--font-heading); font-size: 2.5rem;  line-height: 1.2; letter-spacing: -0.01em; }
+  .text-h3 { font-family: var(--font-heading); font-size: 1.875rem; line-height: 1.3; }
+  .text-h4 { font-family: var(--font-heading); font-size: 1.5rem;  line-height: 1.4; }
+  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.7; }
+  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.7; }
+  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.6; }
+
   .text-editorial {
     font-family: var(--font-heading);
     font-style: italic;
     font-weight: 300;
   }
+
+  /* Section vertical padding — Desktop: 120px, Tablet: 96px, Mobile: 72px */
+  .section-padding {
+    padding-top: 4.5rem;    /* 72px mobile */
+    padding-bottom: 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 6rem;    /* 96px tablet */
+      padding-bottom: 6rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 7.5rem;  /* 120px desktop */
+      padding-bottom: 7.5rem;
+    }
+  }
+
+  /* Section backgrounds */
+  .bg-section-white      { background-color: var(--color-surface); }
+  .bg-section-light-blue { background-color: var(--color-primary-50); }
+  .bg-section-cream      { background-color: #FAFAF8; }
+  .bg-section-dark       { background-color: var(--color-text); }
+
+  /* Primary Button */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    border-radius: var(--radius-lg);
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background-color var(--transition-normal);
+    box-shadow: var(--shadow-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Outline Button */
+  .btn-outline {
+    background-color: transparent;
+    border: 1.5px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Ghost Button (text with bottom border) */
+  .btn-ghost {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: color var(--transition-fast);
+  }
+
+  /* Section divider line (gold accent) */
+  .section-divider {
+    width: 3rem;
+    height: 1px;
+    background-color: var(--color-accent);
+    margin: 0 auto;
+  }
+
+  /* Gold accent — use sparingly */
+  .accent-gold { color: var(--color-accent); }
+  .bg-accent-gold { background-color: var(--color-accent); }
 }

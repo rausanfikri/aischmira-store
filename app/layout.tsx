@@ -9,35 +9,58 @@ import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aischmira.store"),
   title: "AISCHMIRA | Elegant Women's Fashion",
-  description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
+  description:
+    "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
   authors: [{ name: "AISCHMIRA" }],
+  keywords: ["fashion wanita", "baju muslim", "modest fashion", "aischmira", "busana elegan"],
+  icons: {
+    icon: [
+      { url: "/logo/logo-icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logo/logo-icon.png" },
+    ],
+    shortcut: "/logo/logo-icon.png",
+  },
   openGraph: {
     siteName: "AISCHMIRA",
     title: "AISCHMIRA | Elegant Women's Fashion",
-    description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
-    images: ["/logo/logo-primary.png"],
+    description:
+      "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
+    images: [
+      {
+        url: "/logo/logo-primary.png",
+        width: 1200,
+        height: 630,
+        alt: "AISCHMIRA — Elegant Women's Fashion",
+      },
+    ],
     type: "website",
+    locale: "id_ID",
   },
   twitter: {
     card: "summary_large_image",
     title: "AISCHMIRA | Elegant Women's Fashion",
-    description: "AISCHMIRA menghadirkan koleksi fashion wanita elegan, modern, dan timeless untuk perempuan Indonesia dengan kualitas premium.",
+    description:
+      "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
     images: ["/logo/logo-primary.png"],
   },
   alternates: {
     canonical: "https://aischmira.store",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -50,7 +73,7 @@ export default function RootLayout({
       lang="id-ID"
       className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body">
+      <body className="min-h-full flex flex-col font-body bg-background text-text">
         <AnnouncementBar />
         <Navbar />
         <main className="flex-1 pt-[104px]">
