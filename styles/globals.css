@@ -85,6 +85,14 @@
   --breakpoint-tablet:  768px;
   --breakpoint-desktop: 1024px;
   --breakpoint-wide:    1280px;
+
+  /* === ANIMATIONS === */
+  --animate-image-drift: image-drift 30s linear infinite alternate;
+
+  @keyframes image-drift {
+    0% { transform: scale(1.05) translate(0, 0); }
+    100% { transform: scale(1.15) translate(-1.5%, 1.5%); }
+  }
 }
 
 /* ===== BASE STYLES ===== */

@@ -20,11 +20,11 @@ export function Footer() {
       role="contentinfo"
     >
       {/* Main Footer */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16">
 
           {/* Brand Column */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-8">
             {/* Logo with text fallback */}
             <Link
               href="/"
@@ -33,7 +33,7 @@ export function Footer() {
             >
               {imgError ? (
                 <span
-                  className="font-heading text-2xl tracking-[0.3em] uppercase text-text"
+                  className="font-heading text-2xl sm:text-3xl tracking-[0.3em] uppercase text-text"
                   aria-hidden="true"
                 >
                   AISCHMIRA
@@ -42,40 +42,40 @@ export function Footer() {
                 <Image
                   src="/logo.png"
                   alt="AISCHMIRA"
-                  width={160}
-                  height={44}
+                  width={180}
+                  height={50}
                   className="object-contain h-10 w-auto opacity-90"
                   onError={() => setImgError(true)}
                 />
               )}
             </Link>
 
-            <p className="font-body text-sm leading-relaxed text-text-secondary max-w-sm">
+            <p className="font-body text-[13px] sm:text-sm leading-loose text-text-secondary max-w-sm font-light">
               {footerData.brandDescription}
             </p>
 
             {/* Contact */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-text-secondary text-sm">
-                <MapPin size={13} strokeWidth={1.5} aria-hidden="true" />
-                <span className="font-body">Indonesia</span>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-text-secondary text-sm">
+                <MapPin size={14} strokeWidth={1} aria-hidden="true" />
+                <span className="font-body font-light tracking-wide">Indonesia</span>
               </div>
-              <div className="flex items-center gap-2 text-text-secondary text-sm">
-                <Mail size={13} strokeWidth={1.5} aria-hidden="true" />
-                <span className="font-body">hello@aischmira.store</span>
+              <div className="flex items-center gap-3 text-text-secondary text-sm">
+                <Mail size={14} strokeWidth={1} aria-hidden="true" />
+                <span className="font-body font-light tracking-wide">hello@aischmira.store</span>
               </div>
-              <div className="flex items-center gap-2 text-text-secondary text-sm">
-                <Phone size={13} strokeWidth={1.5} aria-hidden="true" />
-                <span className="font-body">+62 851-2134-4848</span>
+              <div className="flex items-center gap-3 text-text-secondary text-sm">
+                <Phone size={14} strokeWidth={1} aria-hidden="true" />
+                <span className="font-body font-light tracking-wide">+62 851-2134-4848</span>
               </div>
             </div>
 
             {/* Social Icons */}
-            <div>
-              <p className="font-body text-[10px] tracking-[0.15em] uppercase text-text-secondary mb-3">
-                Ikuti Kami
+            <div className="pt-2">
+              <p className="font-body text-[9px] tracking-[0.2em] uppercase text-text-secondary mb-4">
+                Follow Us
               </p>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-3 flex-wrap">
                 {socialMediaLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -86,7 +86,7 @@ export function Footer() {
                       rel="noopener noreferrer"
                       aria-label={social.ariaLabel}
                       title={social.name}
-                      className="h-9 w-9 flex items-center justify-center border border-border text-text-secondary hover:border-primary hover:text-primary hover:bg-primary-light transition-all duration-300 rounded-full"
+                      className="h-10 w-10 flex items-center justify-center border border-border text-text-secondary hover:border-primary hover:text-primary transition-all duration-300 rounded-none"
                     >
                       <Icon size={14} />
                     </a>
@@ -96,16 +96,18 @@ export function Footer() {
             </div>
 
             {/* WhatsApp CTA */}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Chat dengan AISCHMIRA via WhatsApp"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-lg font-body text-sm hover:bg-primary-hover transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
-            >
-              <FaWhatsapp size={18} aria-hidden="true" />
-              <span>Chat via WhatsApp</span>
-            </a>
+            <div className="pt-4">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat dengan AISCHMIRA via WhatsApp"
+                className="inline-flex items-center justify-center gap-3 bg-text text-surface px-8 py-3.5 rounded-none font-body text-[10px] tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-colors duration-300 w-full sm:w-auto"
+              >
+                <FaWhatsapp size={16} aria-hidden="true" />
+                <span>Chat via WhatsApp</span>
+              </a>
+            </div>
           </div>
 
           {/* Spacer */}
