@@ -82,6 +82,18 @@ export function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen, searchOpen, cartOpen]);
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+        setCartOpen(false);
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <>
       <header
@@ -136,10 +148,20 @@ export function Navbar() {
                   </button>
                   {/* Account Dropdown */}
                   <div className="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                    <div className="bg-surface shadow-xl border border-border/50 rounded-sm w-48 p-4 flex flex-col gap-3 font-body text-[11px] tracking-widest uppercase">
-                      <p className="text-text/40 text-[9px] mb-2">Guest</p>
-                      <button className="text-left hover:text-primary transition-colors">Sign In</button>
-                      <button className="text-left hover:text-primary transition-colors">Register</button>
+                    <div className="bg-surface shadow-xl border border-border/50 rounded-sm w-56 p-6 flex flex-col gap-4 font-body text-[10px] tracking-widest uppercase">
+                      <div className="border-b border-border/50 pb-4 mb-2">
+                        <p className="text-text/40 text-[9px] mb-3">Welcome</p>
+                        <div className="flex flex-col gap-3">
+                          <button className="text-left hover:text-primary transition-colors font-medium">Sign In</button>
+                          <button className="text-left hover:text-primary transition-colors">Register</button>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3 text-text/70">
+                        <button className="text-left hover:text-primary transition-colors">Dashboard</button>
+                        <button className="text-left hover:text-primary transition-colors">My Orders</button>
+                        <button className="text-left hover:text-primary transition-colors">Wishlist</button>
+                        <button className="text-left hover:text-primary transition-colors">Rewards</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -231,12 +253,12 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col items-center p-4 pt-32 overflow-y-auto"
           >
-            <button onClick={() => setSearchOpen(false)} className="absolute top-8 right-8 text-text hover:text-primary">
+            <button onClick={() => setSearchOpen(false)} className="absolute top-8 right-8 text-text hover:text-primary transition-colors">
               <X size={32} strokeWidth={1} />
             </button>
-            <div className="w-full max-w-2xl relative">
+            <div className="w-full max-w-4xl relative mb-16">
               <input 
                 type="text" 
                 placeholder="Search products, collections..." 
@@ -244,6 +266,41 @@ export function Navbar() {
                 autoFocus
               />
               <Search size={28} className="absolute right-0 top-1/2 -translate-y-1/2 text-text/30" strokeWidth={1} />
+            </div>
+
+            <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-12 text-left pb-16">
+              <div>
+                <h3 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/50 mb-6">Recent Searches</h3>
+                <ul className="flex flex-col gap-4 font-heading text-xl text-text/80">
+                  <li><button className="hover:text-primary transition-colors">Silk Scarves</button></li>
+                  <li><button className="hover:text-primary transition-colors">Priscila Dress</button></li>
+                  <li><button className="hover:text-primary transition-colors">Outerwear 2025</button></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/50 mb-6">Popular Collections</h3>
+                <ul className="flex flex-col gap-4 font-heading text-xl text-text/80">
+                  <li><button className="hover:text-primary transition-colors">FEMME Collection</button></li>
+                  <li><button className="hover:text-primary transition-colors">HER Edit</button></li>
+                  <li><button className="hover:text-primary transition-colors">Classic Scarf</button></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/50 mb-6">Popular Products</h3>
+                <div className="flex flex-col gap-4">
+                  {[1, 2].map((i) => (
+                    <div key={i} className="flex items-center gap-4 group cursor-pointer">
+                      <div className="w-12 h-16 bg-surface overflow-hidden">
+                        <Image src={`https://picsum.photos/seed/search-prod-${i}/100/150`} alt="" width={48} height={64} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                      </div>
+                      <div className="flex flex-col text-left">
+                        <span className="font-heading text-lg group-hover:text-primary transition-colors">Bianca Dress</span>
+                        <span className="font-body text-[10px] tracking-widest text-text/50 uppercase">Rp 899.000</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

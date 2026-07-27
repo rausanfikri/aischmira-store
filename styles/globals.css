@@ -127,13 +127,13 @@ body {
 
 @layer utilities {
   /* Typography Utilities */
-  .text-h1 { font-family: var(--font-heading); font-size: 3.5rem; line-height: 1.1; letter-spacing: -0.02em; }
-  .text-h2 { font-family: var(--font-heading); font-size: 2.5rem;  line-height: 1.2; letter-spacing: -0.01em; }
-  .text-h3 { font-family: var(--font-heading); font-size: 1.875rem; line-height: 1.3; }
+  .text-h1 { font-family: var(--font-heading); font-size: 4rem; line-height: 1.1; letter-spacing: -0.02em; }
+  .text-h2 { font-family: var(--font-heading); font-size: 3rem;  line-height: 1.2; letter-spacing: -0.01em; }
+  .text-h3 { font-family: var(--font-heading); font-size: 2rem; line-height: 1.3; }
   .text-h4 { font-family: var(--font-heading); font-size: 1.5rem;  line-height: 1.4; }
-  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.8; }
-  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.8; }
-  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.7; }
+  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.8; letter-spacing: 0.01em; }
+  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.8; letter-spacing: 0.02em; }
+  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.7; letter-spacing: 0.03em; }
 
   .text-editorial {
     font-family: var(--font-heading);
@@ -141,10 +141,10 @@ body {
     font-weight: 300;
   }
 
-  /* Section vertical padding — Desktop: 144px, Tablet: 96px, Mobile: 64px */
+  /* Section vertical padding — Desktop: 120-160px, Tablet: 80-100px, Mobile: 56-72px */
   .section-padding {
-    padding-top: 4rem;      /* 64px mobile */
-    padding-bottom: 4rem;
+    padding-top: 4.5rem;      /* 72px mobile */
+    padding-bottom: 4.5rem;
   }
   @media (min-width: 768px) {
     .section-padding {
@@ -154,8 +154,8 @@ body {
   }
   @media (min-width: 1024px) {
     .section-padding {
-      padding-top: 9rem;   /* 144px desktop */
-      padding-bottom: 9rem;
+      padding-top: 10rem;   /* 160px desktop */
+      padding-bottom: 10rem;
     }
   }
 
@@ -170,46 +170,56 @@ body {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
     border-radius: var(--radius-full);
-    padding: 0.875rem 2rem;
+    padding: 1rem 2.5rem;
     font-family: var(--font-body);
-    font-size: 0.8125rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    transition: background-color var(--transition-normal);
-    box-shadow: var(--shadow-soft);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
-  .btn-primary:hover {
+  .btn-primary:hover:not(:disabled) {
     background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
   }
-  .btn-primary:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 3px;
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   /* Outline Button */
   .btn-outline {
     background-color: transparent;
-    border: 1.5px solid var(--color-primary);
+    border: 1px solid var(--color-primary);
     color: var(--color-primary);
     border-radius: var(--radius-full);
-    padding: 0.875rem 2rem;
+    padding: 1rem 2.5rem;
     font-family: var(--font-body);
-    font-size: 0.8125rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    transition: all var(--transition-normal);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
-  .btn-outline:hover {
+  .btn-outline:hover:not(:disabled) {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-outline:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   /* Ghost Button (text with bottom border) */

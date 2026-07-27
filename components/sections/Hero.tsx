@@ -27,10 +27,11 @@ export function Hero() {
           className="object-cover object-center scale-[1.02] animate-image-drift"
           priority
           aria-hidden="true"
-          quality={90}
+          quality={100}
         />
-        {/* Gradient overlay — bottom heavy for elegant editorial look */}
-        <div className="absolute inset-0 bg-gradient-to-b from-text/10 via-text/30 to-text/70" />
+        {/* Subtle vignette for elegant editorial look, removing heavy gradients */}
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
       </div>
 
       {/* Content — centered editorial */}
@@ -85,12 +86,12 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.85 }}
-          className="flex flex-col sm:flex-row gap-5 items-center"
+          className="flex flex-col sm:flex-row gap-6 items-center mt-6"
         >
           <Link
             href="#featured-collections"
-            className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary-hover px-10 py-4 font-body text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 min-w-[220px]"
-            aria-label="Jelajahi koleksi AISCHMIRA"
+            className="btn-primary bg-surface text-text hover:bg-surface/90 w-full sm:w-auto"
+            aria-label="Explore AISCHMIRA Collections"
           >
             Explore Collection
           </Link>
@@ -98,8 +99,8 @@ export function Hero() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 border border-surface/40 text-surface px-10 py-4 font-body text-[11px] tracking-[0.2em] uppercase hover:bg-surface hover:text-text transition-all duration-300 min-w-[220px]"
-            aria-label="Belanja via WhatsApp"
+            className="btn-outline border-surface/40 text-surface hover:bg-surface hover:text-text w-full sm:w-auto"
+            aria-label="Shop via WhatsApp"
           >
             Shop via WhatsApp
           </a>

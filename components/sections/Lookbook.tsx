@@ -40,7 +40,7 @@ export function Lookbook() {
         </div>
 
         {/* Editorial Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 auto-rows-[320px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[400px]">
           {lookbookImages.map((img, index) => {
             let spanClass = "row-span-1";
             if (index === 0) spanClass = "md:col-span-2 lg:col-span-1 lg:row-span-2";
@@ -53,14 +53,14 @@ export function Lookbook() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
-                className={`relative w-full h-full overflow-hidden rounded-md shadow-sm group bg-surface ${spanClass}`}
+                className={`relative w-full h-full overflow-hidden shadow-sm group bg-surface ${spanClass}`}
               >
                 <Image
                   src={img.imageUrl}
                   alt={img.alt}
                   fill
-                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
-                  quality={85}
+                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.03]"
+                  quality={90}
                 />
                 {/* Subtle overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-text/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -73,7 +73,7 @@ export function Lookbook() {
         <div className="mt-20 flex justify-center">
           <Link
             href="/lookbook"
-            className="btn-outline px-10 py-3.5 text-[11px] tracking-[0.2em]"
+            className="btn-outline"
             aria-label="Lihat lookbook lengkap AISCHMIRA"
           >
             View Full Lookbook

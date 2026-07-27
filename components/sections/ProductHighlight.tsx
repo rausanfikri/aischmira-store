@@ -52,18 +52,18 @@ export function ProductHighlight() {
               className="group flex flex-col"
             >
               {/* Product Image */}
-              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-soft bg-primary-light mb-5">
+              <div className="relative w-full aspect-[2/3] overflow-hidden bg-primary-light mb-6">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
                   fill
-                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.02]"
-                  quality={85}
+                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.03]"
+                  quality={90}
                 />
 
-                {/* Best Seller Badge — gold accent */}
+                {/* Premium Badge */}
                 {product.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-3 py-1 text-[8px] tracking-[0.2em] uppercase font-body rounded-sm shadow-sm">
+                  <div className="absolute top-4 left-4 bg-surface text-text px-4 py-1.5 text-[9px] tracking-[0.25em] uppercase font-body shadow-sm">
                     Best Seller
                   </div>
                 )}
@@ -83,14 +83,14 @@ export function ProductHighlight() {
               </div>
 
               {/* Product Info */}
-              <div className="flex flex-col items-center text-center space-y-1.5 px-1">
-                <p className="font-body text-[9px] tracking-[0.2em] uppercase text-text-secondary">
+              <div className="flex flex-col items-center text-center space-y-2 px-1">
+                <p className="font-body text-[9px] tracking-[0.2em] uppercase text-text/50">
                   {product.categoryId}
                 </p>
-                <h3 className="font-heading text-lg sm:text-xl text-text tracking-wide leading-snug">
+                <h3 className="font-heading text-xl sm:text-2xl text-text tracking-wide font-light">
                   {product.name}
                 </h3>
-                <p className="font-body text-sm text-primary">
+                <p className="font-body text-sm text-text/70">
                   Rp {product.basePrice.toLocaleString("id-ID")}
                 </p>
               </div>
@@ -104,7 +104,7 @@ export function ProductHighlight() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline px-10 py-3.5 text-[11px] tracking-[0.2em]"
+            className="btn-outline"
             aria-label="Lihat semua produk AISCHMIRA via WhatsApp"
           >
             View All Products

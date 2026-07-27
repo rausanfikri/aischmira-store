@@ -69,31 +69,28 @@ export function FeaturedCollection() {
             >
               <Link
                 href="#"
-                className="relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-soft mb-8 block"
-                aria-label={`Lihat koleksi ${collection.name}`}
+                className="relative w-full aspect-[3/4] overflow-hidden mb-8 block"
+                aria-label={`View ${collection.name} collection`}
               >
                 <Image
                   src={collection.coverImage}
                   alt={collection.name}
                   fill
-                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.02]"
-                  quality={85}
+                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.03]"
+                  quality={90}
                 />
-                <div className="absolute inset-0 bg-text/0 group-hover:bg-text/10 transition-colors duration-700" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-700" />
               </Link>
 
               <h3 className="font-heading text-2xl tracking-[0.2em] text-text mb-3 uppercase">
                 {collection.name}
               </h3>
-              <p className="font-body text-[13px] text-text-secondary mb-5 px-4 line-clamp-2 leading-relaxed font-light">
+              <p className="font-body text-[13px] text-text-secondary mb-6 px-4 line-clamp-2 leading-relaxed font-light opacity-80 group-hover:opacity-100 transition-opacity duration-500">
                 {collection.description}
-              </p>
-              <p className="font-body text-[10px] text-primary tracking-[0.2em] uppercase mb-6">
-                12 Products
               </p>
               <Link
                 href="#"
-                className="inline-block border-b border-text text-text hover:text-primary hover:border-primary transition-colors duration-300 pb-1 font-body text-[10px] tracking-[0.2em] uppercase"
+                className="btn-ghost text-[10px] tracking-[0.2em]"
               >
                 Explore
               </Link>

@@ -62,27 +62,27 @@ export function BrandStory() {
 
             <Link
               href="/about"
-              className="inline-block border-b border-text text-text hover:text-primary hover:border-primary transition-colors duration-300 pb-1 font-body text-xs tracking-[0.2em] uppercase"
+              className="btn-ghost"
             >
               Discover More
             </Link>
           </motion.div>
 
           {/* Editorial Image Grid */}
-          <div className="relative h-[500px] sm:h-[700px] w-full max-w-4xl mx-auto">
+          <div className="relative h-[500px] sm:h-[800px] w-full max-w-5xl mx-auto mt-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-              className="absolute top-0 right-4 sm:right-12 w-[65%] sm:w-[60%] h-[80%] overflow-hidden bg-surface rounded-md shadow-sm"
+              className="absolute top-0 right-0 sm:right-12 w-[65%] sm:w-[60%] h-[80%] overflow-hidden bg-surface shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-1/800/1000"
                 alt="AISCHMIRA Editorial"
                 fill
-                className="object-cover hover:scale-[1.02] transition-transform duration-[2s] ease-out"
-                quality={85}
+                className="object-cover hover:scale-[1.03] transition-transform duration-[2s] ease-out"
+                quality={90}
               />
             </motion.div>
 
@@ -91,14 +91,14 @@ export function BrandStory() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-              className="absolute bottom-0 left-4 sm:left-12 w-[50%] h-[60%] overflow-hidden bg-surface border-4 border-background rounded-md shadow-sm"
+              className="absolute bottom-0 left-0 sm:left-12 w-[50%] h-[60%] overflow-hidden bg-surface border-4 border-background shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-2/800/800"
                 alt="AISCHMIRA Details"
                 fill
-                className="object-cover hover:scale-[1.02] transition-transform duration-[2s] ease-out"
-                quality={85}
+                className="object-cover hover:scale-[1.03] transition-transform duration-[2s] ease-out"
+                quality={90}
               />
             </motion.div>
 
