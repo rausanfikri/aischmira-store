@@ -9,8 +9,6 @@ import { navigationData } from "@/data/navigation";
 import { socialMediaLinks } from "@/data/socials";
 import { motion, AnimatePresence } from "framer-motion";
 
-const WHATSAPP_URL =
-  "https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website.";
 
 function LogoMark({ className }: { className?: string }) {
   return (
@@ -44,7 +42,7 @@ function NavLogo({ inverted = false }: { inverted?: boolean }) {
         height={72}
         className={cn(
           "object-contain w-auto",
-          inverted ? "h-12 brightness-0 invert" : "h-12 sm:h-14 lg:h-[72px]"
+          inverted ? "h-14 brightness-0 invert" : "h-14 sm:h-[64px] lg:h-[100px]"
         )}
         priority
         onError={() => setImgError(true)}
@@ -81,7 +79,7 @@ export function Navbar() {
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-20 sm:h-24 items-center justify-between">
+          <div className="flex h-[80px] lg:h-[120px] items-center justify-between">
 
             {/* Left Nav (Desktop) */}
             <nav className="hidden lg:flex items-center gap-8 flex-1" aria-label="Navigasi Kiri">
@@ -124,17 +122,6 @@ export function Navbar() {
                   </Link>
                 ))}
               </nav>
-
-              {/* WhatsApp CTA (desktop) */}
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Hubungi AISCHMIRA via WhatsApp"
-                className="hidden md:flex items-center justify-center border-b border-text text-text hover:text-primary hover:border-primary pb-1 transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase"
-              >
-                WhatsApp
-              </a>
 
               {/* Mobile menu toggle */}
               <button
@@ -193,16 +180,6 @@ export function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full flex items-center justify-center bg-text text-surface py-4 text-[11px] tracking-[0.2em] uppercase font-body hover:bg-primary rounded-full transition-colors"
-                >
-                  Shop via WhatsApp
-                </a>
-                
                 {/* Mobile Socials */}
                 <div className="mt-10 border-t border-border/50 pt-8">
                   <p className="font-body text-[10px] tracking-[0.2em] uppercase text-text/40 mb-6 text-center">
