@@ -59,7 +59,7 @@ export function Lookbook() {
                   src={img.imageUrl}
                   alt={img.alt}
                   fill
-                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
                   quality={85}
                 />
                 {/* Subtle overlay on hover */}

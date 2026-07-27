@@ -114,7 +114,7 @@ body {
 
   p {
     font-family: var(--font-body);
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   /* Focus states for accessibility */
@@ -131,9 +131,9 @@ body {
   .text-h2 { font-family: var(--font-heading); font-size: 2.5rem;  line-height: 1.2; letter-spacing: -0.01em; }
   .text-h3 { font-family: var(--font-heading); font-size: 1.875rem; line-height: 1.3; }
   .text-h4 { font-family: var(--font-heading); font-size: 1.5rem;  line-height: 1.4; }
-  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.7; }
-  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.7; }
-  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.6; }
+  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.8; }
+  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.8; }
+  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.7; }
 
   .text-editorial {
     font-family: var(--font-heading);
@@ -141,21 +141,21 @@ body {
     font-weight: 300;
   }
 
-  /* Section vertical padding — Desktop: 160px, Tablet: 128px, Mobile: 96px */
+  /* Section vertical padding — Desktop: 144px, Tablet: 96px, Mobile: 64px */
   .section-padding {
-    padding-top: 6rem;      /* 96px mobile */
-    padding-bottom: 6rem;
+    padding-top: 4rem;      /* 64px mobile */
+    padding-bottom: 4rem;
   }
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 8rem;    /* 128px tablet */
-      padding-bottom: 8rem;
+      padding-top: 6rem;    /* 96px tablet */
+      padding-bottom: 6rem;
     }
   }
   @media (min-width: 1024px) {
     .section-padding {
-      padding-top: 10rem;   /* 160px desktop */
-      padding-bottom: 10rem;
+      padding-top: 9rem;   /* 144px desktop */
+      padding-bottom: 9rem;
     }
   }
 
@@ -169,7 +169,7 @@ body {
   .btn-primary {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-full);
     padding: 0.875rem 2rem;
     font-family: var(--font-body);
     font-size: 0.8125rem;
@@ -195,7 +195,7 @@ body {
     background-color: transparent;
     border: 1.5px solid var(--color-primary);
     color: var(--color-primary);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-full);
     padding: 0.875rem 2rem;
     font-family: var(--font-body);
     font-size: 0.8125rem;

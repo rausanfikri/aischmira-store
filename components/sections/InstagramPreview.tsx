@@ -67,7 +67,7 @@ export function InstagramPreview() {
                   src={img.imageUrl}
                   alt={img.alt}
                   fill
-                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
                   quality={85}
                 />
                 <div className="absolute inset-0 bg-text/0 group-hover:bg-text/40 transition-colors duration-500 flex items-center justify-center">

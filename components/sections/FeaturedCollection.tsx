@@ -76,7 +76,7 @@ export function FeaturedCollection() {
                   src={collection.coverImage}
                   alt={collection.name}
                   fill
-                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.02]"
                   quality={85}
                 />
                 <div className="absolute inset-0 bg-text/0 group-hover:bg-text/10 transition-colors duration-700" />

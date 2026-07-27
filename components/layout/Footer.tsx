@@ -27,9 +27,9 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt="AISCHMIRA"
-                width={180}
-                height={50}
-                className="object-contain h-10 w-auto opacity-90"
+                width={360}
+                height={100}
+                className="object-contain h-20 sm:h-[100px] w-auto opacity-90"
                 onError={() => setImgError(true)}
               />
             )}

@@ -40,11 +40,11 @@ function NavLogo({ inverted = false }: { inverted?: boolean }) {
       <Image
         src="/logo.png"
         alt="AISCHMIRA"
-        width={160}
-        height={44}
+        width={260}
+        height={72}
         className={cn(
           "object-contain w-auto",
-          inverted ? "h-9 brightness-0 invert" : "h-9 sm:h-10"
+          inverted ? "h-12 brightness-0 invert" : "h-12 sm:h-14 lg:h-[72px]"
         )}
         priority
         onError={() => setImgError(true)}
@@ -81,7 +81,7 @@ export function Navbar() {
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 md:h-24 items-center justify-between">
+          <div className="flex h-20 sm:h-24 items-center justify-between">
 
             {/* Left Nav (Desktop) */}
             <nav className="hidden lg:flex items-center gap-8 flex-1" aria-label="Navigasi Kiri">
@@ -198,7 +198,7 @@ export function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full flex items-center justify-center bg-text text-surface py-4 text-[11px] tracking-[0.2em] uppercase font-body hover:bg-primary transition-colors"
+                  className="w-full flex items-center justify-center bg-text text-surface py-4 text-[11px] tracking-[0.2em] uppercase font-body hover:bg-primary rounded-full transition-colors"
                 >
                   Shop via WhatsApp
                 </a>

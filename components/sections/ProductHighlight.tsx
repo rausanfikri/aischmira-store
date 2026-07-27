@@ -57,7 +57,7 @@ export function ProductHighlight() {
                   src={product.images[0]}
                   alt={product.name}
                   fill
-                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.02]"
                   quality={85}
                 />
 

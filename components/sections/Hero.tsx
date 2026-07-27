@@ -24,7 +24,7 @@ export function Hero() {
           src="https://picsum.photos/seed/aischmira-hero-2/1920/1080"
           alt=""
           fill
-          className="object-cover object-center scale-105 animate-image-drift"
+          className="object-cover object-center scale-[1.02] animate-image-drift"
           priority
           aria-hidden="true"
           quality={90}

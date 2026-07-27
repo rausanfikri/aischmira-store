@@ -81,7 +81,7 @@ export function BrandStory() {
                 src="https://picsum.photos/seed/aischmira-story-1/800/1000"
                 alt="AISCHMIRA Editorial"
                 fill
-                className="object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
+                className="object-cover hover:scale-[1.02] transition-transform duration-[2s] ease-out"
                 quality={85}
               />
             </motion.div>
@@ -97,7 +97,7 @@ export function BrandStory() {
                 src="https://picsum.photos/seed/aischmira-story-2/800/800"
                 alt="AISCHMIRA Details"
                 fill
-                className="object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
+                className="object-cover hover:scale-[1.02] transition-transform duration-[2s] ease-out"
                 quality={85}
               />
             </motion.div>
