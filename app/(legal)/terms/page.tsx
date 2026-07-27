@@ -17,7 +17,7 @@ export default function TermsPage() {
 
         <div className="prose prose-sm md:prose-base prose-neutral max-w-none font-body font-light text-text/80 leading-loose prose-headings:font-heading prose-headings:not-italic prose-headings:font-normal prose-headings:text-text prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
           <p>
-            This website is operated by AISCHMIRA. Throughout the site, the terms "we", "us" and "our" refer to AISCHMIRA. AISCHMIRA offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.
+            This website is operated by AISCHMIRA. Throughout the site, the terms &quot;we&quot;, &quot;us&quot; and &quot;our&quot; refer to AISCHMIRA. AISCHMIRA offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.
           </p>
           
           <h3>1. Online Store Terms</h3>

@@ -1,4 +1,8 @@
-export function getWhatsAppCheckoutUrl(cartItems: any[]) {
+import { CartItem, Product, Variant } from "@/types";
+
+type CartItemWithDetails = CartItem & { product: Product; variant: Variant };
+
+export function getWhatsAppCheckoutUrl(cartItems: CartItemWithDetails[]) {
   const WHATSAPP_NUMBER = "6285121344848"; // From user requirements
 
   let message = "Hello AISCHMIRA, I would like to place an order:\n\n";

@@ -23,7 +23,8 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     if (cartItemsWithDetails.length === 0) return;
-    const url = getWhatsAppCheckoutUrl(cartItemsWithDetails as any); // Casting as any to bypass strict type check for now
+    // We already filtered items without product or variant above, so we can safely cast to the combined type.
+    const url = getWhatsAppCheckoutUrl(cartItemsWithDetails as (typeof cartItemsWithDetails[0] & { product: NonNullable<typeof cartItemsWithDetails[0]['product']>; variant: NonNullable<typeof cartItemsWithDetails[0]['variant']> })[]);
     window.open(url, "_blank");
   };
 

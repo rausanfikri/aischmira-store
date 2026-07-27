@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from "next";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 

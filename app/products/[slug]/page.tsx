@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { productsData } from "@/data/products";
 import { Metadata } from "next";

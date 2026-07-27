@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-sm md:prose-base prose-neutral max-w-none font-body font-light text-text/80 leading-loose prose-headings:font-heading prose-headings:not-italic prose-headings:font-normal prose-headings:text-text prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
           <p>
-            AISCHMIRA ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by AISCHMIRA when you visit or make a purchase from our website.
+            AISCHMIRA (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by AISCHMIRA when you visit or make a purchase from our website.
           </p>
           
           <h3>1. Information We Collect</h3>
@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
             When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site.
           </p>
           <p>
-            When you make a purchase or attempt to make a purchase through the Site, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit card numbers), email address, and phone number. We refer to this information as "Order Information".
+            When you make a purchase or attempt to make a purchase through the Site, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit card numbers), email address, and phone number. We refer to this information as &quot;Order Information&quot;.
           </p>
 
           <h3>2. How We Use Your Personal Information</h3>
