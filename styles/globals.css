@@ -86,12 +86,59 @@
   --breakpoint-desktop: 1024px;
   --breakpoint-wide:    1280px;
 
-  /* === ANIMATIONS === */
+  /* === ANIMATIONS & DURATIONS === */
   --animate-image-drift: image-drift 30s linear infinite alternate;
+  
+  /* Radix UI Menu Animations */
+  --animate-scaleIn: scaleIn 200ms ease;
+  --animate-scaleOut: scaleOut 200ms ease;
+  --animate-fadeIn: fadeIn 200ms ease;
+  --animate-fadeOut: fadeOut 200ms ease;
+  --animate-enterFromLeft: enterFromLeft 250ms ease;
+  --animate-enterFromRight: enterFromRight 250ms ease;
+  --animate-exitToLeft: exitToLeft 250ms ease;
+  --animate-exitToRight: exitToRight 250ms ease;
+
+  --transition-duration-fast: 0.2s;
+  --transition-duration-normal: 0.4s;
+  --transition-duration-slow: 0.8s;
+  --transition-duration-slower: 1.5s;
+  --transition-duration-slowest: 2s;
+
+  /* === TRACKING / LETTER SPACING === */
+  --tracking-wide: 0.1em;
+  --tracking-wider: 0.2em;
+  --tracking-widest: 0.3em;
+  --tracking-editorial: 0.4em;
 
   @keyframes image-drift {
     0% { transform: scale(1.05) translate(0, 0); }
     100% { transform: scale(1.15) translate(-1.5%, 1.5%); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: rotateX(-10deg) scale(0.9); }
+    to { opacity: 1; transform: rotateX(0deg) scale(1); }
+  }
+  @keyframes scaleOut {
+    from { opacity: 1; transform: rotateX(0deg) scale(1); }
+    to { opacity: 0; transform: rotateX(-10deg) scale(0.95); }
+  }
+  @keyframes enterFromRight {
+    from { opacity: 0; transform: translateX(200px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes enterFromLeft {
+    from { opacity: 0; transform: translateX(-200px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes exitToRight {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(200px); }
+  }
+  @keyframes exitToLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-200px); }
   }
 }
 

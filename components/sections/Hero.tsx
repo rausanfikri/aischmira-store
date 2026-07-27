@@ -19,19 +19,20 @@ export function Hero() {
       aria-label="Hero — AISCHMIRA"
     >
       {/* Background Image */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0">
         <Image
-          src="https://picsum.photos/seed/aischmira-hero-2/1920/1080"
+          src="/images/hero/hero-bg.png"
           alt=""
           fill
           className="object-cover object-center scale-[1.02] animate-image-drift"
           priority
+          fetchPriority="high"
           aria-hidden="true"
           quality={100}
         />
-        {/* Subtle vignette for elegant editorial look, removing heavy gradients */}
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+        {/* Subtle vignette for elegant editorial look, using a warmer dark (#2A2520) */}
+        <div className="absolute inset-0 bg-[#2A2520]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1A17]/50 via-transparent to-[#1F1A17]/10" />
       </div>
 
       {/* Content — centered editorial */}

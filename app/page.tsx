@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { EditorialBridge } from "@/components/sections/EditorialBridge";
 import { FeaturedCollection } from "@/components/sections/FeaturedCollection";
 import { ProductHighlight } from "@/components/sections/ProductHighlight";
 import { BrandStory } from "@/components/sections/BrandStory";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <EditorialBridge />
       <FeaturedCollection />
       <ProductHighlight />
       <BrandStory />
