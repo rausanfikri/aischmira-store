@@ -22,10 +22,16 @@ export interface Product {
   slug: string;
   categoryId: string;
   collectionId?: string;
+  sku: string;
   description: string;
+  story?: string;
+  material?: string;
+  careInstruction?: string;
+  shippingInfo?: string;
   basePrice: number;
   variants: Variant[];
   images: string[]; // General product images
+  relatedProductIds?: string[];
   isFeatured?: boolean;
   createdAt: string;
   updatedAt: string;
