@@ -21,7 +21,7 @@ export function ProductHighlight() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text font-light tracking-[0.1em] uppercase mb-6"
           >
-            Best Collection
+            New Arrival
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -52,7 +52,7 @@ export function ProductHighlight() {
               className="group flex flex-col"
             >
               {/* Product Image */}
-              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-none bg-primary-light mb-5">
+              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-soft bg-primary-light mb-5">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -63,7 +63,7 @@ export function ProductHighlight() {
 
                 {/* Best Seller Badge — gold accent */}
                 {product.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-3 py-1 text-[8px] tracking-[0.2em] uppercase font-body rounded-none shadow-sm">
+                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-3 py-1 text-[8px] tracking-[0.2em] uppercase font-body rounded-sm shadow-sm">
                     Best Seller
                   </div>
                 )}

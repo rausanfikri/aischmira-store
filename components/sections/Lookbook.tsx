@@ -53,7 +53,7 @@ export function Lookbook() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
-                className={`relative w-full h-full overflow-hidden rounded-none group bg-surface ${spanClass}`}
+                className={`relative w-full h-full overflow-hidden rounded-md shadow-sm group bg-surface ${spanClass}`}
               >
                 <Image
                   src={img.imageUrl}

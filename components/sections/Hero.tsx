@@ -53,11 +53,11 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.35 }}
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.1] tracking-wide mb-8 uppercase"
+          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.1] tracking-wide mb-8"
         >
-          Effortlessly
+          Crafted to comfort.
           <br />
-          <span className="italic text-surface/90 lowercase tracking-normal">classy & elegance.</span>
+          <span className="italic text-surface/90">Designed to stand out.</span>
         </motion.h1>
 
         {/* Divider */}
@@ -76,7 +76,7 @@ export function Hero() {
           transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.7 }}
           className="font-body text-sm sm:text-base text-surface/80 font-light tracking-widest max-w-xl mb-12 uppercase"
         >
-          Discover your perfect pair today
+          Elegance in every curve and every moment.
         </motion.p>
 
         {/* CTAs */}

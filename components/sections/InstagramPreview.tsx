@@ -61,7 +61,7 @@ export function InstagramPreview() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Lihat postingan Instagram ${img.alt}`}
-                className="group relative w-full aspect-square block overflow-hidden rounded-none"
+                className="group relative w-full aspect-square block overflow-hidden rounded-md shadow-sm"
               >
                 <Image
                   src={img.imageUrl}

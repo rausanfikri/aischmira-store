@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigationData } from "@/data/navigation";
 import { socialMediaLinks } from "@/data/socials";
@@ -74,71 +74,56 @@ export function Navbar() {
         className={cn(
           "fixed left-0 right-0 z-40 transition-all duration-300",
           scrolled
-            ? "bg-surface/95 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
-            : "bg-surface/90 backdrop-blur-sm"
+            ? "bg-background/95 backdrop-blur-md shadow-sm"
+            : "bg-transparent"
         )}
         style={{ top: "40px" }}
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 md:h-20 items-center justify-between gap-6">
+          <div className="flex h-16 md:h-24 items-center justify-between">
 
-            {/* Logo */}
-            <Link
-              href="/"
-              className="relative shrink-0 flex items-center"
-              aria-label="AISCHMIRA — Kembali ke Beranda"
-            >
-              <NavLogo />
-            </Link>
-
-            {/* Desktop Nav */}
-            <nav
-              className="hidden lg:flex items-center gap-8 flex-1 justify-center"
-              aria-label="Navigasi utama"
-            >
-              {navigationData.mainNav.map((item) => (
+            {/* Left Nav (Desktop) */}
+            <nav className="hidden lg:flex items-center gap-8 flex-1" aria-label="Navigasi Kiri">
+              {[
+                { label: "Collection", href: "#featured-collections" },
+                { label: "Lookbook", href: "/lookbook" },
+                { label: "Journal", href: "/journal" },
+              ].map((item) => (
                 <Link
-                  key={item.href}
+                  key={item.label}
                   href={item.href}
-                  className="font-body text-[11px] tracking-[0.2em] uppercase text-text/70 hover:text-text transition-colors duration-200 relative group py-2"
+                  className="font-body text-[11px] tracking-[0.2em] uppercase text-text/80 hover:text-primary transition-colors duration-200"
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
             </nav>
 
-            {/* Right: Social Icons + Utility + Mobile Toggle */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              {/* Desktop Socials — limited: show only top 4 */}
-              <div className="hidden xl:flex items-center gap-1 border-r border-border pr-3 mr-1">
-                {socialMediaLinks.slice(0, 4).map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.ariaLabel}
-                      title={social.name}
-                      className="h-9 w-9 flex items-center justify-center text-text/40 hover:text-text transition-colors duration-200 rounded-full hover:bg-black/5"
-                    >
-                      <Icon size={14} strokeWidth={1.5} />
-                    </a>
-                  );
-                })}
-              </div>
-
-              {/* Search */}
-              <Link
-                href="/search"
-                aria-label="Cari produk"
-                className="hidden sm:flex h-10 w-10 items-center justify-center text-text/60 hover:text-text transition-colors rounded-full hover:bg-black/5"
-              >
-                <Search size={18} strokeWidth={1.25} />
+            {/* Center Logo */}
+            <div className="flex-1 lg:flex-none flex justify-start lg:justify-center">
+              <Link href="/" className="relative" aria-label="AISCHMIRA — Kembali ke Beranda">
+                <NavLogo />
               </Link>
+            </div>
+
+            {/* Right Nav & Utilities */}
+            <div className="flex items-center justify-end gap-6 flex-1">
+              {/* Desktop Right Nav */}
+              <nav className="hidden lg:flex items-center gap-8" aria-label="Navigasi Kanan">
+                {[
+                  { label: "About", href: "/about" },
+                  { label: "Contact", href: "/contact" },
+                ].map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="font-body text-[11px] tracking-[0.2em] uppercase text-text/80 hover:text-primary transition-colors duration-200"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
 
               {/* WhatsApp CTA (desktop) */}
               <a
@@ -146,9 +131,9 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Hubungi AISCHMIRA via WhatsApp"
-                className="hidden md:flex items-center gap-2 bg-text text-surface rounded-none px-5 py-2.5 text-[10px] font-body tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ml-2"
+                className="hidden md:flex items-center justify-center border-b border-text text-text hover:text-primary hover:border-primary pb-1 transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase"
               >
-                Shop Now
+                WhatsApp
               </a>
 
               {/* Mobile menu toggle */}
@@ -157,11 +142,12 @@ export function Navbar() {
                 aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
                 aria-expanded={mobileOpen}
                 aria-controls="mobile-menu"
-                className="lg:hidden flex h-10 w-10 items-center justify-center text-text/80 hover:text-text transition-colors rounded-full hover:bg-black/5 z-50 relative"
+                className="lg:hidden flex h-10 w-10 items-center justify-center text-text/80 hover:text-text transition-colors rounded-full hover:bg-black/5 z-50 relative -mr-2"
               >
                 {mobileOpen ? <X size={22} strokeWidth={1.25} /> : <Menu size={22} strokeWidth={1.25} />}
               </button>
             </div>
+
           </div>
         </div>
       </header>

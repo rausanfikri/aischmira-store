@@ -69,7 +69,7 @@ export function FeaturedCollection() {
             >
               <Link
                 href="#"
-                className="relative w-full aspect-[3/4] overflow-hidden rounded-none mb-8 block"
+                className="relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-soft mb-8 block"
                 aria-label={`Lihat koleksi ${collection.name}`}
               >
                 <Image

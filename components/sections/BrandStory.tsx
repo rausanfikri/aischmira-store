@@ -75,7 +75,7 @@ export function BrandStory() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-              className="absolute top-0 right-0 w-[75%] h-[80%] overflow-hidden bg-surface"
+              className="absolute top-0 right-0 w-[75%] h-[80%] overflow-hidden bg-surface rounded-md shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-1/800/1000"
@@ -91,7 +91,7 @@ export function BrandStory() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-              className="absolute bottom-0 left-0 w-[55%] h-[60%] overflow-hidden bg-surface border-4 border-background"
+              className="absolute bottom-0 left-0 w-[55%] h-[60%] overflow-hidden bg-surface border-4 border-background rounded-md shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-2/800/800"
