@@ -38,16 +38,16 @@ export function BrandStory() {
           />
         </div>
 
-        {/* Content — centered editorial text + side images on large screens */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        {/* Content — centered editorial text + stacked images */}
+        <div className="flex flex-col items-center w-full">
 
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1"
+            className="flex flex-col items-center text-center mb-16 sm:mb-24"
           >
             <p className="font-body text-base sm:text-lg text-text-secondary leading-[2.2] mb-6 max-w-xl font-light">
               AISCHMIRA adalah brand fashion wanita yang menghadirkan busana
@@ -69,13 +69,13 @@ export function BrandStory() {
           </motion.div>
 
           {/* Editorial Image Grid */}
-          <div className="relative h-[600px] sm:h-[700px] w-full order-1 lg:order-2">
+          <div className="relative h-[500px] sm:h-[700px] w-full max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-              className="absolute top-0 right-0 w-[75%] h-[80%] overflow-hidden bg-surface rounded-md shadow-sm"
+              className="absolute top-0 right-4 sm:right-12 w-[65%] sm:w-[60%] h-[80%] overflow-hidden bg-surface rounded-md shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-1/800/1000"
@@ -91,7 +91,7 @@ export function BrandStory() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-              className="absolute bottom-0 left-0 w-[55%] h-[60%] overflow-hidden bg-surface border-4 border-background rounded-md shadow-sm"
+              className="absolute bottom-0 left-4 sm:left-12 w-[50%] h-[60%] overflow-hidden bg-surface border-4 border-background rounded-md shadow-sm"
             >
               <Image
                 src="https://picsum.photos/seed/aischmira-story-2/800/800"
@@ -108,7 +108,7 @@ export function BrandStory() {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 1, type: "spring" }}
-              className="absolute top-[68%] right-[24%] w-2.5 h-2.5 rounded-full bg-accent z-30" 
+              className="absolute top-[68%] right-[32%] sm:right-[38%] w-2.5 h-2.5 rounded-full bg-accent z-30" 
             />
           </div>
         </div>
