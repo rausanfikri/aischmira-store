@@ -3,24 +3,21 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaWhatsapp } from "react-icons/fa6";
 import { socialMediaLinks } from "@/data/socials";
 
 export function Footer() {
-  const WHATSAPP_URL =
-    "https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website.";
-
+  const WHATSAPP_URL = "https://wa.me/6285121344848";
   const [imgError, setImgError] = React.useState(false);
 
   return (
-    <footer className="bg-background text-text border-t border-border pt-20 pb-10 sm:pt-32 sm:pb-16" role="contentinfo">
-      <div className="mx-auto max-w-[700px] px-4 flex flex-col items-center text-center">
+    <footer className="bg-background text-text border-t border-border pt-24 pb-12 sm:pt-32 sm:pb-16" role="contentinfo">
+      <div className="mx-auto max-w-7xl px-8 lg:px-12">
         
-        {/* Logo & Tagline */}
-        <div className="mb-16 flex flex-col items-center">
+        {/* Top: Logo & Tagline */}
+        <div className="flex flex-col items-center text-center mb-20 sm:mb-28">
           <Link href="/" className="block mb-10" aria-label="AISCHMIRA Home">
             {imgError ? (
-              <span className="font-heading text-2xl sm:text-3xl tracking-[0.3em] uppercase text-text" aria-hidden="true">
+              <span className="font-heading text-3xl tracking-[0.3em] uppercase text-text" aria-hidden="true">
                 AISCHMIRA
               </span>
             ) : (
@@ -29,102 +26,81 @@ export function Footer() {
                 alt="AISCHMIRA"
                 width={400}
                 height={120}
-                className="object-contain h-[80px] sm:h-[120px] w-auto opacity-90"
+                className="object-contain h-[100px] sm:h-[120px] w-auto opacity-90"
                 onError={() => setImgError(true)}
               />
             )}
           </Link>
           <h3 className="font-heading text-2xl sm:text-3xl font-light tracking-wide mb-4">
-            Crafted to comfort.<br />
-            <span className="italic">Designed to stand out.</span>
+            Crafted to comfort.<br className="hidden sm:block" />
+            <span className="italic sm:ml-2">Designed to stand out.</span>
           </h3>
-          <p className="font-body text-sm text-text-secondary tracking-widest uppercase max-w-sm font-light">
+          <p className="font-body text-sm text-text/60 tracking-widest uppercase font-light mt-4">
             Elegance in every curve and every moment.
           </p>
         </div>
 
-        <div className="w-16 h-px bg-border mb-16" />
-
-        {/* Navigation */}
-        <nav className="mb-16 w-full" aria-label="Footer Navigation">
-          <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4">
-            {[
-              { label: "Collection", href: "/collections" },
-              { label: "Lookbook", href: "/lookbook" },
-              { label: "Journal", href: "/journal" },
-              { label: "About", href: "/about" },
-              { label: "Contact", href: "/contact" }
-            ].map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="font-body text-[11px] tracking-[0.2em] uppercase text-text-secondary hover:text-primary transition-colors duration-200"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="w-16 h-px bg-border mb-16" />
-
-        {/* Follow Us */}
-        <div className="mb-16 flex flex-col items-center">
-          <p className="font-body text-[10px] tracking-[0.2em] uppercase text-text-secondary mb-8">
-            Follow Us
-          </p>
-          <div className="flex justify-center gap-6">
-            {socialMediaLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.ariaLabel}
-                  title={social.name}
-                  className="text-text-secondary hover:text-primary transition-colors duration-300 flex flex-col items-center gap-2"
-                >
-                  <Icon size={20} strokeWidth={1.5} />
-                  <span className="font-body text-[9px] tracking-[0.1em] uppercase hidden sm:block">
-                    {social.name}
-                  </span>
-                </a>
-              );
-            })}
+        {/* Middle: 4 Column Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16 mb-24 sm:mb-32">
+          
+          {/* Column 1: Collections */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/40 mb-8">Collections</h4>
+            <ul className="flex flex-col gap-5 font-body text-[11px] tracking-[0.2em] uppercase text-text/80">
+              <li><Link href="#" className="hover:text-primary transition-colors">FEMME</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">HER</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">SHE</Link></li>
+            </ul>
           </div>
+
+          {/* Column 2: Company */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/40 mb-8">Company</h4>
+            <ul className="flex flex-col gap-5 font-body text-[11px] tracking-[0.2em] uppercase text-text/80">
+              <li><Link href="/about" className="hover:text-primary transition-colors">About</Link></li>
+              <li><Link href="/journal" className="hover:text-primary transition-colors">Journal</Link></li>
+              <li><Link href="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Contact */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/40 mb-8">Contact</h4>
+            <ul className="flex flex-col gap-5 font-body text-[11px] tracking-[0.2em] uppercase text-text/80">
+              <li>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a href="mailto:hello@aischmira.store" className="hover:text-primary transition-colors lowercase tracking-wide normal-case text-sm">
+                  hello@aischmira.store
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Follow Us */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="font-body text-[10px] tracking-[0.2em] uppercase text-text/40 mb-8">Follow Us</h4>
+            <ul className="flex flex-col gap-5 font-body text-[11px] tracking-[0.2em] uppercase text-text/80">
+              {socialMediaLinks.map(social => (
+                <li key={social.name}>
+                  <a href={social.href} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors flex items-center gap-3 justify-center sm:justify-start">
+                    <social.icon size={16} strokeWidth={1.5} />
+                    <span>{social.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
 
-        <div className="w-16 h-px bg-border mb-16" />
-
-        {/* Contact */}
-        <div className="mb-20 flex flex-col items-center space-y-6">
-          <p className="font-body text-[10px] tracking-[0.2em] uppercase text-text-secondary">
-            Contact
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 font-heading text-xl sm:text-2xl text-text hover:text-primary transition-colors tracking-widest"
-          >
-            <FaWhatsapp size={20} className="text-primary" />
-            +62 851-2134-4848
-          </a>
-          <a
-            href="mailto:hello@aischmira.store"
-            className="font-body text-sm text-text-secondary hover:text-primary transition-colors font-light tracking-wide"
-          >
-            hello@aischmira.store
-          </a>
-        </div>
-
-        {/* Copyright */}
-        <div className="w-full flex flex-col items-center text-center gap-4">
-          <p className="font-body text-xs text-text-secondary/60 tracking-widest uppercase">
-            © 2026 AISCHMIRA. All Rights Reserved.
+        {/* Bottom: Copyright */}
+        <div className="w-full flex flex-col items-center text-center border-t border-border/50 pt-12">
+          <p className="font-body text-[10px] text-text/40 tracking-[0.2em] uppercase">
+            © 2026 AISCHMIRA
           </p>
         </div>
 
