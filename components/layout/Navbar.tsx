@@ -81,7 +81,7 @@ export function Navbar() {
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between gap-6">
+          <div className="flex h-16 md:h-20 items-center justify-between gap-6">
 
             {/* Logo */}
             <Link

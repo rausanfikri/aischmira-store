@@ -61,7 +61,7 @@ export function InstagramPreview() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Lihat postingan Instagram ${img.alt}`}
-                className="group relative w-full aspect-square block overflow-hidden rounded-none shadow-sm"
+                className="group relative w-full aspect-square block overflow-hidden rounded-none"
               >
                 <Image
                   src={img.imageUrl}
@@ -71,7 +71,7 @@ export function InstagramPreview() {
                   quality={85}
                 />
                 <div className="absolute inset-0 bg-text/0 group-hover:bg-text/40 transition-colors duration-500 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 text-surface font-body text-[10px] tracking-[0.2em] uppercase transition-opacity duration-500 flex items-center gap-2 border border-surface/40 px-4 py-2 rounded-sm backdrop-blur-sm">
+                  <span className="opacity-0 group-hover:opacity-100 text-surface font-body text-[10px] tracking-[0.2em] uppercase transition-opacity duration-500 flex items-center gap-2 border border-surface/40 px-4 py-2 rounded-none backdrop-blur-sm">
                     <FaInstagram size={12} />
                     View
                   </span>

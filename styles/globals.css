@@ -141,21 +141,21 @@ body {
     font-weight: 300;
   }
 
-  /* Section vertical padding — Desktop: 120px, Tablet: 96px, Mobile: 72px */
+  /* Section vertical padding — Desktop: 160px, Tablet: 128px, Mobile: 96px */
   .section-padding {
-    padding-top: 4.5rem;    /* 72px mobile */
-    padding-bottom: 4.5rem;
+    padding-top: 6rem;      /* 96px mobile */
+    padding-bottom: 6rem;
   }
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 6rem;    /* 96px tablet */
-      padding-bottom: 6rem;
+      padding-top: 8rem;    /* 128px tablet */
+      padding-bottom: 8rem;
     }
   }
   @media (min-width: 1024px) {
     .section-padding {
-      padding-top: 7.5rem;  /* 120px desktop */
-      padding-bottom: 7.5rem;
+      padding-top: 10rem;   /* 160px desktop */
+      padding-bottom: 10rem;
     }
   }
 

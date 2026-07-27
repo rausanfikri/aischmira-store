@@ -42,7 +42,7 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.2 }}
-          className="font-body text-[9px] tracking-[0.3em] uppercase text-surface/80 mb-8 block"
+          className="font-body text-[10px] tracking-[0.4em] uppercase text-surface/80 mb-8 block"
         >
           New Collection — 2025
         </motion.span>
@@ -53,11 +53,11 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.35 }}
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.05] tracking-tight mb-8"
+          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.1] tracking-wide mb-8 uppercase"
         >
-          Crafted for comfort,
+          Effortlessly
           <br />
-          <span className="italic text-surface/90">Designed to stand out.</span>
+          <span className="italic text-surface/90 lowercase tracking-normal">classy & elegance.</span>
         </motion.h1>
 
         {/* Divider */}
@@ -65,7 +65,7 @@ export function Hero() {
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
-          className="w-16 h-px bg-accent mb-8 origin-center"
+          className="w-20 h-px bg-accent mb-8 origin-center"
         />
 
         {/* Subheadline */}
@@ -74,9 +74,9 @@ export function Hero() {
           animate="animate"
           initial="initial"
           transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.7 }}
-          className="font-body text-sm sm:text-base text-surface/80 font-light tracking-wide max-w-xl mb-12"
+          className="font-body text-sm sm:text-base text-surface/80 font-light tracking-widest max-w-xl mb-12 uppercase"
         >
-          Elegance in every curve and every moment.
+          Discover your perfect pair today
         </motion.p>
 
         {/* CTAs */}

@@ -93,7 +93,7 @@ export function FeaturedCollection() {
               </p>
               <Link
                 href="#"
-                className="btn-ghost text-text hover:text-primary transition-colors duration-300 pb-1"
+                className="inline-block border-b border-text text-text hover:text-primary hover:border-primary transition-colors duration-300 pb-1 font-body text-[10px] tracking-[0.2em] uppercase"
               >
                 Explore
               </Link>

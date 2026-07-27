@@ -52,7 +52,7 @@ export function ProductHighlight() {
               className="group flex flex-col"
             >
               {/* Product Image */}
-              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-sm bg-primary-light mb-5">
+              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-none bg-primary-light mb-5">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -63,7 +63,7 @@ export function ProductHighlight() {
 
                 {/* Best Seller Badge — gold accent */}
                 {product.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-3 py-1 text-[8px] tracking-[0.2em] uppercase font-body rounded-sm shadow-sm">
+                  <div className="absolute top-3 left-3 bg-accent text-primary-foreground px-3 py-1 text-[8px] tracking-[0.2em] uppercase font-body rounded-none shadow-sm">
                     Best Seller
                   </div>
                 )}
@@ -75,7 +75,7 @@ export function ProductHighlight() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Order ${product.name} via WhatsApp`}
-                    className="flex w-full items-center justify-center bg-text/90 backdrop-blur-sm text-surface py-3.5 font-body text-[10px] tracking-[0.2em] uppercase rounded hover:bg-primary transition-colors"
+                    className="flex w-full items-center justify-center bg-text/90 backdrop-blur-sm text-surface py-3.5 font-body text-[10px] tracking-[0.2em] uppercase rounded-none hover:bg-primary transition-colors"
                   >
                     Shop via WhatsApp
                   </a>
