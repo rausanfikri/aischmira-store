@@ -2,9 +2,9 @@ import { CartItem, Product, Variant } from "@/types";
 
 type CartItemWithDetails = CartItem & { product: Product; variant: Variant };
 
-export function getWhatsAppCheckoutUrl(cartItems: CartItemWithDetails[]) {
-  const WHATSAPP_NUMBER = "6285121344848"; // From user requirements
+export const WHATSAPP_NUMBER = "6285121344848";
 
+export function getWhatsAppCheckoutUrl(cartItems: CartItemWithDetails[]) {
   let message = "Hello AISCHMIRA, I would like to place an order:\n\n";
 
   cartItems.forEach((item, index) => {
@@ -17,5 +17,10 @@ export function getWhatsAppCheckoutUrl(cartItems: CartItemWithDetails[]) {
   message += "Please let me know the total with shipping and how to proceed with payment.\nThank you.";
 
   const encodedMessage = encodeURIComponent(message);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+}
+
+export function getWhatsAppInquiryUrl(customMessage: string) {
+  const encodedMessage = encodeURIComponent(customMessage);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 }

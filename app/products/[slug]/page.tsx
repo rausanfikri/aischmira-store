@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { productsData } from "@/data/products";
+import { collectionsData } from "@/data/collections";
 import { Metadata } from "next";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductInfo } from "@/components/products/ProductInfo";
 import { ProductCard } from "@/components/ui/ProductCard";
+import { ChevronRight } from "lucide-react";
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const product = productsData.find((p) => p.slug === params.slug);
@@ -24,15 +26,47 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   const product = productsData.find((p) => p.slug === params.slug);
   if (!product) notFound();
 
+  const collection = collectionsData.find((c) => c.id === product.collectionId);
+
   const relatedProducts = product.relatedProductIds 
     ? productsData.filter((p) => product.relatedProductIds?.includes(p.id))
-    : [];
+    : productsData.filter((p) => p.collectionId === product.collectionId && p.id !== product.id).slice(0, 4);
 
   return (
     <div className="pt-[104px] pb-24 md:pb-32 bg-background min-h-screen">
       
       {/* Main Product Section */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        {/* Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 font-body text-[10px] tracking-widest uppercase text-text/50">
+            <li>
+              <Link href="/" className="hover:text-text transition-colors">Home</Link>
+            </li>
+            <li>
+              <ChevronRight size={12} className="text-text/30" />
+            </li>
+            <li>
+              <Link href="/collections" className="hover:text-text transition-colors">Collections</Link>
+            </li>
+            {collection && (
+              <>
+                <li>
+                  <ChevronRight size={12} className="text-text/30" />
+                </li>
+                <li>
+                  <Link href={`/collections/${collection.slug}`} className="hover:text-text transition-colors">{collection.name}</Link>
+                </li>
+              </>
+            )}
+            <li>
+              <ChevronRight size={12} className="text-text/30" />
+            </li>
+            <li className="text-text font-medium">{product.name}</li>
+          </ol>
+        </nav>
+
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 mb-24 md:mb-32">
           {/* Left: Gallery */}
           <div className="w-full lg:w-3/5">
@@ -45,6 +79,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           </div>
         </div>
       </div>
+
 
       {/* Brand Story / Full Width Image (Optional Editorial Moment) */}
       <div className="w-full bg-surface py-24 mb-24 md:mb-32 flex justify-center px-4">

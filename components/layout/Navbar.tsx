@@ -7,12 +7,12 @@ import dynamic from "next/dynamic";
 import { Menu, X, Search, User, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/store/useUIStore";
-import DesktopNav from "./DesktopNav";
+import DesktopNav from "@/components/layout/DesktopNav";
 
 // Dynamically load heavy modals only when triggered
-const SearchModal = dynamic(() => import("./SearchModal"), { ssr: false });
-const CartDrawer = dynamic(() => import("./CartDrawer"), { ssr: false });
-const MobileNav = dynamic(() => import("./MobileNav"), { ssr: false });
+const SearchModal = dynamic(() => import("@/components/layout/SearchModal"), { ssr: false });
+const CartDrawer = dynamic(() => import("@/components/layout/CartDrawer"), { ssr: false });
+const MobileNav = dynamic(() => import("@/components/layout/MobileNav"), { ssr: false });
 
 function LogoMark({ className }: { className?: string }) {
   return (

@@ -374,3 +374,406 @@ npm run lint
 Update documentation if needed.
 
 Only then consider the task complete.
+
+# AISCHMIRA.STORE
+
+## AI AGENT RULES
+
+This document is the permanent source of truth for every AI Agent working in this repository.
+
+Always read this file before starting any task.
+
+---
+
+# PROJECT IDENTITY
+
+AISCHMIRA is a luxury fashion brand.
+
+It is NOT:
+
+- Marketplace
+- Fast fashion
+- Discount-first store
+- Template website
+
+It IS:
+
+- Premium fashion flagship
+- Editorial experience
+- Storytelling platform
+- WhatsApp-first commerce
+- Loyalty-first ecosystem
+
+---
+
+# PRIMARY GOAL
+
+Every implementation must increase:
+
+- Brand value
+- Customer trust
+- Purchase confidence
+- Visual quality
+- User experience
+
+Never sacrifice quality for speed.
+
+---
+
+# TECHNOLOGY
+
+Framework
+
+- Next.js App Router
+
+Language
+
+- TypeScript
+
+Styling
+
+- Tailwind CSS v4
+
+Animation
+
+- Framer Motion
+
+Deployment
+
+- Vercel
+
+Version Control
+
+- GitHub
+
+---
+
+# AI TOOLS
+
+Always use:
+
+Context7
+
+→ latest documentation
+
+UI/UX Pro Max
+
+→ design guidance
+
+Headroom
+
+→ load only relevant project context
+
+---
+
+# WORKFLOW
+
+Before coding
+
+1 Read documentation
+
+2 Audit current implementation
+
+3 Identify improvements
+
+4 Explain implementation plan
+
+5 Implement
+
+6 Self review
+
+7 Run lint
+
+8 Run build
+
+9 Fix issues
+
+10 Generate report
+
+Never skip self review.
+
+---
+
+# CODING RULES
+
+Do not duplicate components.
+
+Prefer composition.
+
+Use absolute imports.
+
+Do not hardcode colors.
+
+Use design tokens.
+
+Avoid any.
+
+Keep components small.
+
+Prefer Server Components.
+
+Client Components only when necessary.
+
+---
+
+# UI RULES
+
+Luxury
+
+Editorial
+
+Minimal
+
+Elegant
+
+Timeless
+
+Photography First
+
+Large Whitespace
+
+Readable Typography
+
+Consistent Spacing
+
+Balanced Layout
+
+---
+
+# UX RULES
+
+Accessibility first.
+
+Keyboard friendly.
+
+Fast interactions.
+
+Simple navigation.
+
+Clear CTA.
+
+No clutter.
+
+---
+
+# COMMERCE
+
+Checkout
+
+↓
+
+WhatsApp
+
+https://wa.me/6285121344848
+
+Never implement marketplace checkout.
+
+---
+
+# MEMBER
+
+Prepare architecture for:
+
+Account
+
+Wishlist
+
+Points
+
+Rewards
+
+Referral
+
+Order History
+
+---
+
+# DONE CRITERIA
+
+Every task must pass
+
+✓ Build
+
+✓ Lint
+
+✓ Responsive
+
+✓ Accessibility
+
+✓ Design Review
+
+✓ Performance
+
+before completion.
+
+# AISCHMIRA PROJECT IDENTITY
+
+AISCHMIRA is a luxury fashion flagship website.
+
+It is NOT:
+
+- Marketplace
+- Fast fashion
+- Discount-first website
+
+It IS:
+
+- Luxury Editorial Experience
+- WhatsApp-first Commerce
+- Loyalty-first Ecosystem
+- Premium Fashion Brand
+
+Every design decision must reinforce elegance, simplicity, and timelessness.
+
+# AI WORKFLOW
+
+Every task must follow this order.
+
+1 Read documentation
+
+2 Use Headroom
+
+3 Read only relevant files
+
+4 Use Context7 whenever framework documentation is required
+
+5 Follow UI/UX Pro Max
+
+6 Audit current implementation
+
+7 Explain implementation plan
+
+8 Implement
+
+9 Self review
+
+10 Run lint
+
+11 Run build
+
+12 Fix issues
+
+13 Generate implementation report
+
+Never skip self review.
+
+# UI PRINCIPLES
+
+Whitespace is Luxury.
+
+Photography is the Product.
+
+Typography is Branding.
+
+Large breathing room.
+
+Centered layout.
+
+Elegant spacing.
+
+No clutter.
+
+No marketplace feeling.
+
+Motion should be subtle.
+
+Luxury over decoration.
+
+# COMMERCE
+
+Current checkout flow:
+
+Website
+
+↓
+
+WhatsApp
+
+↓
+
+Human Sales
+
+↓
+
+Payment
+
+↓
+
+Fulfillment
+
+Do not implement marketplace checkout.
+
+Always keep WhatsApp as the purchase channel until Phase 4.
+
+# MEMBER EXPERIENCE
+
+Prepare architecture for
+
+Login
+
+Register
+
+Wishlist
+
+Shopping Bag
+
+Loyalty Points
+
+Rewards
+
+Referral
+
+Customer Dashboard
+
+Order History
+
+# DESIGN REVIEW
+
+Before finishing every task verify
+
+Header
+
+Footer
+
+Typography
+
+Spacing
+
+Accessibility
+
+Responsive
+
+Performance
+
+Animation
+
+SEO
+
+WhatsApp Flow
+
+Consistency
+
+Every page must look production-ready.
+
+# DEFINITION OF DONE
+
+Every implementation must pass
+
+✓ npm run lint
+
+✓ npm run build
+
+✓ No Type Error
+
+✓ No ESLint Error
+
+✓ Responsive
+
+✓ Accessibility
+
+✓ Context7 compliant
+
+✓ UI/UX Pro Max compliant
+
+✓ Production Ready
+
