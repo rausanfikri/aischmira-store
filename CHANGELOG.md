@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint 2E] - 2026-07-28
+### Added
+- **Domain-Oriented Data Layer (`services/domain/`)**: Built domain modules for `product`, `collection`, `category`, `homepage`, `navigation`, `journal`, and `loyalty`. Each module includes `types.ts`, `schema.ts` (Zod), `dummy.ts`, `mapper.ts`, and `service.ts`.
+- **Service Layer Abstractions**: Created `ProductService`, `CollectionService`, `CategoryService`, `HomepageService`, `NavigationService`, `JournalService`, and `LoyaltyService`. UI components consume domain Services rather than importing raw static data files.
+- **BigSeller & Supabase Model Readiness**: Enhanced Product entity with `sku`, `parentSku`, `compareAtPrice`, `currency`, `status`, `isActive`, and `isFeatured` fields.
+- **Zod Runtime Validation**: Integrated Zod schemas for entity validation upon data retrieval or external payload ingestion.
+- **Sprint 2E Documentation**: Generated 6 deliverable architecture and integration reports (`DATA_LAYER_REPORT.md`, `DOMAIN_ARCHITECTURE_REPORT.md`, `SERVICE_LAYER_REPORT.md`, `FUTURE_INTEGRATION_NOTES.md`, `DATA_LAYER_FILES_CHANGED.md`, `DATA_LAYER_TECHNICAL_DEBT.md`).
+
 ## [HOTFIX — Header Architecture v3] - 2026-07-28
 ### Added
 - **Separated Header Component Hierarchy (`components/layout/Header/`)**: Implemented Single Responsibility Principle across 11 dedicated module files (`HeaderShell.tsx`, `HeaderContainer.tsx`, `Header.tsx`, `Navigation.tsx`, `NavLinks.tsx`, `NavIcons.tsx`, `Logo.tsx`, `MegaMenuCollections.tsx`, `DropdownCategories.tsx`, `AnnouncementBar.tsx`, `index.ts`).

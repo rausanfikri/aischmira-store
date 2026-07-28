@@ -1,0 +1,36 @@
+import { Product } from "./types";
+import { productsData as rawProducts } from "@/data/products";
+
+export const dummyProducts: Product[] = rawProducts.map((p) => ({
+  id: p.id,
+  sku: p.sku || `SKU-${p.id}`,
+  parentSku: `PARENT-${p.id}`,
+  name: p.name,
+  slug: p.slug,
+  categoryId: p.categoryId,
+  collectionId: p.collectionId,
+  basePrice: p.basePrice,
+  compareAtPrice: p.basePrice * 1.25,
+  currency: "IDR",
+  description: p.description,
+  story: p.story || "Handcrafted with pure Mulberry silk.",
+  material: p.material || "100% Pure Mulberry Silk",
+  careInstruction: p.careInstruction || "Dry clean only. Iron on low silk setting.",
+  shippingInfo: p.shippingInfo || "Complimentary express shipping across Indonesia.",
+  variants: p.variants.map((v) => ({
+    id: v.id,
+    sku: v.sku,
+    color: v.color,
+    size: v.size,
+    price: v.price,
+    stock: v.stock,
+    images: v.images || p.images,
+  })),
+  images: p.images,
+  relatedProductIds: p.relatedProductIds || [],
+  status: "active",
+  isActive: true,
+  isFeatured: p.isFeatured || false,
+  createdAt: p.createdAt || "2026-01-01T00:00:00Z",
+  updatedAt: p.updatedAt || "2026-07-28T00:00:00Z",
+}));

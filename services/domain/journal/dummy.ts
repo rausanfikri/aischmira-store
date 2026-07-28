@@ -1,0 +1,40 @@
+import { JournalArticle } from "./types";
+
+export const dummyArticles: JournalArticle[] = [
+  {
+    id: "1",
+    title: "The Art of Layering",
+    slug: "art-of-layering",
+    date: "October 12, 2026",
+    category: "Style Guide",
+    image: "/images/products/placeholder.png",
+    excerpt: "Discover how to seamlessly transition your wardrobe through the seasons with our definitive guide to elegant layering.",
+    content: "Minimalism is not about cold simplicity; it is about eliminating clutter to highlight pure form...",
+    author: "Editorial Team",
+    isFeatured: true,
+  },
+  {
+    id: "2",
+    title: "Behind the Seams: The Silk Collection",
+    slug: "behind-the-seams-silk",
+    date: "September 28, 2026",
+    category: "Craftsmanship",
+    image: "/images/products/placeholder.png",
+    excerpt: "An exclusive look into the creation of our latest silk collection, from initial sketches to the final hand-stitched border.",
+    content: "From the silk moth farms to hand-rolled hem seamstresses in Indonesia...",
+    author: "Design Studio",
+    isFeatured: false,
+  },
+  {
+    id: "3",
+    title: "Minimalism Mastered",
+    slug: "minimalism-mastered",
+    date: "September 15, 2026",
+    category: "Editorial",
+    image: "/images/products/placeholder.png",
+    excerpt: "Embracing the quiet luxury of simplicity. How to curate a capsule wardrobe that speaks volumes with less.",
+    content: "True quiet luxury lies in uncompromised textiles and architectural cuts...",
+    author: "Creative Director",
+    isFeatured: false,
+  },
+];
