@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [HOTFIX — Header Architecture v3] - 2026-07-28
+### Added
+- **Separated Header Component Hierarchy (`components/layout/Header/`)**: Implemented Single Responsibility Principle across 11 dedicated module files (`HeaderShell.tsx`, `HeaderContainer.tsx`, `Header.tsx`, `Navigation.tsx`, `NavLinks.tsx`, `NavIcons.tsx`, `Logo.tsx`, `MegaMenuCollections.tsx`, `DropdownCategories.tsx`, `AnnouncementBar.tsx`, `index.ts`).
+- **Dedicated Header System Tokens (`styles/theme.css`)**: Registered `--header-bg`, `--header-bg-scrolled`, `--header-text`, `--header-border`, `--header-shadow`, `--header-hover`, `--header-height`, `--header-height-scrolled`, `--header-logo-size`, `--header-logo-size-scrolled`, and `--header-transition`.
+- **10 Header Architecture Reports**: Generated comprehensive QA documentation (`HEADER_ARCHITECTURE_REPORT.md`, `HEADERSHELL_REPORT.md`, `DESIGN_TOKEN_REPORT.md`, `NAV_REPORT.md`, `MEGA_MENU_REPORT.md`, `HEADER_RESPONSIVE_REPORT.md`, `HEADER_ACCESSIBILITY_REPORT.md`, `PERFORMANCE_REPORT.md`, `HEADER_FILES_CHANGED.md`, `HEADER_TECHNICAL_DEBT.md`).
+
+### Removed
+- **Transparent / Hero-Dependent Header Modes**: Completely removed transparent header overlay mode and hero text color switching. Header ALWAYS uses glass background (`rgba(255,255,255,0.88)` / `0.96`) with `backdrop-blur-xl` and neutral text.
+
 ## [Sprint 2D.5A] - 2026-07-28
 ### Added
 - **CSS Grid 3-Column Header Architecture (`Header.tsx`)**: Rebuilt Header layout using `grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr)` ensuring exact mathematical logo centering relative to the viewport.

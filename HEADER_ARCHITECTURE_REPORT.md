@@ -1,29 +1,25 @@
 # AISCHMIRA.STORE — Header Architecture Report
-**Sprint:** 2D.5A — Premium Header Navigation Final (Pre UI Freeze)
+**Sprint:** HOTFIX — Premium Header Architecture v3 (Production Ready)
 **Date:** July 28, 2026
 
 ---
 
 ## 1. Executive Summary
 
-Sprint 2D.5A rebuilt the global Header architecture using a mathematically sound CSS Grid layout. This eliminates Flexbox logo shifts when navigation item widths change or dropdown states update.
+HOTFIX Header v3 implemented strict Single Responsibility Principle (SRP) by restructuring the Header into 11 dedicated module files under `components/layout/Header/`. It eliminated transparent header modes and hero-dependent text color switching, establishing a permanent, zero-layout-shift glass navigation system.
 
-## 2. CSS Grid Architecture
+## 2. Component Hierarchy & Responsibilities
 
-```css
-display: grid;
-grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-align-items: center;
-width: 100%;
-```
-
-### Column Specifications
-1. **Left Column (`minmax(0, 1fr)`)**: Holds the Mobile Navigation drawer toggle (`lg:hidden`) and Desktop Navigation links (`NavLinks.tsx` / `DesktopNav.tsx`) containing **Collections ▼** and **Categories ▼** side-by-side.
-2. **Center Column (`auto`)**: Holds the `Logo` component. Because the left and right columns share equal `minmax(0, 1fr)` proportions, the center column is mathematically guaranteed to remain perfectly centered relative to the container/viewport.
-3. **Right Column (`minmax(0, 1fr)`)**: Holds action icon controls (`NavIcons.tsx`) with `justify-end` alignment (Search, Account, Wishlist, Shopping Bag).
-
-## 3. Visual & Aesthetic Standards
-
-- **Logo Dimension Scale**: Desktop 52px (top) &rarr; 44px (scrolled); Mobile 36px.
-- **Header Heights**: 84px (top) &rarr; 72px (scrolled with solid background & backdrop blur).
-- **Zero Layout Shift**: Smooth height scaling and background transitions without flickering.
+| Module File | Single Responsibility |
+|---|---|
+| `HeaderShell.tsx` | Sticky positioning, scroll detection (`scrolled`), glass background (`rgba(255,255,255,0.88)` / `0.96`), backdrop blur (`backdrop-blur-xl`), height transitions (`84px` &rarr; `72px`). |
+| `HeaderContainer.tsx` | Inner container max-width wrapper (`container-hero`). |
+| `Header.tsx` | Composition-only layout layer using CSS Grid `minmax(0, 1fr) auto minmax(0, 1fr)`. |
+| `Navigation.tsx` | Semantic `<nav aria-label="Primary Header Navigation">` container wrapper. |
+| `NavLinks.tsx` | Renders Collections and Categories navigation menu triggers side-by-side. |
+| `MegaMenuCollections.tsx` | Luxury multi-column Mega Menu for Collections (Signature with gold badges, Classic in 2-col grid, Special scarf edits, Editorial cover card). |
+| `DropdownCategories.tsx` | Single-column compact dropdown for Categories (7 unique items). |
+| `NavIcons.tsx` | Action controls (Search, Account, Wishlist, Shopping Bag) with min 44x44px touch targets and `#D9AE20` gold hover states. |
+| `Logo.tsx` | Renders logo image with CSS token height scaling (`52px` top, `44px` scrolled desktop, `36px` mobile). |
+| `AnnouncementBar.tsx` | Structural wrapper module for top announcement bar. |
+| `index.ts` | Clean module exports. |
