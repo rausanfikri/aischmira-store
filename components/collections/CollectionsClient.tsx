@@ -95,68 +95,81 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
           {filteredCollections.map((collection, idx) => {
             const count = getProductCount(collection.id);
             return (
-              <motion.div
-                key={collection.id}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: (idx % 3) * 0.15 }}
-                className="group flex flex-col bg-surface border border-border/40 rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-all duration-500"
-              >
-                {/* Image Cover */}
-                <Link
-                  href={`/collections/${collection.slug}`}
-                  className="relative w-full aspect-[3/4] overflow-hidden bg-background block"
+              <React.Fragment key={collection.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.7, delay: (idx % 3) * 0.15 }}
+                  className="group flex flex-col bg-surface border border-border/40 rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-all duration-500"
                 >
-                  <Image
-                    src={collection.coverImage}
-                    alt={collection.name}
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
-                    priority={idx < 3}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  
-                  {/* Floating Badges */}
-                  <div className="absolute top-4 left-4 right-4 flex justify-between items-center text-surface">
-                    <span className="font-body text-[8px] tracking-[0.25em] uppercase text-surface/90 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-sm border border-surface/20">
-                      {collection.category}
-                    </span>
-                    {collection.isFeatured && (
-                      <span className="font-body text-[8px] tracking-[0.25em] uppercase text-primary bg-black/60 backdrop-blur-md border border-primary/40 px-2.5 py-1 rounded-sm font-bold">
-                        Featured
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Title Overlay */}
-                  <div className="absolute bottom-6 left-6 right-6 text-surface">
-                    <h2 className="font-heading italic text-3xl md:text-4xl text-surface tracking-wide drop-shadow-md">
-                      {collection.name}
-                    </h2>
-                  </div>
-                </Link>
-
-                {/* Card Information Body */}
-                <div className="p-6 md:p-8 flex flex-col flex-1 justify-between space-y-6">
-                  <div className="space-y-3">
-                    <span className="font-body text-[9px] tracking-widest uppercase text-text/40 block">
-                      {count} {count === 1 ? "Curated Piece" : "Curated Pieces"}
-                    </span>
-                    <p className="font-body text-xs text-text/70 leading-relaxed font-light line-clamp-2">
-                      {collection.description}
-                    </p>
-                  </div>
-
+                  {/* Image Cover */}
                   <Link
                     href={`/collections/${collection.slug}`}
-                    className="w-full bg-text text-surface hover:bg-primary transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-sm font-medium text-center block"
+                    className="relative w-full aspect-[3/4] overflow-hidden bg-background block"
                   >
-                    Explore Collection
+                    <Image
+                      src={collection.coverImage}
+                      alt={collection.name}
+                      fill
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                      priority={idx < 3}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    
+                    {/* Floating Badges */}
+                    <div className="absolute top-4 left-4 right-4 flex justify-between items-center text-surface">
+                      <span className="font-body text-[8px] tracking-[0.25em] uppercase text-surface/90 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-sm border border-surface/20">
+                        {collection.category}
+                      </span>
+                      {collection.isFeatured && (
+                        <span className="font-body text-[8px] tracking-[0.25em] uppercase text-primary bg-black/60 backdrop-blur-md border border-primary/40 px-2.5 py-1 rounded-sm font-bold">
+                          Featured
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Title Overlay */}
+                    <div className="absolute bottom-6 left-6 right-6 text-surface">
+                      <h2 className="font-heading italic text-3xl md:text-4xl text-surface tracking-wide drop-shadow-md">
+                        {collection.name}
+                      </h2>
+                    </div>
                   </Link>
-                </div>
-              </motion.div>
+
+                  {/* Card Information Body */}
+                  <div className="p-6 md:p-8 flex flex-col flex-1 justify-between space-y-6">
+                    <div className="space-y-3">
+                      <span className="font-body text-[9px] tracking-widest uppercase text-text/40 block">
+                        {count} {count === 1 ? "Curated Piece" : "Curated Pieces"}
+                      </span>
+                      <p className="font-body text-xs text-text/70 leading-relaxed font-light line-clamp-2">
+                        {collection.description}
+                      </p>
+                    </div>
+
+                    <Link
+                      href={`/collections/${collection.slug}`}
+                      className="w-full bg-text text-surface hover:bg-primary transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-sm font-medium text-center block"
+                    >
+                      Explore Collection
+                    </Link>
+                  </div>
+                </motion.div>
+
+                {/* Editorial Break Card after every 6th Collection */}
+                {idx === 5 && (
+                  <div className="col-span-full my-6 p-10 bg-surface border border-border/40 text-center space-y-3 rounded-sm">
+                    <span className="font-body text-[9px] tracking-[0.3em] uppercase text-primary font-bold block">
+                      Craft & Lineage
+                    </span>
+                    <h3 className="font-heading italic text-3xl text-text font-light">
+                      &ldquo;Conceived in quiet elegance. Born of pure mulberry silk.&rdquo;
+                    </h3>
+                  </div>
+                )}
+              </React.Fragment>
             );
           })}
         </div>

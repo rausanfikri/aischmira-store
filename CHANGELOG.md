@@ -2,7 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Sprint 2D.4] - 2026-07-28
+## [Sprint 2D.6] - 2026-07-28
+### Added
+- **Design System Audit Reports**: Generated 4 comprehensive design system QA deliverables (`DESIGN_AUDIT_REPORT.md`, `DESIGN_SYSTEM_REPORT.md`, `UI_FREEZE_CHECKLIST.md`, `TECHNICAL_DEBT_REPORT.md`).
+- **UI Freeze Baseline**: Formally locked all visual layout structures, design tokens, typography scales, interactive components, modals, and drawers for production deployment.
+
+### Verified
+- **TypeScript & ESLint Quality**: 0 errors, 0 warnings across all project files.
+- **Turbopack Build**: 59 static routes pre-rendered cleanly in 1.0s.
+
+## [Sprint 2D.5] - 2026-07-28
+### Added
+- **Artisanal Craftsmanship Section (`components/sections/Craftsmanship.tsx`)**: New section celebrating 100% Pure Mulberry Silk, hand-rolled hem boundaries, precision cuts, and local artisan studios in Indonesia.
+- **Journal Preview Section (`components/sections/JournalPreview.tsx`)**: New 3-card editorial journal preview showcasing style guides, behind-the-seams, and minimalist philosophy with links to `/journal`.
+- **Inline Editorial Grid Blocks**: Integrated storytelling quote banners directly into product grids (`CollectionDetailClient.tsx` and `CollectionsClient.tsx`) after product #4.
+- **Multi-Facet Collection Filters**: Added multi-facet filtering for Category, Size, Color, Price Range, and Availability on Collection pages with active filter badges and reset controls.
+
+### Changed
+- **Editorial Homepage (`app/page.tsx`)**: Reordered 10 sections with generous breathing room (`py-24 md:py-36`), storytelling focus, and high-fashion visual hierarchy.
+- **Brand Story (`components/sections/BrandStory.tsx`)**: Enhanced to highlight Craftsmanship, Premium Materials, Designed in Indonesia, and Timeless Elegance.
+- **Instagram Gallery (`components/sections/InstagramPreview.tsx`)**: Refined to 6-card 1:1 square photo grid with dark backdrop overlay and hover states.
+- **Collection Detail (`CollectionDetailClient.tsx`)**: Added multi-facet filters, sorting options, pagination load controls, skeleton loaders, and luxury empty states.
 ### Added
 - **ProductEditorial Component (`components/products/ProductEditorial.tsx`)**: New editorial storytelling component with three sections — The Story, Craftsmanship (Designer Notes + Material Composition), and Designed For (Lifestyle context).
 - **Loyalty Preview Card**: UI-only informational card in ProductInfo showing "Earn loyalty points with every purchase" message, preparing foundation for future member features.

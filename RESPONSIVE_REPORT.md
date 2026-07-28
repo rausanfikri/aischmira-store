@@ -1,23 +1,24 @@
 # AISCHMIRA.STORE — Responsive Report
-**Sprint:** 2B — Navigation & Information Architecture
+**Sprint:** 2D.5 — Luxury Homepage & Collection Experience
 **Date:** July 28, 2026
 
 ---
 
-## 1. Viewport Adaptation Matrix
+## 1. Executive Summary
 
-The global navigation and footer were tested and verified across 4 primary responsive breakpoints:
+All Homepage and Collection components were audited across 4 primary viewport breakpoints to ensure fluid typography, image scaling, and touch target accessibility.
 
-| Breakpoint Tier | Viewport Width | Header & Nav Behavior | Footer Behavior |
-| --- | --- | --- | --- |
-| **Mobile** | `<640px` | Header height 72px; centered logo (36-42px); Right icons (Search, Cart); Mobile Nav trigger button opens slide-over drawer with full menu hierarchy. | 1-Column stacked layout with full width padding. |
-| **Tablet** | `640px – 767px` | Header height 88px/72px; Right icons include Search, Account, Wishlist, Cart; Mobile Nav trigger available. | 2-Column layout. |
-| **Laptop** | `768px – 1023px` | Sticky header with background blur; Left Nav transforms to compact trigger menu; Right icons full display. | 3-Column layout. |
-| **Desktop / Wide**| `>=1024px` | Full Left Desktop Navigation (Collections Mega Menu, Categories Mega Menu, Journal, About); Logo centered (48-58px); Full Right Icon Controls. | 5-Column balanced luxury layout with bottom legal policy links bar. |
+## 2. Breakpoint Matrix
 
----
+| Viewport Tier | Width Boundary | Container Padding | Grid Layout Adjustments |
+|---|---|---|---|
+| **Desktop Wide** | `≥ 1280px` | `80px` (`px-20`) | 4-column product grid, 3-column collection grid, 6-column Instagram grid. |
+| **Laptop** | `1024px – 1279px` | `64px` (`px-16`) | 4-column product grid, 3-column collection grid, 6-column Instagram grid. |
+| **Tablet** | `640px – 1023px` | `40px` (`px-10`) | 2-column to 3-column product grid, 2-column collection grid, 3-column Instagram grid. |
+| **Mobile** | `< 640px` | `24px` (`px-6`) | 2-column product grid, 1-column collection grid, 2-column Instagram grid, horizontal scroll tabs. |
 
-## 2. Touch Target & Spacing Verification
+## 3. Touch & Layout Hygiene
 
-- All icon buttons maintain minimum click target dimensions of `44x44px` or `48x48px`.
-- Mega menu drop-down panels use fixed viewports (`w-screen`) with `max-w-[1280px]` content boundaries.
+- **Aspect Ratios**: Preserved `3/4` for product cards, `1/1` for Instagram grid, `3/4` for collection covers across all device widths.
+- **Header Clearance**: Hero starts cleanly below fixed/scrolled header without layout overlap.
+- **Mobile Filter**: Multi-column filter bar stacks gracefully into a single scrollable form on mobile.

@@ -1,9 +1,10 @@
 import { Hero } from "@/components/sections/Hero";
-import { BrandIntroduction } from "@/components/sections/BrandIntroduction";
+import { BrandStory } from "@/components/sections/BrandStory";
 import { NewCollections } from "@/components/sections/NewCollections";
 import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
-import { Lookbook } from "@/components/sections/Lookbook";
-import { BrandValues } from "@/components/sections/BrandValues";
+import { EditorialBridge } from "@/components/sections/EditorialBridge";
+import { Craftsmanship } from "@/components/sections/Craftsmanship";
+import { JournalPreview } from "@/components/sections/JournalPreview";
 import { InstagramPreview } from "@/components/sections/InstagramPreview";
 import { Newsletter } from "@/components/sections/Newsletter";
 import { WhatsAppSection } from "@/components/sections/WhatsAppSection";
@@ -11,14 +12,34 @@ import { WhatsAppSection } from "@/components/sections/WhatsAppSection";
 export default function Home() {
   return (
     <>
+      {/* 1. Flagship Editorial Hero */}
       <Hero />
-      <BrandIntroduction />
+
+      {/* 2. Brand Story & Heritage Pillars */}
+      <BrandStory />
+
+      {/* 3. Featured Signature Collections */}
       <NewCollections />
+
+      {/* 4. New Arrivals & Curated Highlights */}
       <FeaturedProducts />
-      <Lookbook />
-      <BrandValues />
+
+      {/* 5. High-Fashion Editorial Quote Banner */}
+      <EditorialBridge />
+
+      {/* 6. Artisanal Craftsmanship & Silk Heritage */}
+      <Craftsmanship />
+
+      {/* 7. Journal Preview & Style Guides */}
+      <JournalPreview />
+
+      {/* 8. Instagram Community 1:1 Gallery */}
       <InstagramPreview />
+
+      {/* 9. Private Correspondence Newsletter */}
       <Newsletter />
+
+      {/* 10. WhatsApp Concierge CTA */}
       <WhatsAppSection />
     </>
   );

@@ -6,7 +6,8 @@ import Image from "next/image";
 import { Product } from "@/types";
 import { ExtendedCollection } from "@/data/collections";
 import { ProductCard } from "@/components/ui/ProductCard";
-import { SlidersHorizontal, X, MessageCircle, Gem, Sparkles } from "lucide-react";
+import { ProductCardSkeleton } from "@/components/ui/SkeletonLoader";
+import { SlidersHorizontal, X, MessageCircle, Gem, Sparkles, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CollectionDetailClientProps {
@@ -21,61 +22,98 @@ export function CollectionDetailClient({
   products,
   relatedCollections,
 }: CollectionDetailClientProps) {
-  const [sortBy, setSortBy] = React.useState<"featured" | "price-asc" | "price-desc" | "newest">("featured");
+  const [sortBy, setSortBy] = React.useState<"featured" | "newest" | "price-asc" | "price-desc" | "best-selling">("featured");
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
   const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
   const [selectedSize, setSelectedSize] = React.useState<string | null>(null);
+  const [priceRange, setPriceRange] = React.useState<"all" | "under-1m" | "1m-2m" | "above-2m">("all");
+  const [availability, setAvailability] = React.useState<"all" | "in-stock" | "pre-order">("all");
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const [visibleCount, setVisibleCount] = React.useState(8);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  // Extract available colors and sizes
+  // Extract available categories, colors, sizes
+  const availableCategories = Array.from(new Set(products.map((p) => p.categoryId)));
   const availableColors = Array.from(
     new Set(products.flatMap((p) => p.variants.map((v) => v.color)))
   ).filter((c) => c !== "OS");
-
   const availableSizes = Array.from(
     new Set(products.flatMap((p) => p.variants.map((v) => v.size)))
   ).filter((s) => s !== "OS");
 
-  // Apply filtering
+  // Filter products
   let filteredProducts = products.filter((product) => {
+    if (selectedCategory && product.categoryId !== selectedCategory) return false;
+    
     if (selectedColor) {
       const hasColor = product.variants.some((v) => v.color.toLowerCase() === selectedColor.toLowerCase());
       if (!hasColor) return false;
     }
+    
     if (selectedSize) {
       const hasSize = product.variants.some((v) => v.size.toUpperCase() === selectedSize.toUpperCase());
       if (!hasSize) return false;
     }
+
+    if (priceRange === "under-1m" && product.basePrice >= 1000000) return false;
+    if (priceRange === "1m-2m" && (product.basePrice < 1000000 || product.basePrice > 2000000)) return false;
+    if (priceRange === "above-2m" && product.basePrice <= 2000000) return false;
+
+    if (availability === "in-stock") {
+      const hasStock = product.variants.some((v) => v.stock > 0);
+      if (!hasStock) return false;
+    }
+
     return true;
   });
 
-  // Apply sorting
+  // Sort products
   filteredProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === "price-asc") return a.basePrice - b.basePrice;
     if (sortBy === "price-desc") return b.basePrice - a.basePrice;
     if (sortBy === "newest") return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime();
+    if (sortBy === "best-selling") return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
     return 0;
   });
 
-  const activeFilterCount = (selectedColor ? 1 : 0) + (selectedSize ? 1 : 0);
+  const displayedProducts = filteredProducts.slice(0, visibleCount);
+
+  const activeFilterCount =
+    (selectedCategory ? 1 : 0) +
+    (selectedColor ? 1 : 0) +
+    (selectedSize ? 1 : 0) +
+    (priceRange !== "all" ? 1 : 0) +
+    (availability !== "all" ? 1 : 0);
 
   const clearFilters = () => {
+    setSelectedCategory(null);
     setSelectedColor(null);
     setSelectedSize(null);
+    setPriceRange("all");
+    setAvailability("all");
     setSortBy("featured");
+  };
+
+  const handleLoadMore = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setVisibleCount((prev) => prev + 4);
+      setIsLoading(false);
+    }, 400);
   };
 
   return (
     <div className="container-custom space-y-20 md:space-y-28">
       
-      {/* Editorial Story & Designer Notes */}
+      {/* Editorial Story & Designer Notes Banner */}
       {(collection.story || collection.designerNotes) && (
-        <section className="bg-surface p-8 md:p-12 border border-border/40 rounded-sm shadow-sm max-w-[960px] mx-auto space-y-8 text-center">
+        <section className="bg-surface p-8 md:p-14 border border-border/40 rounded-sm shadow-sm max-w-[960px] mx-auto space-y-8 text-center">
           <div className="space-y-4">
             <span className="font-body text-[10px] tracking-[0.3em] uppercase text-text/50 block font-medium">
               Curator Narrative
             </span>
             <h2 className="font-heading italic text-3xl md:text-4xl text-text font-light">
-              Collection Story
+              Collection Story & Craft
             </h2>
             <p className="font-body text-xs md:text-sm text-text/70 leading-relaxed font-light prose-reading">
               {collection.story || collection.description}
@@ -111,10 +149,10 @@ export function CollectionDetailClient({
 
       {/* Toolbar & Filter Bar */}
       <div>
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/40 pb-6 mb-12">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/40 pb-6 mb-10">
           <div className="flex items-center gap-4">
             <p className="font-body text-[10px] tracking-widest uppercase text-text/60 font-medium">
-              Showing {filteredProducts.length} of {products.length} {products.length === 1 ? "Piece" : "Pieces"}
+              Showing {displayedProducts.length} of {filteredProducts.length} {filteredProducts.length === 1 ? "Piece" : "Pieces"}
             </p>
             {activeFilterCount > 0 && (
               <button
@@ -126,10 +164,10 @@ export function CollectionDetailClient({
             )}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 flex-wrap">
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="flex items-center gap-2 font-body text-[10px] tracking-widest uppercase text-text hover:text-primary transition-colors border border-border/60 px-4 py-2 rounded-sm font-medium"
+              className="flex items-center gap-2 font-body text-[10px] tracking-widest uppercase text-text hover:text-primary transition-colors border border-border/60 px-4 py-2 rounded-sm font-medium bg-surface"
             >
               <SlidersHorizontal size={14} />
               Filter {activeFilterCount > 0 && `(${activeFilterCount})`}
@@ -139,11 +177,12 @@ export function CollectionDetailClient({
               <span className="hidden sm:inline">Sort by:</span>
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as "featured" | "price-asc" | "price-desc" | "newest")}
+                onChange={(e) => setSortBy(e.target.value as "featured" | "newest" | "price-asc" | "price-desc" | "best-selling")}
                 className="bg-transparent border-b border-border/50 text-text font-body text-[10px] tracking-widest uppercase py-1 focus:outline-none focus:border-text cursor-pointer"
               >
                 <option value="featured">Featured</option>
                 <option value="newest">Newest Arrival</option>
+                <option value="best-selling">Best Selling</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
               </select>
@@ -151,14 +190,48 @@ export function CollectionDetailClient({
           </div>
         </div>
 
-        {/* Collapsible Filter Panel */}
+        {/* Collapsible Multi-Facet Filter Panel */}
         {isFilterOpen && (
-          <div className="bg-surface/80 p-6 border border-border/40 mb-12 rounded-sm space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-surface p-6 sm:p-8 border border-border/40 mb-12 rounded-sm space-y-8 animate-fadeIn">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+              
+              {/* Category Filter */}
+              {availableCategories.length > 0 && (
+                <div>
+                  <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block mb-3 font-medium">
+                    Category
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => setSelectedCategory(null)}
+                      className={cn(
+                        "text-left font-body text-[10px] tracking-widest uppercase py-1 transition-colors",
+                        selectedCategory === null ? "text-primary font-bold" : "text-text/70 hover:text-text"
+                      )}
+                    >
+                      All Categories
+                    </button>
+                    {availableCategories.map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
+                        className={cn(
+                          "text-left font-body text-[10px] tracking-widest uppercase py-1 transition-colors",
+                          selectedCategory === cat ? "text-primary font-bold" : "text-text/70 hover:text-text"
+                        )}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Color Filter */}
               {availableColors.length > 0 && (
                 <div>
                   <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block mb-3 font-medium">
-                    Filter by Color
+                    Color
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {availableColors.map((color) => (
@@ -179,10 +252,11 @@ export function CollectionDetailClient({
                 </div>
               )}
 
+              {/* Size Filter */}
               {availableSizes.length > 0 && (
                 <div>
                   <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block mb-3 font-medium">
-                    Filter by Size
+                    Size
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {availableSizes.map((size) => (
@@ -202,14 +276,57 @@ export function CollectionDetailClient({
                   </div>
                 </div>
               )}
+
+              {/* Price & Availability Filter */}
+              <div className="space-y-6">
+                <div>
+                  <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block mb-3 font-medium">
+                    Price Range
+                  </span>
+                  <select
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(e.target.value as "all" | "under-1m" | "1m-2m" | "above-2m")}
+                    className="w-full bg-background border border-border/50 rounded-sm text-text font-body text-[10px] tracking-widest uppercase p-2 focus:outline-none"
+                  >
+                    <option value="all">All Prices</option>
+                    <option value="under-1m">Under Rp 1.000.000</option>
+                    <option value="1m-2m">Rp 1.000.000 – Rp 2.000.000</option>
+                    <option value="above-2m">Above Rp 2.000.000</option>
+                  </select>
+                </div>
+
+                <div>
+                  <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block mb-3 font-medium">
+                    Availability
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setAvailability(availability === "in-stock" ? "all" : "in-stock")}
+                      className={cn(
+                        "font-body text-[9px] tracking-widest uppercase px-3 py-1.5 border rounded-sm transition-all",
+                        availability === "in-stock" ? "border-emerald-700 bg-emerald-50 text-emerald-900 font-bold" : "border-border/50 text-text/70"
+                      )}
+                    >
+                      In Stock Only
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         )}
 
         {/* Active Filter Badges */}
-        {(selectedColor || selectedSize) && (
-          <div className="flex items-center gap-2 mb-8">
+        {activeFilterCount > 0 && (
+          <div className="flex items-center gap-2 mb-8 flex-wrap">
             <span className="font-body text-[10px] tracking-widest uppercase text-text/50">Active:</span>
+            {selectedCategory && (
+              <span className="inline-flex items-center gap-1 font-body text-[10px] tracking-widest uppercase bg-surface px-3 py-1 border border-border/50 text-text">
+                Category: {selectedCategory}
+                <button onClick={() => setSelectedCategory(null)} className="hover:text-primary"><X size={12} /></button>
+              </span>
+            )}
             {selectedColor && (
               <span className="inline-flex items-center gap-1 font-body text-[10px] tracking-widest uppercase bg-surface px-3 py-1 border border-border/50 text-text">
                 Color: {selectedColor}
@@ -222,14 +339,38 @@ export function CollectionDetailClient({
                 <button onClick={() => setSelectedSize(null)} className="hover:text-primary"><X size={12} /></button>
               </span>
             )}
+            {priceRange !== "all" && (
+              <span className="inline-flex items-center gap-1 font-body text-[10px] tracking-widest uppercase bg-surface px-3 py-1 border border-border/50 text-text">
+                Price: {priceRange}
+                <button onClick={() => setPriceRange("all")} className="hover:text-primary"><X size={12} /></button>
+              </span>
+            )}
           </div>
         )}
 
-        {/* Featured Products Grid */}
-        {filteredProducts.length > 0 ? (
+        {/* Featured Products Grid with INLINE EDITORIAL CONTENT BLOCKS */}
+        {displayedProducts.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {displayedProducts.map((product, idx) => (
+              <React.Fragment key={product.id}>
+                {/* Regular Product Card */}
+                <ProductCard product={product} />
+
+                {/* INLINE EDITORIAL BLOCK inserted after the 4th item in grid */}
+                {idx === 3 && (
+                  <div className="col-span-full my-8 bg-surface p-10 md:p-14 border border-border/40 rounded-sm text-center space-y-4">
+                    <span className="font-body text-[9px] tracking-[0.3em] uppercase text-primary font-bold block">
+                      Editorial Pause
+                    </span>
+                    <h3 className="font-heading italic text-3xl md:text-4xl text-text font-light max-w-xl mx-auto">
+                      &ldquo;Every seam tells a story of patience, Mulberry silk, and quiet luxury.&rdquo;
+                    </h3>
+                    <p className="font-body text-xs text-text/60 tracking-widest uppercase font-light">
+                      Handcrafted in Indonesia &bull; AISCHMIRA Studio
+                    </p>
+                  </div>
+                )}
+              </React.Fragment>
             ))}
           </div>
         ) : (
@@ -237,7 +378,7 @@ export function CollectionDetailClient({
           <div className="text-center py-20 px-6 space-y-4 bg-surface/50 border border-border/40 rounded-sm max-w-md mx-auto">
             <p className="font-heading italic text-3xl text-text font-light">No Pieces Match Criteria</p>
             <p className="font-body text-xs tracking-widest uppercase text-text/50 leading-relaxed font-light">
-              Try adjusting your active color or size filters to discover available pieces.
+              Try adjusting your active category, color, or size filters to discover available pieces.
             </p>
             <button
               onClick={clearFilters}
@@ -247,6 +388,26 @@ export function CollectionDetailClient({
             </button>
           </div>
         )}
+
+        {/* Loading State & Load More Controls */}
+        {isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 pt-10">
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+            <ProductCardSkeleton />
+          </div>
+        ) : visibleCount < filteredProducts.length ? (
+          <div className="text-center pt-14">
+            <button
+              onClick={handleLoadMore}
+              className="bg-surface text-text border border-border/60 hover:border-text hover:text-primary transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-4 px-12 rounded-sm font-medium inline-flex items-center gap-2"
+            >
+              Load More Pieces <ArrowRight size={14} />
+            </button>
+          </div>
+        ) : null}
+
       </div>
 
       {/* Related Collections Section */}
