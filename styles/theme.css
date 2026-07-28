@@ -7,7 +7,22 @@
 
 :root {
   /* =========================================
-     1. BRAND COLOR PALETTE — #D9AE20 Scale
+     1. LAYOUT ARCHITECTURE TOKENS
+     ========================================= */
+  --announcement-height:       40px;
+  --header-height:             88px;
+  --header-height-scrolled:    72px;
+  --section-spacing-sm:        96px;
+  --section-spacing-md:        120px;
+  --section-spacing-lg:        160px;
+  --content-width:             1280px;
+  --hero-width:                1440px;
+  --ultrawide-width:           1600px;
+  --editorial-width:           960px;
+  --reading-width:             760px;
+
+  /* =========================================
+     2. BRAND COLOR PALETTE — #D9AE20 Scale
      ========================================= */
   --color-primary-50:  #F9F2D8;
   --color-primary-100: #F3E5B5;
@@ -21,7 +36,7 @@
   --color-primary-900: #704A0B;
 
   /* =========================================
-     2. SEMANTIC COLOR TOKENS
+     3. SEMANTIC COLOR TOKENS
      ========================================= */
   --color-primary:            #D9AE20;
   --color-primary-hover:      #C08E18;
@@ -79,7 +94,7 @@
   --muted:      var(--color-text-secondary);
 
   /* =========================================
-     3. SPACING SCALE (rem, base 16px)
+     4. SPACING SCALE (rem, base 16px)
      ========================================= */
   --spacing-4:   0.25rem;   /* 4px */
   --spacing-8:   0.5rem;    /* 8px */
@@ -96,7 +111,7 @@
   --spacing-128: 8rem;      /* 128px */
 
   /* =========================================
-     4. RADIUS SCALE
+     5. RADIUS SCALE
      ========================================= */
   --radius-xs:   0.125rem;  /* 2px */
   --radius-sm:   0.25rem;   /* 4px */
@@ -107,7 +122,7 @@
   --radius-full: 9999px;
 
   /* =========================================
-     5. SHADOW SYSTEM
+     6. SHADOW SYSTEM
      ========================================= */
   --shadow-sm:       0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md:       0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
@@ -117,14 +132,14 @@
   --shadow-hover:    0 12px 32px -8px rgba(43, 43, 43, 0.12);
 
   /* =========================================
-     6. MOTION & TRANSITIONS
+     7. MOTION & TRANSITIONS
      ========================================= */
   --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow:   500ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* =========================================
-     7. Z-INDEX SYSTEM
+     8. Z-INDEX SYSTEM
      ========================================= */
   --z-base:     0;
   --z-dropdown: 100;
@@ -134,7 +149,7 @@
   --z-toast:    500;
 
   /* =========================================
-     8. CONTAINER & BREAKPOINTS
+     9. CONTAINER & BREAKPOINTS
      ========================================= */
   --container-max:     1280px;
   --container-padding: 1.5rem;

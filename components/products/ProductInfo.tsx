@@ -21,6 +21,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const isWishlisted = wishlist.some((w) => w.productId === product.id);
 
   const [selectedVariantId, setSelectedVariantId] = React.useState(product.variants[0]?.id || "");
+  const [quantity, setQuantity] = React.useState(1);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = React.useState(false);
   const [showAddedToast, setShowAddedToast] = React.useState(false);
 
@@ -36,14 +37,17 @@ export function ProductInfo({ product }: ProductInfoProps) {
     addToCart({
       productId: product.id,
       variantId: selectedVariant.id,
-      quantity: 1,
+      quantity,
     });
     setShowAddedToast(true);
     setTimeout(() => setShowAddedToast(false), 3000);
   };
 
   const handleWhatsAppInquiry = () => {
-    const message = `Hello AISCHMIRA Concierge, I would like to inquire about the ${product.name} (Color: ${selectedVariant?.color || "Standard"}, Size: ${selectedVariant?.size || "Standard"}). Price: ${formatter.format(selectedVariant?.price || product.basePrice)}. Could you assist me?`;
+    const selectedColorName = selectedVariant?.color || "Standard";
+    const selectedSizeName = selectedVariant?.size || "Standard";
+    
+    const message = `Hello AISCHMIRA,\n\nI'm interested in:\nProduct: ${product.name}\nSize: ${selectedSizeName}\nColor: ${selectedColorName}\nPrice: ${formatter.format(selectedVariant?.price || product.basePrice)}\n\nCould you please assist me?`;
     const url = getWhatsAppInquiryUrl(message);
     window.open(url, "_blank");
   };
@@ -62,9 +66,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
   };
 
   return (
-    <div className="flex flex-col h-full sticky top-32">
+    <div className="flex flex-col h-full lg:sticky lg:top-32 space-y-6">
+      
       {/* Category & Share */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <span className="font-body text-[9px] tracking-[0.25em] uppercase text-text/50">
           {product.categoryId} &bull; AISCHMIRA FLAGSHIP
         </span>
@@ -78,38 +83,40 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Title & Price */}
-      <h1 className="font-heading italic text-3xl md:text-5xl text-text mb-4">{product.name}</h1>
-      <div className="flex items-center gap-4 mb-6">
-        <p className="font-body text-xl md:text-2xl font-light text-text/90">
-          {formatter.format(selectedVariant?.price || product.basePrice)}
-        </p>
-        {selectedVariant?.stock && selectedVariant.stock < 5 ? (
-          <span className="font-body text-[9px] tracking-widest uppercase bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-1 rounded-full">
-            Limited &bull; Only {selectedVariant.stock} left
-          </span>
-        ) : (
-          <span className="font-body text-[9px] tracking-widest uppercase text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-            In Stock &bull; Concierge Ready
-          </span>
-        )}
+      <div>
+        <h1 className="font-heading italic text-3xl md:text-5xl text-text mb-3">{product.name}</h1>
+        <div className="flex items-center gap-4">
+          <p className="font-body text-xl md:text-2xl font-light text-text/90">
+            {formatter.format(selectedVariant?.price || product.basePrice)}
+          </p>
+          {selectedVariant?.stock && selectedVariant.stock < 5 ? (
+            <span className="font-body text-[9px] tracking-widest uppercase bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-1 rounded-full">
+              Limited &bull; Only {selectedVariant.stock} left
+            </span>
+          ) : (
+            <span className="font-body text-[9px] tracking-widest uppercase text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+              In Stock &bull; Concierge Ready
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Short Story snippet */}
       {product.story && (
-        <p className="font-body text-xs leading-relaxed text-text/70 italic mb-8 border-l-2 border-primary/40 pl-4">
+        <p className="font-body text-xs leading-relaxed text-text/70 italic border-l-2 border-primary/40 pl-4 py-1">
           &ldquo;{product.story}&rdquo;
         </p>
       )}
 
       {/* Selectors */}
-      <div className="flex flex-col gap-8 mb-10">
+      <div className="space-y-6 pt-2">
         {/* Color Selection */}
         {colors.length > 0 && colors[0] !== "OS" && (
-          <div className="flex flex-col gap-3">
-            <span className="font-body text-[10px] tracking-widest uppercase text-text/60">
+          <div className="space-y-2.5">
+            <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block">
               Color: <span className="text-text font-medium">{selectedVariant?.color}</span>
             </span>
-            <div className="flex gap-3">
+            <div className="flex gap-2.5 flex-wrap">
               {colors.map((color) => {
                 const variant = product.variants.find((v) => v.color === color);
                 const isSelected = selectedVariant?.color === color;
@@ -118,9 +125,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
                     key={color}
                     onClick={() => variant && setSelectedVariantId(variant.id)}
                     className={cn(
-                      "font-body text-[10px] tracking-widest uppercase px-4 py-2 border transition-all duration-300 rounded-sm",
+                      "font-body text-[10px] tracking-widest uppercase px-4 py-2 border transition-all duration-300 rounded-sm font-medium",
                       isSelected
-                        ? "border-text text-text bg-surface shadow-sm font-medium"
+                        ? "border-text text-text bg-surface shadow-sm"
                         : "border-border/50 text-text/60 hover:border-border hover:text-text"
                     )}
                   >
@@ -134,7 +141,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
         {/* Size Selection */}
         {sizes.length > 0 && sizes[0] !== "OS" && (
-          <div className="flex flex-col gap-3">
+          <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="font-body text-[10px] tracking-widest uppercase text-text/60">
                 Size: <span className="text-text font-medium">{selectedVariant?.size}</span>
@@ -146,7 +153,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 <Ruler size={14} /> Size Guide
               </button>
             </div>
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex gap-2.5 flex-wrap">
               {sizes.map((size) => {
                 const variant = product.variants.find((v) => v.color === selectedVariant?.color && v.size === size);
                 const isSelected = selectedVariant?.size === size;
@@ -157,11 +164,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
                     disabled={!isAvailable}
                     onClick={() => variant && setSelectedVariantId(variant.id)}
                     className={cn(
-                      "w-12 h-12 flex items-center justify-center font-body text-[10px] tracking-widest uppercase border transition-all duration-300 rounded-sm",
+                      "w-12 h-12 flex items-center justify-center font-body text-[10px] tracking-widest uppercase border transition-all duration-300 rounded-sm font-medium",
                       !isAvailable
                         ? "opacity-30 cursor-not-allowed border-border/50 text-text relative after:content-[''] after:absolute after:w-[120%] after:h-[1px] after:bg-text after:rotate-45"
                         : isSelected
-                        ? "border-text text-text bg-surface shadow-sm font-medium"
+                        ? "border-text text-text bg-surface shadow-sm"
                         : "border-border/50 text-text/70 hover:border-border hover:text-text"
                     )}
                   >
@@ -172,22 +179,44 @@ export function ProductInfo({ product }: ProductInfoProps) {
             </div>
           </div>
         )}
+
+        {/* Quantity Counter */}
+        <div className="space-y-2.5">
+          <span className="font-body text-[10px] tracking-widest uppercase text-text/60 block">Quantity</span>
+          <div className="inline-flex items-center border border-border/60 rounded-sm bg-surface">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              className="px-3.5 py-2 text-text/70 hover:text-text transition-colors font-body text-sm"
+              aria-label="Decrease quantity"
+            >
+              -
+            </button>
+            <span className="px-4 font-body text-xs font-medium text-text">{quantity}</span>
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+              className="px-3.5 py-2 text-text/70 hover:text-text transition-colors font-body text-sm"
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-10">
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
         <button
           onClick={handleAddToCart}
-          className="flex-1 bg-text text-surface font-body text-[10px] tracking-[0.2em] uppercase py-4 hover:bg-primary transition-colors rounded-sm font-medium shadow-sm"
+          className="flex-1 bg-text text-surface font-body text-[10px] tracking-[0.2em] uppercase py-4 hover:bg-primary transition-colors rounded-sm font-medium shadow-sm text-center"
         >
           Add to Bag
         </button>
         
         <button
           onClick={handleWhatsAppInquiry}
-          className="flex-1 bg-whatsapp text-white font-body text-[10px] tracking-[0.2em] uppercase py-4 hover:opacity-90 transition-opacity rounded-sm font-medium flex items-center justify-center gap-2"
+          className="flex-1 bg-whatsapp text-white font-body text-[10px] tracking-[0.2em] uppercase py-4 hover:opacity-90 transition-opacity rounded-sm font-medium flex items-center justify-center gap-2 text-center"
         >
-          <MessageCircle size={15} /> Inquire Concierge
+          <MessageCircle size={15} /> Order via WhatsApp
         </button>
 
         <button
@@ -201,7 +230,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Added to Bag Toast Banner */}
       {showAddedToast && (
-        <div className="mb-6 p-4 bg-emerald-900 text-white rounded-sm font-body text-xs flex items-center justify-between animate-fadeIn">
+        <div className="p-4 bg-emerald-900 text-white rounded-sm font-body text-xs flex items-center justify-between animate-fadeIn">
           <span className="flex items-center gap-2">
             <Check size={16} /> Added to your shopping bag.
           </span>
@@ -212,16 +241,16 @@ export function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       {/* Accordion Details */}
-      <Accordion.Root type="multiple" defaultValue={["desc"]} className="border-t border-border/50 pt-4">
+      <Accordion.Root type="multiple" defaultValue={["desc"]} className="border-t border-border/50 pt-2">
         <Accordion.Item value="desc" className="border-b border-border/50">
           <Accordion.Header>
-            <Accordion.Trigger className="flex w-full items-center justify-between py-5 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
+            <Accordion.Trigger className="flex w-full items-center justify-between py-4 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
               Description & Craftsmanship
               <ChevronDown size={14} className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
             </Accordion.Trigger>
           </Accordion.Header>
           <Accordion.Content className="overflow-hidden">
-            <p className="font-body text-sm font-light leading-relaxed text-text/70 pb-6">
+            <p className="font-body text-sm font-light leading-relaxed text-text/70 pb-5">
               {product.description}
             </p>
           </Accordion.Content>
@@ -230,13 +259,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         {product.material && (
           <Accordion.Item value="mat" className="border-b border-border/50">
             <Accordion.Header>
-              <Accordion.Trigger className="flex w-full items-center justify-between py-5 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
+              <Accordion.Trigger className="flex w-full items-center justify-between py-4 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
                 Details & Care
                 <ChevronDown size={14} className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="overflow-hidden">
-              <div className="font-body text-sm font-light leading-relaxed text-text/70 pb-6 space-y-3">
+              <div className="font-body text-sm font-light leading-relaxed text-text/70 pb-5 space-y-2">
                 <p><span className="font-medium text-text">Composition:</span> {product.material}</p>
                 <p><span className="font-medium text-text">Care:</span> {product.careInstruction}</p>
               </div>
@@ -247,13 +276,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         {product.shippingInfo && (
           <Accordion.Item value="ship" className="border-b border-border/50">
             <Accordion.Header>
-              <Accordion.Trigger className="flex w-full items-center justify-between py-5 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
+              <Accordion.Trigger className="flex w-full items-center justify-between py-4 font-body text-[10px] tracking-widest uppercase text-text/80 hover:text-primary transition-colors group">
                 Complimentary Shipping & Concierge Returns
                 <ChevronDown size={14} className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content className="overflow-hidden">
-              <p className="font-body text-sm font-light leading-relaxed text-text/70 pb-6">
+              <p className="font-body text-sm font-light leading-relaxed text-text/70 pb-5">
                 {product.shippingInfo} All orders are hand-packaged in signature AISCHMIRA luxury boxes with personal inspection certificates.
               </p>
             </Accordion.Content>

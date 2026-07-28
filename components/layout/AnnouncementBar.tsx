@@ -1,56 +1,41 @@
 "use client";
 
 import * as React from "react";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
-
-const announcements = [
-  "Free Shipping on orders above Rp 500.000",
-  "New Collection — FEMME is now available",
-  "Shop the latest arrivals at AISCHMIRA.STORE",
-];
+import { X, MessageCircle } from "lucide-react";
+import { useAnnouncementContext } from "@/providers/AnnouncementProvider";
 
 export function AnnouncementBar() {
-  const [visible, setVisible] = React.useState(true);
-  const [index, setIndex] = React.useState(0);
+  const { dismissed, dismiss } = useAnnouncementContext();
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % announcements.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  if (!visible) return null;
+  if (dismissed) return null;
 
   return (
     <div
-      className={cn(
-        "relative z-50 flex items-center justify-center bg-text text-surface px-4 py-2.5",
-        "min-h-[40px] overflow-hidden"
-      )}
+      className="bg-text text-surface h-[40px] px-6 flex items-center justify-between font-body text-[10px] tracking-[0.2em] uppercase z-50 relative transition-all duration-300 border-b border-surface/10"
       role="region"
-      aria-label="Pengumuman toko"
+      aria-label="Announcement Bar"
     >
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={index}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="text-center text-[10px] sm:text-xs font-body tracking-[0.2em] uppercase text-surface/90"
+      <div className="mx-auto flex items-center gap-3">
+        <span className="font-medium">
+          COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING & CONCIERGE PACKAGING
+        </span>
+        <span className="hidden md:inline text-surface/40">&bull;</span>
+        <a
+          href="https://wa.me/6285121344848"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline font-bold text-primary hover:underline flex items-center gap-1"
         >
-          {announcements[index]}
-        </motion.p>
-      </AnimatePresence>
+          <MessageCircle size={12} /> WhatsApp Assistance
+        </a>
+      </div>
+
       <button
-        onClick={() => setVisible(false)}
-        aria-label="Tutup pengumuman"
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-surface/60 hover:text-surface transition-colors p-1"
+        onClick={dismiss}
+        className="text-surface/60 hover:text-surface transition-colors p-1"
+        aria-label="Dismiss Announcement"
       >
-        <X size={14} strokeWidth={1.5} />
+        <X size={14} />
       </button>
     </div>
   );

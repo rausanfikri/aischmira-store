@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "@/styles/globals.css";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { SiteLayout } from "@/components/layout/SiteLayout";
 import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 
 const inter = Inter({
@@ -73,13 +71,8 @@ export default function RootLayout({
       lang="id-ID"
       className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body bg-background text-text">
-        <AnnouncementBar />
-        <Navbar />
-        <main className="flex-1 pt-[104px]">
-          {children}
-        </main>
-        <Footer />
+      <body className="min-h-full font-body bg-background text-text">
+        <SiteLayout>{children}</SiteLayout>
         <FloatingWhatsApp />
       </body>
     </html>

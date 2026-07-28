@@ -45,14 +45,21 @@ const CATEGORIES = [
   { name: "Short Pyjama Set", slug: "pyjamas" },
 ];
 
-export default function DesktopNav() {
+interface DesktopNavProps {
+  isTransparent?: boolean;
+}
+
+export default function DesktopNav({ isTransparent }: DesktopNavProps) {
+  const linkTextClass = isTransparent
+    ? "text-surface/90 hover:text-surface"
+    : "text-text/80 hover:text-primary";
   return (
     <NavigationMenu.Root className="relative z-10 hidden lg:flex w-full items-center">
       <NavigationMenu.List className="flex items-center gap-8 m-0 p-0 list-none">
         
         {/* Collections Mega Menu */}
         <NavigationMenu.Item>
-          <NavigationMenu.Trigger className="group flex items-center gap-1 font-body text-[11px] tracking-[0.2em] uppercase text-text/80 hover:text-primary transition-colors py-6 bg-transparent outline-none font-medium">
+          <NavigationMenu.Trigger className={`group flex items-center gap-1 font-body text-[11px] tracking-[0.2em] uppercase ${linkTextClass} transition-colors py-6 bg-transparent outline-none font-medium`}>
             Collections
             <ChevronDown
               size={12}
@@ -135,7 +142,7 @@ export default function DesktopNav() {
 
         {/* Categories Mega Menu */}
         <NavigationMenu.Item>
-          <NavigationMenu.Trigger className="group flex items-center gap-1 font-body text-[11px] tracking-[0.2em] uppercase text-text/80 hover:text-primary transition-colors py-6 bg-transparent outline-none font-medium">
+          <NavigationMenu.Trigger className={`group flex items-center gap-1 font-body text-[11px] tracking-[0.2em] uppercase ${linkTextClass} transition-colors py-6 bg-transparent outline-none font-medium`}>
             Categories
             <ChevronDown
               size={12}
