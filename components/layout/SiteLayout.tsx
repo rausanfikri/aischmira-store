@@ -12,6 +12,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { ShoppingBagDrawer } from "@/components/layout/ShoppingBagDrawer";
+import { AccountDrawer } from "@/components/layout/AccountDrawer";
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -37,6 +38,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 {/* 5. Global Overlays & Drawers */}
                 <SearchOverlay />
                 <ShoppingBagDrawer />
+                <AccountDrawer />
 
               </div>
             </ModalProvider>

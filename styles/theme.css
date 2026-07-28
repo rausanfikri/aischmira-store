@@ -10,8 +10,9 @@
      1. LAYOUT ARCHITECTURE TOKENS
      ========================================= */
   --announcement-height:       40px;
-  --header-height:             88px;
-  --header-height-scrolled:    72px;
+  --header-height-desktop:     80px;
+  --header-height-scrolled:    64px;
+  --header-height-mobile:      60px;
   --section-spacing-sm:        96px;
   --section-spacing-md:        120px;
   --section-spacing-lg:        160px;

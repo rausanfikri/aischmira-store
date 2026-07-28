@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function CollectionsPage() {
   return (
-    <div className="pt-[104px] pb-24 md:pb-36 bg-background min-h-screen">
+    <div className="pt-12 md:pt-16 pb-24 md:pb-36 bg-background min-h-screen">
       <div className="container-custom">
         
         {/* Header Hero Banner */}

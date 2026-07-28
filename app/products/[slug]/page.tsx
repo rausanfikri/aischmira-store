@@ -7,6 +7,7 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductInfo } from "@/components/products/ProductInfo";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { RecentlyViewed } from "@/components/products/RecentlyViewed";
+import { StickyWhatsAppCTA } from "@/components/products/StickyWhatsAppCTA";
 import { ChevronRight, MessageCircle, Sparkles, Gem } from "lucide-react";
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
@@ -34,10 +35,10 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     : productsData.filter((p) => p.collectionId === product.collectionId && p.id !== product.id).slice(0, 4);
 
   return (
-    <div className="pt-[40px] pb-24 md:pb-36 bg-background min-h-screen">
+    <div className="pt-8 md:pt-12 pb-28 md:pb-36 bg-background min-h-screen">
       <div className="container-custom">
 
-        {/* Breadcrumb Navigation */}
+        {/* 1. Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-2 font-body text-[10px] tracking-[0.25em] uppercase text-text/50">
             <li><Link href="/" className="hover:text-text transition-colors">Home</Link></li>
@@ -54,15 +55,15 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           </ol>
         </nav>
 
-        {/* Main Product Split Grid (Left: Gallery, Right: Info) */}
+        {/* 2. Sticky Desktop Gallery & Product Information Split View */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 mb-24 md:mb-32">
           
-          {/* Left: Gallery */}
+          {/* Gallery */}
           <div className="w-full lg:w-7/12">
             <ProductGallery images={product.images} />
           </div>
 
-          {/* Right: Product Info Controls */}
+          {/* Product Info & Selectors */}
           <div className="w-full lg:w-5/12">
             <ProductInfo product={product} />
           </div>
@@ -71,7 +72,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
       </div>
 
-      {/* Editorial Story & Designer Notes Section */}
+      {/* 3. Product Story, Designer Notes & Materials Composition Section */}
       <div className="w-full bg-surface py-20 md:py-28 mb-24 md:mb-32 border-y border-border/40">
         <div className="container-editorial text-center space-y-8">
           <div className="space-y-3">
@@ -87,7 +88,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             {product.story || "A testament to enduring style, this piece blends classic construction with contemporary aesthetics to deliver unparalleled elegance."}
           </p>
 
-          {/* Designer Notes & Materials Badges */}
+          {/* Designer Notes & Material Badges */}
           <div className="pt-6 border-t border-border/30 max-w-xl mx-auto flex flex-col items-center gap-4">
             <span className="font-body text-[9px] tracking-[0.25em] uppercase text-primary font-bold flex items-center gap-1.5">
               <Sparkles size={14} /> Designer Notes
@@ -106,7 +107,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
       <div className="container-custom space-y-24 md:space-y-32">
         
-        {/* Related Products Grid */}
+        {/* 4. Related Products Grid */}
         {relatedProducts.length > 0 && (
           <section className="space-y-12">
             <div className="flex items-center justify-between border-b border-border/40 pb-6">
@@ -134,10 +135,10 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           </section>
         )}
 
-        {/* Client Recently Viewed Products */}
+        {/* 5. Recently Viewed Products (Client Browsing History) */}
         <RecentlyViewed currentProductId={product.id} />
 
-        {/* Direct WhatsApp Concierge Assistance */}
+        {/* 6. Direct WhatsApp Concierge Styling CTA */}
         <section className="bg-surface p-10 md:p-16 border border-border/40 rounded-sm text-center space-y-6 max-w-[960px] mx-auto shadow-sm">
           <span className="font-body text-[10px] tracking-[0.3em] uppercase text-text/50 block">
             Dedicated Fashion Concierge
@@ -161,6 +162,10 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
         </section>
 
       </div>
+
+      {/* 7. Sticky Mobile WhatsApp CTA Bar */}
+      <StickyWhatsAppCTA product={product} />
+
     </div>
   );
 }

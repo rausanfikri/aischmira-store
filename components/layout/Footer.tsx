@@ -11,7 +11,7 @@ export function Footer() {
 
   return (
     <footer className="bg-background text-text border-t border-border/40 pt-20 pb-12 sm:pt-28 sm:pb-16" role="contentinfo">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+      <div className="container-hero">
         
         {/* Balanced 5-Column Navigation Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-12 mb-20 sm:mb-28 text-left">
