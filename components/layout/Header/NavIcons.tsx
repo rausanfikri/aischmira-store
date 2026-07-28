@@ -21,13 +21,13 @@ export function NavIcons({ isTransparent }: NavIconsProps) {
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const iconClass = cn(
-    "p-1.5 transition-colors focus:outline-none",
-    isTransparent ? "text-surface hover:text-primary-light" : "text-text hover:text-primary"
+    "p-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs flex items-center justify-center",
+    isTransparent ? "text-surface hover:text-primary" : "text-text/80 hover:text-primary"
   );
 
   return (
-    <div className="flex items-center justify-end gap-3 sm:gap-5 min-w-[120px] md:min-w-[220px]">
-      {/* Search */}
+    <div className="flex items-center justify-end gap-2 sm:gap-4 w-full">
+      {/* 1. Search */}
       <button
         onClick={() => setSearchOpen(true)}
         className={iconClass}
@@ -36,16 +36,16 @@ export function NavIcons({ isTransparent }: NavIconsProps) {
         <Search size={20} strokeWidth={1.5} />
       </button>
 
-      {/* Account */}
+      {/* 2. Account */}
       <button
         onClick={() => setAccountOpen(true)}
-        className={cn(iconClass, "hidden sm:block")}
+        className={cn(iconClass, "hidden sm:flex")}
         aria-label="Member Account"
       >
         <UserIcon size={20} strokeWidth={1.5} />
       </button>
 
-      {/* Wishlist */}
+      {/* 3. Wishlist */}
       <button
         onClick={() => setWishlistOpen(true)}
         className={cn(iconClass, "relative")}
@@ -53,21 +53,21 @@ export function NavIcons({ isTransparent }: NavIconsProps) {
       >
         <Heart size={20} strokeWidth={1.5} />
         {wishlist.length > 0 && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-surface font-body text-[8px] font-bold rounded-full flex items-center justify-center">
+          <span className="absolute top-0 right-0 w-4 h-4 bg-primary text-surface font-body text-[8px] font-bold rounded-full flex items-center justify-center">
             {wishlist.length}
           </span>
         )}
       </button>
 
-      {/* Shopping Bag */}
+      {/* 4. Shopping Bag */}
       <button
         onClick={() => setCartOpen(true)}
-        className={cn(iconClass, "relative flex items-center gap-1")}
+        className={cn(iconClass, "relative")}
         aria-label="Shopping Bag"
       >
         <ShoppingBag size={20} strokeWidth={1.5} />
         {cartCount > 0 && (
-          <span className="w-4 h-4 bg-text text-surface font-body text-[8px] font-bold rounded-full flex items-center justify-center">
+          <span className="absolute top-0 right-0 w-4 h-4 bg-text text-surface font-body text-[8px] font-bold rounded-full flex items-center justify-center">
             {cartCount}
           </span>
         )}

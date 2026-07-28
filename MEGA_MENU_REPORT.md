@@ -1,22 +1,27 @@
 # AISCHMIRA.STORE — Mega Menu Report
-**Sprint:** 2D.3 — Premium Navigation Experience
+**Sprint:** 2D.5A — Premium Header Navigation Final (Pre UI Freeze)
 **Date:** July 28, 2026
 
 ---
 
-## 1. Directory Entries Verified
+## 1. Collections Mega Menu Structure
 
-### Collections Directory
-- **Newest**: FEMME, HER, SHE
-- **Classic**: Bianca, Priscila, Safira, Briana, Tifani, Zamira, Gendis, Amara, Dasya, Jolly, Aveline, Luna
-- **Scarves & Prints**: AM Monogram, Floral Meadow, Chili Chic, Garlic Bloom, Spice Blossom
+Multi-column layout divided into 3 distinct sections with a feature preview card:
 
-### Apparel Categories Directory
-- Outerwear, Tops, Bottoms, Dress, Accessories, Long Pyjama Set, Short Pyjama Set
+| Section | Content | Visual Styling |
+|---|---|---|
+| **SIGNATURE COLLECTIONS** | FEMME, HER, SHE | Highlighted with primary gold font (`#D9AE20`), subtle background cards, and "Signature" badges. |
+| **CLASSIC COLLECTIONS** | Bianca, Priscila, Safira, Briana, Tifani, Zamira, Gendis, Amara, Dasya, Jolly, Aveline, Luna | 2-column clean typography grid. |
+| **SPECIAL COLLECTIONS** | AM Monogram, Floral Meadow, Chili Chic, Garlic Bloom, Spice Blossom | Single-column silk scarf collection list. |
+| **EDITORIAL PREVIEW** | Flagship Edit Image Card | 3/4 aspect ratio cover preview with gradient overlay. |
 
----
+## 2. Categories Dropdown
 
-## 2. Animation & UX
-
-- Smooth Radix Navigation Menu transitions (`data-[motion]`) with full-width backdrop card.
-- High-resolution editorial photography preview card.
+Compact dropdown with exactly 7 unique apparel categories:
+1. Outerwear
+2. Tops
+3. Bottoms
+4. Dress
+5. Accessories
+6. Long Pyjama Set
+7. Short Pyjama Set

@@ -18,21 +18,30 @@ export function Header() {
 
   return (
     <HeaderContainer scrolled={scrolled} isTransparent={isTransparent}>
-      <div className="flex items-center justify-between w-full">
+      {/* 
+        CSS GRID HEADER ARCHITECTURE
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr)
+        Mathematically guarantees Logo remains perfectly centered relative to the viewport/container.
+      */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center w-full">
         
-        {/* Left: Mobile Toggle & Navigation Links */}
-        <div className="flex items-center gap-4 min-w-[120px] md:min-w-[220px]">
-          <div className="md:hidden">
+        {/* Left Column: Mobile Toggle & Desktop Nav Links (Collections & Categories side-by-side) */}
+        <div className="flex items-center gap-4">
+          <div className="lg:hidden">
             <MobileNav />
           </div>
           <NavLinks isTransparent={isTransparent} />
         </div>
 
-        {/* Center: Brand Flagship Logo */}
-        <Logo scrolled={scrolled} />
+        {/* Center Column: AISCHMIRA Brand Flagship Logo */}
+        <div className="flex items-center justify-center">
+          <Logo scrolled={scrolled} />
+        </div>
 
-        {/* Right: Action Controls (Search, Account, Wishlist, Cart) */}
-        <NavIcons isTransparent={isTransparent} />
+        {/* Right Column: Action Controls (Search, Account, Wishlist, Bag) */}
+        <div className="flex items-center justify-end">
+          <NavIcons isTransparent={isTransparent} />
+        </div>
 
       </div>
     </HeaderContainer>

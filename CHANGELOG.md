@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint 2D.5A] - 2026-07-28
+### Added
+- **CSS Grid 3-Column Header Architecture (`Header.tsx`)**: Rebuilt Header layout using `grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr)` ensuring exact mathematical logo centering relative to the viewport.
+- **Collections Mega Menu Restructuring (`DesktopNav.tsx`)**: Multi-column menu organized into Signature Collections (FEMME, HER, SHE with primary gold emphasis), Classic Collections (12 items in 2-col grid), and Special Collections (5 silk scarf edits) with editorial cover preview.
+- **Categories Dropdown Restructuring (`DesktopNav.tsx`)**: Compact dropdown with 7 unique items (Outerwear, Tops, Bottoms, Dress, Accessories, Long Pyjama Set, Short Pyjama Set).
+- **Exact Logo Heights (`Logo.tsx`)**: Desktop initial 52px, scrolled 44px, mobile 36px.
+- **Header Reports**: Generated 7 dedicated header audit reports (`HEADER_ARCHITECTURE_REPORT.md`, `NAV_REPORT.md`, `MEGA_MENU_REPORT.md`, `HEADER_RESPONSIVE_REPORT.md`, `HEADER_ACCESSIBILITY_REPORT.md`, `HEADER_FILES_CHANGED.md`, `HEADER_TECHNICAL_DEBT.md`).
+
+### Removed
+- **Journal & About Nav Links**: Completely removed Journal and About links from main header row with zero leftover empty spacing.
+
 ## [Sprint 2D.6] - 2026-07-28
 ### Added
 - **Design System Audit Reports**: Generated 4 comprehensive design system QA deliverables (`DESIGN_AUDIT_REPORT.md`, `DESIGN_SYSTEM_REPORT.md`, `UI_FREEZE_CHECKLIST.md`, `TECHNICAL_DEBT_REPORT.md`).

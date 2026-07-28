@@ -15,11 +15,11 @@ export function Logo({ scrolled }: LogoProps) {
   return (
     <Link
       href="/"
-      className="relative flex items-center justify-center shrink-0 transition-all duration-300 ease-in-out focus:outline-none"
+      className="relative flex items-center justify-center shrink-0 transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xs"
       aria-label="AISCHMIRA Flagship Home"
     >
       {imgError ? (
-        <span className="font-heading text-2xl tracking-[0.3em] uppercase text-text" aria-hidden="true">
+        <span className="font-heading text-2xl md:text-3xl tracking-[0.3em] uppercase text-text font-light" aria-hidden="true">
           AISCHMIRA
         </span>
       ) : (
@@ -30,9 +30,10 @@ export function Logo({ scrolled }: LogoProps) {
           height={70}
           className={cn(
             "object-contain w-auto transition-all duration-300 ease-in-out",
+            /* Desktop: 52px initial, 44px scrolled | Mobile: 36px */
             scrolled
-              ? "h-[38px] md:h-[44px]"
-              : "h-[38px] md:h-[52px]"
+              ? "h-[36px] md:h-[44px]"
+              : "h-[36px] md:h-[52px]"
           )}
           onError={() => setImgError(true)}
           priority

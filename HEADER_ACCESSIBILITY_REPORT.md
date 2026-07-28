@@ -1,12 +1,12 @@
 # AISCHMIRA.STORE — Header Accessibility Report
-**Sprint:** 2D.1 — Luxury Header Reconstruction & Visual Stabilization
+**Sprint:** 2D.5A — Premium Header Navigation Final (Pre UI Freeze)
 **Date:** July 28, 2026
 
 ---
 
-## 1. Accessibility Features Verified
+## Accessibility Audit
 
-- **Screen Reader Labels**: `aria-label` added to logo (`AISCHMIRA Flagship Home`), navigation (`Main Navigation`), search trigger (`Search Catalog`), member account (`Member Account`), wishlist (`Wishlist`), and cart drawer (`Shopping Bag`).
-- **Focus Rings**: 2px primary gold outline on keyboard `Tab` focus.
-- **Semantic HTML**: `<header>`, `<nav>`, `<button>`, and `<a>` elements used strictly according to specification.
-- **Touch Target Padding**: Icon buttons padded to minimum `44x44px` interactive area.
+- **ARIA Navigation**: `<nav aria-label="Main Navigation">` and Radix `NavigationMenu` primitives with `aria-expanded` and `aria-hidden` chevron triggers.
+- **Focus Management**: Visible outline ring (`focus-visible:ring-2 ring-primary`) on all interactive buttons and logo link.
+- **Keyboard Navigation**: Escape key closes Radix dialogs/drawers; Arrow keys navigate dropdown menus.
+- **Icon Labels**: All icon controls have explicit `aria-label` strings ("Search Catalog", "Member Account", "Wishlist", "Shopping Bag").
