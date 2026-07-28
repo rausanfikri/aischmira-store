@@ -8,7 +8,7 @@ export function WhatsAppSection() {
 
   return (
     <section className="bg-background py-24 md:py-36 border-b border-border/40">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+      <div className="mx-auto max-w-[960px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20 text-center">
         
         <motion.div
           initial={{ opacity: 0, y: 30 }}

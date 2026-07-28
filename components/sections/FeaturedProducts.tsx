@@ -28,7 +28,7 @@ export function FeaturedProducts() {
 
   return (
     <section className="bg-surface py-24 md:py-36 border-b border-border/40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">

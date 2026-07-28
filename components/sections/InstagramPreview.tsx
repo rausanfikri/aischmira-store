@@ -9,7 +9,7 @@ export function InstagramPreview() {
 
   return (
     <section className="bg-background py-24 md:py-36 border-b border-border/40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-16 md:mb-20 space-y-3">

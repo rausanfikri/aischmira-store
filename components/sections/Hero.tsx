@@ -32,7 +32,7 @@ export function Hero() {
       </div>
 
       {/* Hero Content Area */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-5 sm:px-8 md:px-12 max-w-4xl mx-auto">
         
         {/* Eyebrow */}
         <motion.span

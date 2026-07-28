@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 export function BrandIntroduction() {
   return (
     <section className="bg-surface py-24 md:py-36 border-b border-border/40 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
           {/* Left Column: Large Editorial Story & Typography */}

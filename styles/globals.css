@@ -165,9 +165,92 @@ body {
   }
 }
 
-/* ===== TYPOGRAPHY & COMPONENT UTILITIES ===== */
+/* ===== CONTAINER & GRID UTILITIES ===== */
 @layer utilities {
-  /* Complete Typography Scale */
+  /* Global Container Utilities — Exact Padding Scale: Mobile 24px, Tablet 40px, Laptop 64px, Desktop 80px */
+  .container-custom {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+    padding-left: 1.5rem;   /* 24px mobile */
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .container-custom {
+      padding-left: 2.5rem; /* 40px tablet */
+      padding-right: 2.5rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .container-custom {
+      padding-left: 4rem;   /* 64px laptop */
+      padding-right: 4rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-custom {
+      padding-left: 5rem;   /* 80px desktop */
+      padding-right: 5rem;
+    }
+  }
+
+  .container-hero {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1440px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) { .container-hero { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  @media (min-width: 768px) { .container-hero { padding-left: 4rem; padding-right: 4rem; } }
+  @media (min-width: 1024px) { .container-hero { padding-left: 5rem; padding-right: 5rem; } }
+
+  .container-editorial {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) { .container-editorial { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  @media (min-width: 768px) { .container-editorial { padding-left: 4rem; padding-right: 4rem; } }
+  @media (min-width: 1024px) { .container-editorial { padding-left: 5rem; padding-right: 5rem; } }
+
+  .container-ultrawide {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1600px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) { .container-ultrawide { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  @media (min-width: 768px) { .container-ultrawide { padding-left: 4rem; padding-right: 4rem; } }
+  @media (min-width: 1024px) { .container-ultrawide { padding-left: 5rem; padding-right: 5rem; } }
+
+  /* Reading line-width limit (720–760px) */
+  .prose-reading {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Grid Standard Gaps */
+  .grid-luxury {
+    display: grid;
+    gap: 1rem; /* 16px mobile */
+  }
+  @media (min-width: 640px) {
+    .grid-luxury { gap: 1.5rem; } /* 24px tablet */
+  }
+  @media (min-width: 1024px) {
+    .grid-luxury { gap: 2rem; } /* 32px desktop */
+  }
+
+  /* Typography Scale */
   .text-display  { font-family: var(--font-heading); font-size: 5rem;    line-height: 1.05; letter-spacing: -0.02em; font-style: italic; }
   .text-h1       { font-family: var(--font-heading); font-size: 4rem;    line-height: 1.1;  letter-spacing: -0.02em; }
   .text-h2       { font-family: var(--font-heading); font-size: 3rem;    line-height: 1.2;  letter-spacing: -0.01em; }
@@ -189,21 +272,21 @@ body {
     font-weight: 300;
   }
 
-  /* Section Padding Scale */
+  /* Section Vertical Rhythm: 96px, 120px, 160px */
   .section-padding {
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
+    padding-top: 6rem;   /* 96px */
+    padding-bottom: 6rem;
   }
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
+      padding-top: 7.5rem; /* 120px */
+      padding-bottom: 7.5rem;
     }
   }
   @media (min-width: 1024px) {
     .section-padding {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
+      padding-top: 10rem;  /* 160px */
+      padding-bottom: 10rem;
     }
   }
 
