@@ -1,29 +1,35 @@
 # AISCHMIRA.STORE — Product Detail Report
-**Sprint:** 2D — Enterprise Layout Architecture + Product Experience
+**Sprint:** 2D.4 — Luxury Product Detail Experience
 **Date:** July 28, 2026
 
 ---
 
-## 1. Product Detail Page Architecture (`/products/[slug]`)
+## 1. Executive Summary
 
-The Product Detail experience was upgraded to reflect an international luxury brand flagship:
+Sprint 2D.4 elevated the Product Detail Page into a luxury editorial flagship experience. All enhancements focus on brand storytelling, premium visual presentation, WhatsApp Checkout conversion, and foundation for future Loyalty and Member features.
 
-1. **Sticky Desktop Gallery (`ProductGallery.tsx`)**: Split 7:5 layout with side thumbnails, smooth image transitions, and full-resolution lightbox zoom (`Maximize2`).
-2. **Product Controls (`ProductInfo.tsx`)**:
-   - Collection badge, Product Name, Price formatted in IDR (`Rp X.XXX.XXX`).
-   - Color variant selector buttons.
-   - Size variant selector buttons with strike-through for out-of-stock sizes.
-   - Quantity selector (+ / - counter).
-   - Size Guide Modal trigger (`Ruler` icon).
-   - Add to Bag button with feedback toast banner.
-   - **Primary Order via WhatsApp CTA**: Direct trigger to `https://wa.me/6285121344848` pre-filling garment name, size, color, and price.
-3. **Editorial Story & Designer Notes**:
-   - "The Inspiration & Craftsmanship" narrative block.
-   - Designer Notes and Materials & Craftsmanship badges.
-4. **Interactive Accordion Panels**:
-   - Description & Craftsmanship details.
-   - Composition & Care instructions.
-   - Complimentary Shipping & Concierge Returns policy.
-5. **Related Products**: 4-column product grid with hover zoom.
-6. **Recently Viewed Products (`RecentlyViewed.tsx`)**: Client browsing history tracker saved in `localStorage`.
-7. **Styling Concierge CTA**: Direct consultation panel with WhatsApp styling team.
+## 2. Components Modified
+
+| File | Change |
+|---|---|
+| `components/products/ProductGallery.tsx` | Framer Motion transitions, hover zoom, keyboard nav, image counter, optimized sizes |
+| `components/products/ProductInfo.tsx` | Sprint WhatsApp format, Loyalty preview card, expanded accordion (Material, Care, Delivery), motion reveals |
+| `components/products/ProductEditorial.tsx` | **NEW** — Editorial storytelling: The Story, Craftsmanship, Designed For |
+| `components/products/StickyWhatsAppCTA.tsx` | WhatsApp checkout message format updated |
+| `components/ui/ImageLightbox.tsx` | Performance polish (sizes prop) |
+| `app/products/[slug]/page.tsx` | Restructured with ProductEditorial, cleaner imports |
+
+## 3. Page Structure
+
+1. **Breadcrumb** — Home → Collections → Collection Name → Product Name
+2. **Gallery + Product Info** — Split view (7/12 + 5/12)
+3. **Editorial Storytelling** — The Story, Craftsmanship, Designed For
+4. **Related Products** — Complete the Look grid
+5. **Recently Viewed** — Client browsing history
+6. **WhatsApp Concierge CTA** — Styling assistance
+7. **Sticky Mobile WhatsApp CTA** — Bottom fixed bar
+
+## 4. Build Verification
+
+- **`npm run lint`**: ✅ 0 errors, 0 warnings
+- **`npm run build`**: ✅ 59/59 static routes compiled cleanly

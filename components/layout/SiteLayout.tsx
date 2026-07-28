@@ -13,6 +13,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { ShoppingBagDrawer } from "@/components/layout/ShoppingBagDrawer";
 import { AccountDrawer } from "@/components/layout/AccountDrawer";
+import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -32,13 +33,14 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 {/* 3. Main Content Area */}
                 <main className="flex-1 w-full">{children}</main>
 
-                {/* 4. Balanced 5-Column Luxury Footer */}
+                {/* 4. Balanced Luxury Footer */}
                 <Footer />
 
                 {/* 5. Global Overlays & Drawers */}
                 <SearchOverlay />
                 <ShoppingBagDrawer />
                 <AccountDrawer />
+                <WishlistDrawer />
 
               </div>
             </ModalProvider>

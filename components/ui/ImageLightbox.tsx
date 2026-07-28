@@ -90,6 +90,7 @@ export function ImageLightbox({
             fill
             className="object-contain"
             priority
+            sizes="(max-width: 768px) 100vw, 80vw"
           />
         </motion.div>
 
