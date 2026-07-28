@@ -2,7 +2,7 @@
   styles/theme.css
   Design Token Foundation — AISCHMIRA
   Source of Truth for all design decisions.
-  Primary: #D9AE20  |  Accent Gold: #D19D28 (limited use)
+  Primary: #D9AE20  |  Secondary: #D5A12A  |  Accent Gold: #D19D28
 */
 
 :root {
@@ -28,26 +28,43 @@
   --color-primary-light:      #F9F2D8;
   --color-primary-foreground: #FFFFFF;
 
-  --color-secondary: #D5A12A;
-  --color-accent:    #D19D28;
+  --color-secondary:       #D5A12A;
+  --color-secondary-hover: #BF8C20;
+  --color-accent:          #D19D28;
+  --color-accent-light:    #F9F2D8;
 
   --color-background: #FAF8F3;
   --color-surface:    #FFFFFF;
+  --color-surface-hover: #F7F4EC;
 
   --color-text:           #2B2B2B;
   --color-text-secondary: #6D6D6D;
+  --color-text-muted:     #8C8C8C;
 
-  --color-border: #ECE8DE;
-  --color-accent-light: #F9F2D8;
+  --color-border:        #ECE8DE;
+  --color-border-hover:  #D9AE20;
+  --color-divider:       #EAE6DC;
 
-  /* Brand-adjacent platform token; keep WhatsApp recognizable without literals in components. */
+  /* States & Feedback */
+  --color-success:       #16A34A;
+  --color-success-light: #F0FDF4;
+  --color-warning:       #EA580C;
+  --color-warning-light: #FFF7ED;
+  --color-danger:        #DC2626;
+  --color-danger-light:  #FEF2F2;
+  --color-info:          #0EA5E9;
+  --color-info-light:    #F0F9FF;
+
+  --color-overlay:       rgba(43, 43, 43, 0.6);
+  --color-focus:         #D9AE20;
+  --color-disabled:      rgba(43, 43, 43, 0.3);
+  --color-disabled-bg:   #F3EFEC;
+
+  /* Concierge WhatsApp Token */
   --color-whatsapp:       #25D366;
   --color-whatsapp-hover: #20BD5A;
 
-  /* =========================================
-     3. LEGACY TOKENS (mapped to new palette)
-     Kept for backward compat with existing components
-     ========================================= */
+  /* Legacy Backward Compatibility Mappings */
   --primary:    var(--color-primary);
   --secondary:  var(--color-secondary);
   --accent:     var(--color-accent);
@@ -55,61 +72,59 @@
   --surface:    var(--color-surface);
   --text:       var(--color-text);
   --border:     var(--color-border);
-
-  --success: #16a34a;
-  --warning: #ea580c;
-  --danger:  #dc2626;
-  --info:    #0ea5e9;
-  --muted:   var(--color-text-secondary);
-
-  /* =========================================
-     4. SPACING (rem, base 16px)
-     ========================================= */
-  --spacing-4:   0.25rem;
-  --spacing-8:   0.5rem;
-  --spacing-12:  0.75rem;
-  --spacing-16:  1rem;
-  --spacing-20:  1.25rem;
-  --spacing-24:  1.5rem;
-  --spacing-32:  2rem;
-  --spacing-40:  2.5rem;
-  --spacing-48:  3rem;
-  --spacing-64:  4rem;
-  --spacing-72:  4.5rem;
-  --spacing-80:  5rem;
-  --spacing-96:  6rem;
-  --spacing-120: 7.5rem;
+  --success:    var(--color-success);
+  --warning:    var(--color-warning);
+  --danger:     var(--color-danger);
+  --info:       var(--color-info);
+  --muted:      var(--color-text-secondary);
 
   /* =========================================
-     5. RADIUS
+     3. SPACING SCALE (rem, base 16px)
      ========================================= */
-  --radius-xs:   0.125rem;
-  --radius-sm:   0.25rem;
-  --radius-md:   0.375rem;
-  --radius-lg:   0.75rem;   /* Buttons */
-  --radius-xl:   1rem;
-  --radius-2xl:  1.5rem;
+  --spacing-4:   0.25rem;   /* 4px */
+  --spacing-8:   0.5rem;    /* 8px */
+  --spacing-12:  0.75rem;   /* 12px */
+  --spacing-16:  1rem;      /* 16px */
+  --spacing-20:  1.25rem;   /* 20px */
+  --spacing-24:  1.5rem;    /* 24px */
+  --spacing-32:  2rem;      /* 32px */
+  --spacing-40:  2.5rem;    /* 40px */
+  --spacing-48:  3rem;      /* 48px */
+  --spacing-64:  4rem;      /* 64px */
+  --spacing-80:  5rem;      /* 80px */
+  --spacing-96:  6rem;      /* 96px */
+  --spacing-128: 8rem;      /* 128px */
+
+  /* =========================================
+     4. RADIUS SCALE
+     ========================================= */
+  --radius-xs:   0.125rem;  /* 2px */
+  --radius-sm:   0.25rem;   /* 4px */
+  --radius-md:   0.375rem;  /* 6px */
+  --radius-lg:   0.5rem;    /* 8px */
+  --radius-xl:   0.75rem;   /* 12px */
+  --radius-2xl:  1.5rem;    /* 24px */
   --radius-full: 9999px;
 
   /* =========================================
-     6. SHADOW
+     5. SHADOW SYSTEM
      ========================================= */
   --shadow-sm:       0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md:       0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-lg:       0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
   --shadow-xl:       0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
-  --shadow-soft:     0 4px 24px -4px rgba(192, 142, 24, 0.12);
-  --shadow-floating: 0 12px 40px -10px rgba(192, 142, 24, 0.18);
+  --shadow-luxury:   0 4px 24px -4px rgba(217, 174, 32, 0.15);
+  --shadow-hover:    0 12px 32px -8px rgba(43, 43, 43, 0.12);
 
   /* =========================================
-     7. TRANSITION
+     6. MOTION & TRANSITIONS
      ========================================= */
   --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow:   500ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* =========================================
-     8. Z-INDEX
+     7. Z-INDEX SYSTEM
      ========================================= */
   --z-base:     0;
   --z-dropdown: 100;
@@ -119,13 +134,13 @@
   --z-toast:    500;
 
   /* =========================================
-     9. CONTAINER
+     8. CONTAINER & BREAKPOINTS
      ========================================= */
   --container-max:     1280px;
   --container-padding: 1.5rem;
 }
 
-/* Warm primary-light tint for alternating sections */
+/* Background utilities */
 .section-primary-light {
   background-color: var(--color-primary-50);
 }

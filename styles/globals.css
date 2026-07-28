@@ -12,8 +12,32 @@
   --color-primary-hover:      var(--color-primary-hover);
   --color-primary-light:      var(--color-primary-light);
   --color-primary-foreground: var(--color-primary-foreground);
+
   --color-secondary:          var(--color-secondary);
+  --color-secondary-hover:    var(--color-secondary-hover);
+  --color-accent:             var(--color-accent);
   --color-accent-light:       var(--color-accent-light);
+
+  --color-background:         var(--color-background);
+  --color-surface:            var(--color-surface);
+  --color-surface-hover:      var(--color-surface-hover);
+
+  --color-text:               var(--color-text);
+  --color-text-secondary:     var(--color-text-secondary);
+  --color-text-muted:         var(--color-text-muted);
+
+  --color-border:             var(--color-border);
+  --color-border-hover:       var(--color-border-hover);
+  --color-divider:            var(--color-divider);
+
+  --color-success:            var(--color-success);
+  --color-warning:            var(--color-warning);
+  --color-danger:             var(--color-danger);
+  --color-info:               var(--color-info);
+
+  --color-overlay:            var(--color-overlay);
+  --color-focus:              var(--color-focus);
+  --color-disabled:           var(--color-disabled);
   --color-whatsapp:           var(--color-whatsapp);
   --color-whatsapp-hover:     var(--color-whatsapp-hover);
 
@@ -29,25 +53,11 @@
   --color-brand-800: var(--color-primary-800);
   --color-brand-900: var(--color-primary-900);
 
-  --color-background: var(--color-background);
-  --color-surface:    var(--color-surface);
-  --color-text:       var(--color-text);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-border:     var(--color-border);
-  --color-accent:     var(--color-accent);
-
-  /* Legacy state tokens */
-  --color-success:   var(--success);
-  --color-warning:   var(--warning);
-  --color-danger:    var(--danger);
-  --color-info:      var(--info);
-  --color-muted:     var(--muted);
-
   /* === TYPOGRAPHY === */
   --font-heading: var(--font-cormorant);
   --font-body:    var(--font-inter);
 
-  /* === SPACING === */
+  /* === SPACING SCALE === */
   --spacing-4:   var(--spacing-4);
   --spacing-8:   var(--spacing-8);
   --spacing-12:  var(--spacing-12);
@@ -58,10 +68,9 @@
   --spacing-40:  var(--spacing-40);
   --spacing-48:  var(--spacing-48);
   --spacing-64:  var(--spacing-64);
-  --spacing-72:  var(--spacing-72);
   --spacing-80:  var(--spacing-80);
   --spacing-96:  var(--spacing-96);
-  --spacing-120: var(--spacing-120);
+  --spacing-128: var(--spacing-128);
 
   /* === RADIUS === */
   --radius-xs:   var(--radius-xs);
@@ -77,8 +86,8 @@
   --shadow-md:       var(--shadow-md);
   --shadow-lg:       var(--shadow-lg);
   --shadow-xl:       var(--shadow-xl);
-  --shadow-soft:     var(--shadow-soft);
-  --shadow-floating: var(--shadow-floating);
+  --shadow-luxury:   var(--shadow-luxury);
+  --shadow-hover:    var(--shadow-hover);
 
   /* === BREAKPOINTS === */
   --breakpoint-mobile:  480px;
@@ -88,22 +97,14 @@
 
   /* === ANIMATIONS & DURATIONS === */
   --animate-image-drift: image-drift 30s linear infinite alternate;
-  
-  /* Radix UI Menu Animations */
   --animate-scaleIn: scaleIn 200ms ease;
   --animate-scaleOut: scaleOut 200ms ease;
   --animate-fadeIn: fadeIn 200ms ease;
   --animate-fadeOut: fadeOut 200ms ease;
-  --animate-enterFromLeft: enterFromLeft 250ms ease;
-  --animate-enterFromRight: enterFromRight 250ms ease;
-  --animate-exitToLeft: exitToLeft 250ms ease;
-  --animate-exitToRight: exitToRight 250ms ease;
 
-  --transition-duration-fast: 0.2s;
-  --transition-duration-normal: 0.4s;
-  --transition-duration-slow: 0.8s;
-  --transition-duration-slower: 1.5s;
-  --transition-duration-slowest: 2s;
+  --transition-duration-fast: 0.15s;
+  --transition-duration-normal: 0.3s;
+  --transition-duration-slow: 0.5s;
 
   /* === TRACKING / LETTER SPACING === */
   --tracking-wide: 0.1em;
@@ -117,28 +118,20 @@
   }
 
   @keyframes scaleIn {
-    from { opacity: 0; transform: rotateX(-10deg) scale(0.9); }
-    to { opacity: 1; transform: rotateX(0deg) scale(1); }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
   }
   @keyframes scaleOut {
-    from { opacity: 1; transform: rotateX(0deg) scale(1); }
-    to { opacity: 0; transform: rotateX(-10deg) scale(0.95); }
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }
   }
-  @keyframes enterFromRight {
-    from { opacity: 0; transform: translateX(200px); }
-    to { opacity: 1; transform: translateX(0); }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
-  @keyframes enterFromLeft {
-    from { opacity: 0; transform: translateX(-200px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes exitToRight {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(200px); }
-  }
-  @keyframes exitToLeft {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(-200px); }
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
   }
 }
 
@@ -164,23 +157,31 @@ body {
     line-height: 1.8;
   }
 
-  /* Focus states for accessibility */
+  /* Accessibility focus ring */
   *:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
   }
 }
 
+/* ===== TYPOGRAPHY & COMPONENT UTILITIES ===== */
 @layer utilities {
-  /* Typography Utilities */
-  .text-h1 { font-family: var(--font-heading); font-size: 4rem; line-height: 1.1; letter-spacing: -0.02em; }
-  .text-h2 { font-family: var(--font-heading); font-size: 3rem;  line-height: 1.2; letter-spacing: -0.01em; }
-  .text-h3 { font-family: var(--font-heading); font-size: 2rem; line-height: 1.3; }
-  .text-h4 { font-family: var(--font-heading); font-size: 1.5rem;  line-height: 1.4; }
-  .text-body-lg { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.8; letter-spacing: 0.01em; }
-  .text-body    { font-family: var(--font-body); font-size: 1rem;     line-height: 1.8; letter-spacing: 0.02em; }
-  .text-body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.7; letter-spacing: 0.03em; }
+  /* Complete Typography Scale */
+  .text-display  { font-family: var(--font-heading); font-size: 5rem;    line-height: 1.05; letter-spacing: -0.02em; font-style: italic; }
+  .text-h1       { font-family: var(--font-heading); font-size: 4rem;    line-height: 1.1;  letter-spacing: -0.02em; }
+  .text-h2       { font-family: var(--font-heading); font-size: 3rem;    line-height: 1.2;  letter-spacing: -0.01em; }
+  .text-h3       { font-family: var(--font-heading); font-size: 2rem;    line-height: 1.3; }
+  .text-h4       { font-family: var(--font-heading); font-size: 1.5rem;  line-height: 1.4; }
+  .text-title    { font-family: var(--font-heading); font-size: 1.25rem; line-height: 1.4; }
+  .text-subtitle { font-family: var(--font-body);    font-size: 1.125rem; line-height: 1.6; letter-spacing: 0.01em; }
+  .text-body-lg  { font-family: var(--font-body);    font-size: 1.125rem; line-height: 1.8; letter-spacing: 0.01em; }
+  .text-body     { font-family: var(--font-body);    font-size: 1rem;     line-height: 1.8; letter-spacing: 0.02em; }
+  .text-body-sm  { font-family: var(--font-body);    font-size: 0.875rem; line-height: 1.7; letter-spacing: 0.03em; }
+  .text-caption  { font-family: var(--font-body);    font-size: 0.75rem;  line-height: 1.5; letter-spacing: 0.05em; }
+  .text-label    { font-family: var(--font-body);    font-size: 0.625rem; line-height: 1.4; letter-spacing: 0.25em; text-transform: uppercase; }
+  .text-button   { font-family: var(--font-body);    font-size: 0.75rem;  line-height: 1.4; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+  .text-small    { font-family: var(--font-body);    font-size: 0.6875rem; line-height: 1.4; }
 
   .text-editorial {
     font-family: var(--font-heading);
@@ -188,42 +189,41 @@ body {
     font-weight: 300;
   }
 
-  /* Section vertical padding — Desktop: 120-160px, Tablet: 80-100px, Mobile: 56-72px */
+  /* Section Padding Scale */
   .section-padding {
-    padding-top: 4.5rem;      /* 72px mobile */
+    padding-top: 4.5rem;
     padding-bottom: 4.5rem;
   }
   @media (min-width: 768px) {
     .section-padding {
-      padding-top: 6rem;    /* 96px tablet */
+      padding-top: 6rem;
       padding-bottom: 6rem;
     }
   }
   @media (min-width: 1024px) {
     .section-padding {
-      padding-top: 10rem;   /* 160px desktop */
-      padding-bottom: 10rem;
+      padding-top: 8rem;
+      padding-bottom: 8rem;
     }
   }
 
-  /* Section backgrounds */
-  .bg-section-white      { background-color: var(--color-surface); }
+  /* Section Backgrounds */
+  .bg-section-white         { background-color: var(--color-surface); }
   .bg-section-primary-light { background-color: var(--color-primary-light); }
-  .bg-section-cream      { background-color: var(--color-background); }
-  .bg-section-dark       { background-color: var(--color-surface); color: var(--color-text); }
+  .bg-section-cream         { background-color: var(--color-background); }
 
-  /* Primary Button */
+  /* Standardized Buttons */
   .btn-primary {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-sm);
     padding: 1rem 2.5rem;
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-fast);
     box-shadow: var(--shadow-sm);
     display: inline-flex;
     align-items: center;
@@ -232,27 +232,21 @@ body {
   }
   .btn-primary:hover:not(:disabled) {
     background-color: var(--color-primary-hover);
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
   }
-  .btn-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 
-  /* Outline Button */
   .btn-outline {
     background-color: transparent;
     border: 1px solid var(--color-primary);
     color: var(--color-primary);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-sm);
     padding: 1rem 2.5rem;
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-fast);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -261,26 +255,18 @@ body {
   .btn-outline:hover:not(:disabled) {
     background-color: var(--color-primary);
     color: var(--color-primary-foreground);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  .btn-outline:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
-  /* Ghost Button (text with bottom border) */
   .btn-ghost {
     font-family: var(--font-body);
-    font-size: 0.8125rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
     transition: color var(--transition-fast);
   }
 
-  /* Section divider line (gold accent) */
   .section-divider {
     width: 3rem;
     height: 1px;
@@ -288,11 +274,16 @@ body {
     margin: 0 auto;
   }
 
-  /* Gold accent — use sparingly */
-  .accent-gold { color: var(--color-accent); }
-  .bg-accent-gold { background-color: var(--color-accent); }
-
-  /* Platform CTA tokens */
   .bg-whatsapp { background-color: var(--color-whatsapp); }
   .hover-bg-whatsapp:hover { background-color: var(--color-whatsapp-hover); }
+}
+
+/* Reduced motion accessibility media query */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

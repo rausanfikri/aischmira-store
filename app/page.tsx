@@ -1,27 +1,25 @@
 import { Hero } from "@/components/sections/Hero";
-import { EditorialBridge } from "@/components/sections/EditorialBridge";
+import { BrandIntroduction } from "@/components/sections/BrandIntroduction";
 import { NewCollections } from "@/components/sections/NewCollections";
-import { FeaturedCollection } from "@/components/sections/FeaturedCollection";
-import { ProductHighlight } from "@/components/sections/ProductHighlight";
-import { BrandStory } from "@/components/sections/BrandStory";
+import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
 import { Lookbook } from "@/components/sections/Lookbook";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { BrandValues } from "@/components/sections/BrandValues";
 import { InstagramPreview } from "@/components/sections/InstagramPreview";
 import { Newsletter } from "@/components/sections/Newsletter";
+import { WhatsAppSection } from "@/components/sections/WhatsAppSection";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <EditorialBridge />
+      <BrandIntroduction />
       <NewCollections />
-      <FeaturedCollection />
-      <ProductHighlight />
-      <BrandStory />
+      <FeaturedProducts />
       <Lookbook />
-      <Testimonials />
+      <BrandValues />
       <InstagramPreview />
       <Newsletter />
+      <WhatsAppSection />
     </>
   );
 }

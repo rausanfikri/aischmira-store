@@ -3,83 +3,67 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaInstagram } from "react-icons/fa6";
-import { instagramImages } from "@/data/homepage";
 
 export function InstagramPreview() {
-  const INSTAGRAM_URL = "https://instagram.com/aischmira";
+  const posts = [1, 2, 3, 4];
 
   return (
-    <section className="section-padding bg-surface">
+    <section className="bg-background py-24 md:py-36 border-b border-border/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
+        
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16 sm:mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text font-light tracking-[0.1em] uppercase mb-6"
-          >
-            Follow Us
-          </motion.h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="section-divider origin-center mb-6"
-          />
-          <motion.a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 font-body text-[13px] sm:text-sm text-text-secondary hover:text-primary transition-colors duration-300 tracking-[0.1em] font-light uppercase"
-            aria-label="Kunjungi profil Instagram @aischmira"
-          >
-            <FaInstagram size={16} className="text-primary" />
-            <span>@aischmira</span>
-          </motion.a>
+        <div className="text-center max-w-xl mx-auto mb-16 md:mb-20 space-y-3">
+          <span className="font-body text-[10px] tracking-[0.3em] uppercase text-text/50 block">
+            Social Community
+          </span>
+          <h2 className="font-heading italic text-4xl md:text-5xl lg:text-6xl text-text">
+            On Instagram
+          </h2>
+          <p className="font-body text-xs tracking-editorial uppercase text-text/60 font-light">
+            Tag @aischmira to be featured in our private journal.
+          </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {instagramImages.map((img, index) => (
-            <motion.div
-              key={img.id}
+        {/* 4 Photo Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+          {posts.map((post, idx) => (
+            <motion.a
+              key={post}
+              href="https://instagram.com/aischmira"
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="relative aspect-square bg-surface overflow-hidden rounded-sm group border border-border/30"
+              aria-label="View AISCHMIRA Instagram Post"
             >
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Lihat postingan Instagram ${img.alt}`}
-                className="group relative w-full aspect-square block overflow-hidden rounded-md shadow-sm"
-              >
-                <Image
-                  src={img.imageUrl}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.02]"
-                  quality={85}
-                />
-                <div className="absolute inset-0 bg-text/0 group-hover:bg-text/40 transition-colors duration-500 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 text-surface font-body text-[10px] tracking-[0.2em] uppercase transition-opacity duration-500 flex items-center gap-2 border border-surface/40 px-4 py-2 rounded-none backdrop-blur-sm">
-                    <FaInstagram size={12} />
-                    View
-                  </span>
-                </div>
-              </a>
-            </motion.div>
+              <Image
+                src="/images/products/placeholder.png"
+                alt="AISCHMIRA Instagram Editorial"
+                fill
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                <FaInstagram size={28} />
+              </div>
+            </motion.a>
           ))}
         </div>
+
+        {/* Follow Button */}
+        <div className="text-center">
+          <a
+            href="https://instagram.com/aischmira"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 bg-surface text-text hover:bg-primary hover:text-surface transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-4 px-10 rounded-sm font-medium border border-border/50 shadow-sm"
+          >
+            <FaInstagram size={16} /> Follow @aischmira
+          </a>
+        </div>
+
       </div>
     </section>
   );

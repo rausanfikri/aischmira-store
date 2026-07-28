@@ -4,9 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const WHATSAPP_URL =
-  "https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website.";
-
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
@@ -15,38 +12,37 @@ const fadeUp = {
 export function Hero() {
   return (
     <section
-      className="relative w-full h-[100svh] min-h-[640px] max-h-[900px] flex items-center justify-center overflow-hidden bg-text"
-      aria-label="Hero — AISCHMIRA"
+      className="relative w-full h-[92vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-text"
+      aria-label="AISCHMIRA Flagship Hero"
     >
-      {/* Background Image */}
+      {/* Editorial Cover Background Image */}
       <div className="absolute inset-0">
         <Image
           src="/images/hero/hero-bg.png"
-          alt=""
+          alt="AISCHMIRA Luxury Fashion"
           fill
-          className="object-cover object-center scale-[1.02] animate-image-drift"
+          className="object-cover object-center scale-[1.02] transition-transform duration-1000"
           priority
           fetchPriority="high"
-          aria-hidden="true"
-          quality={100}
+          quality={95}
         />
-        {/* Subtle vignette for elegant editorial look, using a warmer dark (#2A2520) */}
-        <div className="absolute inset-0 bg-[#2A2520]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1A17]/50 via-transparent to-[#1F1A17]/10" />
+        {/* Soft editorial gradient overlay */}
+        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
       </div>
 
-      {/* Content — centered editorial */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 max-w-4xl mx-auto mt-10">
-
-        {/* Eyebrow tag */}
+      {/* Hero Content Area */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 max-w-4xl mx-auto">
+        
+        {/* Eyebrow */}
         <motion.span
           {...fadeUp}
           animate="animate"
           initial="initial"
-          transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.2 }}
-          className="font-body text-[10px] tracking-[0.4em] uppercase text-surface/80 mb-8 block"
+          transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.1 }}
+          className="font-body text-[10px] md:text-xs tracking-[0.35em] uppercase text-surface/80 mb-6 block font-medium"
         >
-          New Collection — 2025
+          AISCHMIRA &bull; FLAGSHIP 2026
         </motion.span>
 
         {/* Headline */}
@@ -54,31 +50,22 @@ export function Hero() {
           {...fadeUp}
           animate="animate"
           initial="initial"
-          transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.35 }}
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-surface leading-[1.1] tracking-wide mb-8"
+          transition={{ duration: 1.0, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.25 }}
+          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-surface font-light leading-[1.08] mb-8"
         >
-          Crafted to comfort.
-          <br />
-          <span className="italic text-surface/90">Designed to stand out.</span>
+          Crafted to comfort.<br />
+          <span className="italic text-surface/90 font-extralight">Designed to stand out.</span>
         </motion.h1>
-
-        {/* Divider */}
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
-          className="w-20 h-px bg-accent mb-8 origin-center"
-        />
 
         {/* Subheadline */}
         <motion.p
           {...fadeUp}
           animate="animate"
           initial="initial"
-          transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.7 }}
-          className="font-body text-sm sm:text-base text-surface/80 font-light tracking-widest max-w-xl mb-12 uppercase"
+          transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.4 }}
+          className="font-body text-xs sm:text-sm text-surface/80 font-light tracking-widest max-w-xl mb-12 uppercase leading-relaxed"
         >
-          Elegance in every curve and every moment.
+          Timeless silhouettes, pure silk, and modern Indonesian craftsmanship.
         </motion.p>
 
         {/* CTAs */}
@@ -86,43 +73,23 @@ export function Hero() {
           {...fadeUp}
           animate="animate"
           initial="initial"
-          transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.85 }}
-          className="flex flex-col sm:flex-row gap-6 items-center mt-6"
+          transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.55 }}
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center w-full sm:w-auto"
         >
           <Link
-            href="#featured-collections"
-            className="btn-primary bg-surface text-text hover:bg-surface/90 w-full sm:w-auto"
-            aria-label="Explore AISCHMIRA Collections"
+            href="/collections"
+            className="w-full sm:w-auto bg-surface text-text hover:bg-primary hover:text-surface transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-4 px-10 rounded-sm font-medium shadow-md text-center"
           >
-            Explore Collection
+            Shop Collection
           </Link>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline border-surface/40 text-surface hover:bg-surface hover:text-text w-full sm:w-auto"
-            aria-label="Shop via WhatsApp"
+          <Link
+            href="/about"
+            className="w-full sm:w-auto border border-surface/50 text-surface hover:bg-surface hover:text-text transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-4 px-10 rounded-sm font-medium text-center"
           >
-            Shop via WhatsApp
-          </a>
+            Our Story
+          </Link>
         </motion.div>
 
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-        >
-          <span className="font-body text-[8px] tracking-[0.4em] uppercase text-surface/50">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-[1px] h-10 bg-gradient-to-b from-surface/40 to-transparent"
-          />
-        </motion.div>
       </div>
     </section>
   );
