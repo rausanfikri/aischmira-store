@@ -1,21 +1,25 @@
+import { BRAND_CONFIG } from './brand';
+import { CONTACT_CONFIG } from './contact';
+import { NAVIGATION_CONFIG } from './navigation';
+import { SOCIAL_CONFIG } from './social';
+import { SEO_CONFIG } from './seo';
+import { ANALYTICS_CONFIG } from './analytics';
 import { FEATURES } from './features';
 
 export const Config = {
+  brand: BRAND_CONFIG,
+  contact: CONTACT_CONFIG,
+  navigation: NAVIGATION_CONFIG,
+  social: SOCIAL_CONFIG,
+  seo: SEO_CONFIG,
+  analytics: ANALYTICS_CONFIG,
   features: FEATURES,
-  brand: {
-    name: 'AISCHMIRA',
-    tagline: 'Timeless Luxury',
-  },
-  contact: {
-    whatsapp: '6285121344848',
-    whatsappMessagePrefix: 'Hello AISCHMIRA Concierge, I would like to order:',
-    email: 'concierge@aischmira.store',
-  },
-  seo: {
-    defaultTitle: 'AISCHMIRA - Luxury Fashion',
-    defaultDescription: 'Discover the latest editorial collections from AISCHMIRA.',
-  },
-  social: {
-    instagram: 'https://instagram.com/aischmira',
-  }
 } as const;
+
+export * from './brand';
+export * from './contact';
+export * from './navigation';
+export * from './social';
+export * from './seo';
+export * from './analytics';
+export * from './features';
