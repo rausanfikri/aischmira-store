@@ -3,14 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { productsData } from "@/data/products";
+import { Product } from "@/domain/product";
 import { useShopStore } from "@/store/useShopStore";
 import { Heart, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getWhatsAppInquiryUrl } from "@/lib/whatsapp";
 
-export function FeaturedProducts() {
-  const featuredProducts = productsData.slice(0, 4);
+interface FeaturedProductsProps {
+  products?: Product[];
+}
+
+export function FeaturedProducts({ products = [] }: FeaturedProductsProps) {
   const toggleWishlist = useShopStore((state) => state.toggleWishlist);
   const wishlist = useShopStore((state) => state.wishlist);
 
@@ -50,11 +53,11 @@ export function FeaturedProducts() {
 
         {/* 4-Column Luxury Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8">
-          {featuredProducts.map((product, idx) => {
-            const isWishlisted = wishlist.some((w) => w.productId === product.id);
+          {products.map((product, idx) => {
+            const isWishlisted = wishlist.some((w) => w.productId === product.sku);
             return (
               <motion.div
-                key={product.id}
+                key={product.sku}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -65,7 +68,7 @@ export function FeaturedProducts() {
                 <div className="relative aspect-[3/4] w-full bg-background overflow-hidden rounded-sm mb-4 border border-border/30">
                   <Link href={`/products/${product.slug}`} className="block inset-0 absolute">
                     <Image
-                      src={product.images[0]}
+                      src={product.images[0] || "/images/products/placeholder.png"}
                       alt={product.name}
                       fill
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
@@ -75,7 +78,7 @@ export function FeaturedProducts() {
 
                   {/* Wishlist Button */}
                   <button
-                    onClick={() => toggleWishlist(product.id)}
+                    onClick={() => toggleWishlist(product.sku)}
                     className="absolute top-3 right-3 z-10 bg-background/80 backdrop-blur-sm p-2 rounded-full text-text hover:text-primary transition-colors shadow-sm"
                     aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
                   >
@@ -99,12 +102,12 @@ export function FeaturedProducts() {
                     {product.name}
                   </Link>
                   <p className="font-body text-xs font-light text-text/80">
-                    {formatter.format(product.basePrice)}
+                    {formatter.format(product.price)}
                   </p>
 
                   {/* WhatsApp Quick CTA */}
                   <button
-                    onClick={() => handleWhatsAppOrder(product.name, product.basePrice)}
+                    onClick={() => handleWhatsAppOrder(product.name, product.price)}
                     className="mt-3 w-full bg-whatsapp text-white font-body text-[9px] tracking-[0.2em] uppercase py-2.5 rounded-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 font-medium"
                   >
                     <MessageCircle size={13} /> Order via WhatsApp

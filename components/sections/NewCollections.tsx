@@ -3,14 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { collectionsData } from "@/data/collections";
+import { Collection } from "@/domain/collection";
 
-export function NewCollections() {
-  const targetSlugs = ["femme", "her", "she"];
-  const newCollections = targetSlugs
-    .map((slug) => collectionsData.find((c) => c.slug === slug))
-    .filter(Boolean) as typeof collectionsData;
+interface NewCollectionsProps {
+  collections?: Collection[];
+}
 
+export function NewCollections({ collections = [] }: NewCollectionsProps) {
   return (
     <section className="bg-background py-24 md:py-36 border-b border-border/40">
       <div className="mx-auto max-w-[1280px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
@@ -30,7 +29,7 @@ export function NewCollections() {
 
         {/* 3-Column Large Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {newCollections.map((collection, idx) => (
+          {collections.map((collection, idx) => (
             <motion.div
               key={collection.id}
               initial={{ opacity: 0, y: 30 }}

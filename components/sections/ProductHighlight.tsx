@@ -2,12 +2,16 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { productsData } from "@/data/products";
+import { Product } from "@/domain/product";
 
 const WHATSAPP_URL =
   "https://wa.me/6285121344848?text=Halo%20AISCHMIRA,%20saya%20tertarik%20dengan%20produk%20yang%20ada%20di%20website.";
 
-export function ProductHighlight() {
+interface ProductHighlightProps {
+  products?: Product[];
+}
+
+export function ProductHighlight({ products = [] }: ProductHighlightProps) {
   return (
     <section className="section-padding bg-section-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -42,9 +46,9 @@ export function ProductHighlight() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
-          {productsData.map((product, index) => (
+          {products.map((product, index) => (
             <motion.div
-              key={product.id}
+              key={product.sku}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -54,7 +58,7 @@ export function ProductHighlight() {
               {/* Product Image */}
               <div className="relative w-full aspect-[2/3] overflow-hidden bg-primary-light mb-6">
                 <Image
-                  src={product.images[0]}
+                  src={product.images[0] || "/images/products/placeholder.png"}
                   alt={product.name}
                   fill
                   className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.03]"
@@ -91,7 +95,7 @@ export function ProductHighlight() {
                   {product.name}
                 </h3>
                 <p className="font-body text-sm text-text/70">
-                  Rp {product.basePrice.toLocaleString("id-ID")}
+                  Rp {product.price.toLocaleString("id-ID")}
                 </p>
               </div>
             </motion.div>

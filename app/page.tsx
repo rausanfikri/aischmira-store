@@ -1,3 +1,4 @@
+import { services } from "@/services";
 import { Hero } from "@/components/sections/Hero";
 import { BrandStory } from "@/components/sections/BrandStory";
 import { NewCollections } from "@/components/sections/NewCollections";
@@ -9,7 +10,15 @@ import { InstagramPreview } from "@/components/sections/InstagramPreview";
 import { Newsletter } from "@/components/sections/Newsletter";
 import { WhatsAppSection } from "@/components/sections/WhatsAppSection";
 
-export default function Home() {
+export default async function Home() {
+  const [featuredProductsRes, featuredCollectionsRes] = await Promise.all([
+    services.product.getFeaturedProducts(4),
+    services.collection.getFeaturedCollections(3),
+  ]);
+
+  const featuredProducts = featuredProductsRes.isSuccess ? featuredProductsRes.value : [];
+  const featuredCollections = featuredCollectionsRes.isSuccess ? featuredCollectionsRes.value : [];
+
   return (
     <>
       {/* 1. Flagship Editorial Hero */}
@@ -19,10 +28,10 @@ export default function Home() {
       <BrandStory />
 
       {/* 3. Featured Signature Collections */}
-      <NewCollections />
+      <NewCollections collections={featuredCollections} />
 
       {/* 4. New Arrivals & Curated Highlights */}
-      <FeaturedProducts />
+      <FeaturedProducts products={featuredProducts} />
 
       {/* 5. High-Fashion Editorial Quote Banner */}
       <EditorialBridge />

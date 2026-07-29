@@ -3,7 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { collectionsData } from "@/data/collections";
+import { Collection } from "@/domain/collection";
+
+interface FeaturedCollectionProps {
+  collections?: Collection[];
+}
 
 function SectionHeader({
   title,
@@ -45,7 +49,7 @@ function SectionHeader({
   );
 }
 
-export function FeaturedCollection() {
+export function FeaturedCollection({ collections = [] }: FeaturedCollectionProps) {
   return (
     <section
       id="featured-collections"
@@ -58,7 +62,7 @@ export function FeaturedCollection() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {collectionsData.map((collection, index) => (
+          {collections.map((collection, index) => (
             <motion.div
               key={collection.id}
               initial={{ opacity: 0, y: 30 }}
@@ -68,7 +72,7 @@ export function FeaturedCollection() {
               className="group flex flex-col items-center text-center"
             >
               <Link
-                href="#"
+                href={`/collections/${collection.slug}`}
                 className="relative w-full aspect-[3/4] overflow-hidden mb-8 block"
                 aria-label={`View ${collection.name} collection`}
               >
@@ -89,7 +93,7 @@ export function FeaturedCollection() {
                 {collection.description}
               </p>
               <Link
-                href="#"
+                href={`/collections/${collection.slug}`}
                 className="btn-ghost text-[10px] tracking-[0.2em]"
               >
                 Explore
