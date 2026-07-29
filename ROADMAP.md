@@ -14,7 +14,9 @@
 - [x] **Sprint 2D.5A**: Premium Header Navigation Final
 - [x] **Sprint 2D.6**: Design System QA & UI Freeze
 - [x] **Sprint 2E**: CMS Ready Architecture & Data Layer (Domain Services & Zod Validation)
+- [x] **Sprint F1**: Project Cleanup & Refactor (Enterprise Grade Foundation & Specification Documentation)
 
 ## Upcoming Sprints
+- [ ] **Sprint F2**: CMS Ready Architecture & Dummy Data Refactor
 - [ ] **Phase 3**: Supabase Database Integration & BigSeller Inventory Synchronization
 - [ ] **Phase 4**: WhatsApp Concierge Checkout Automation & Member Loyalty Engine

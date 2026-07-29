@@ -10,8 +10,8 @@ import { ModalProvider } from "@/providers/ModalProvider";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { SearchOverlay } from "@/components/layout/SearchOverlay";
-import { ShoppingBagDrawer } from "@/components/layout/ShoppingBagDrawer";
+import SearchModal from "@/components/layout/SearchModal";
+import CartDrawer from "@/components/layout/CartDrawer";
 import { AccountDrawer } from "@/components/layout/AccountDrawer";
 import { WishlistDrawer } from "@/components/layout/WishlistDrawer";
 
@@ -37,8 +37,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 <Footer />
 
                 {/* 5. Global Overlays & Drawers */}
-                <SearchOverlay />
-                <ShoppingBagDrawer />
+                <SearchModal />
+                <CartDrawer />
                 <AccountDrawer />
                 <WishlistDrawer />
 

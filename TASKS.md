@@ -1,13 +1,19 @@
 # TASKS — AISCHMIRA.STORE
 
-## Current Sprint: Sprint 2E — CMS Ready Architecture & Data Layer
-- [x] Create domain modules under `services/domain/` (`product`, `collection`, `category`, `homepage`, `navigation`, `journal`, `loyalty`)
-- [x] Implement Zod schemas (`schema.ts`) in each domain module for runtime payload validation
-- [x] Implement Product model with BigSeller SKU fields (`id`, `sku`, `parentSku`, `compareAtPrice`, `currency`, `status`, `isActive`, `isFeatured`)
-- [x] Create Service Layer abstractions (`ProductService`, `CollectionService`, `CategoryService`, `HomepageService`, `NavigationService`, `JournalService`, `LoyaltyService`)
-- [x] Create payload mappers (`mapper.ts`) to validate external DTOs
-- [x] Re-export domain types in `types/index.ts` and `services/index.ts` for backward compatibility
-- [x] Update documentation (`ARCHITECTURE.md`, `ROADMAP.md`, `CHANGELOG.md`, `TASKS.md`)
-- [x] Verify `npm run lint` (0 errors, 0 warnings)
-- [x] Verify `npm run build` (59 static routes compiled cleanly)
-- [x] Generate 6 deliverable reports (`DATA_LAYER_REPORT.md`, `DOMAIN_ARCHITECTURE_REPORT.md`, `SERVICE_LAYER_REPORT.md`, `FUTURE_INTEGRATION_NOTES.md`, `DATA_LAYER_FILES_CHANGED.md`, `DATA_LAYER_TECHNICAL_DEBT.md`)
+## Completed Sprint: Sprint F1 — Project Cleanup & Refactor
+- [x] Full project audit (components, hooks, utilities, assets, duplicate files, dead code, temporary files)
+- [x] Removed 70+ temporary `.md` report files from repository root
+- [x] Refactored `SiteLayout.tsx` to directly consume `SearchModal` and `CartDrawer`
+- [x] Removed unused component wrapper files (`Navbar.tsx`, `MobileNavigation.tsx`, `Navigation.tsx`, `SearchOverlay.tsx`, `ShoppingBagDrawer.tsx`, `Header.tsx`)
+- [x] Removed unused UI primitive folders (`components/ui/Divider/`, `components/ui/Feedback/`)
+- [x] Removed empty asset folders under `public/images/`
+- [x] Created `lib/index.ts` barrel export for all pure utilities
+- [x] Audited dependencies in `package.json` (all 15 dependencies confirmed active)
+- [x] Updated system documentation (`ARCHITECTURE.md`, `CHANGELOG.md`, `TASKS.md`)
+- [x] Verified `npm run lint` (0 errors, 0 warnings)
+- [x] Verified `npm run build` (59 static routes compiled cleanly)
+
+## Current Sprint: Sprint F2 — CMS Ready Architecture
+- [ ] Prepare domain service layers for external CMS / API connector implementations
+- [ ] Implement headless CMS adapter interfaces
+- [ ] Establish environment-driven data provider configuration

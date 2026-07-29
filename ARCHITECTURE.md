@@ -1,21 +1,21 @@
 # AISCHMIRA.STORE — Enterprise System Architecture
 
-**Last Updated:** July 28, 2026 (Sprint 2E)  
-**Status:** CMS & Integration Ready Data Layer  
+**Last Updated:** July 29, 2026 (Sprint F1)  
+**Status:** Cleaned, Refactored & Stabilized Architecture  
 
 ---
 
 ## 1. Overview
 
-AISCHMIRA.STORE is built as an editorial luxury fashion flagship experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Zustand. In Sprint 2E, the architecture was upgraded to a domain-oriented Data Layer prepared for BigSeller, Supabase, and Member Loyalty API integrations.
+AISCHMIRA.STORE is built as an editorial luxury fashion flagship experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Zustand. In Sprint F1, the architecture was cleaned, refactored, and audited to streamline project structure, purge dead code/obsolete assets, and unify utility exports without changing business logic or UI presentation.
 
 ---
 
 ## 2. Directory Architecture
 
 ```text
-app/                     App Router routes and pages
-components/              UI Components (layout, sections, products, ui)
+app/                     App Router routes, pages, and root layout
+components/              UI Components (layout, sections, products, collections, account, search, ui)
 providers/               React Context Providers
 hooks/                   Custom React Hooks
 services/                Domain Data Layer & Services
@@ -27,10 +27,13 @@ services/                Domain Data Layer & Services
     navigation/          Navigation domain (types, schema, dummy, service)
     journal/             Journal domain (types, schema, dummy, service)
     loyalty/             Loyalty domain (types, schema, dummy, service)
-data/                    Backward-compatible dataset mappings
-types/                   Domain type index
-styles/                  Global CSS and design token source (theme.css)
+data/                    Typed static content and dataset mappings
+types/                   Domain type definitions and index
+lib/                     Pure utilities & token access helpers (formatters, string, theme, utils, whatsapp, index)
+styles/                  Global CSS and design token source (theme.css, globals.css)
 store/                   Zustand global stores (useShopStore, useUIStore)
+public/                  Static production assets (logo, hero imagery, product visuals)
+docs/                    System strategy, API plans, and project guidelines
 ```
 
 ---

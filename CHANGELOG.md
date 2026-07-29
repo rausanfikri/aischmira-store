@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint F1] - 2026-07-29
+### Added
+- **4 Enterprise Documentation Specifications**: Created `DESIGN_SYSTEM.md`, `CODING_STANDARDS.md`, `DATA_MODEL.md`, and `API_STRATEGY.md` (and updated corresponding `docs/` references).
+- **Barrel Export Utility (`lib/index.ts`)**: Unified all pure helper functions (`formatters`, `string`, `theme`, `utils`, `whatsapp`) under a single entry point.
+
+### Changed
+- **Direct Layout Component Imports (`SiteLayout.tsx`)**: Refactored layout composition to consume `SearchModal` and `CartDrawer` directly instead of indirect 1-line wrapper files.
+- **Repository Structure Cleanup**: Purged over 70 obsolete step execution reports from the repository root, retaining only core documentation (`AGENTS.md`, `README.md`, `ROADMAP.md`, `TASKS.md`, `ARCHITECTURE.md`, `CHANGELOG.md`, `DECISIONS.md`, `CONTRIBUTING.md`, `CODEX.md`, `CLAUDE.md`).
+
+### Removed
+- **Unused Component Wrappers**: Deleted obsolete wrapper components `Navbar.tsx`, `Header.tsx`, `MobileNavigation.tsx`, `Navigation.tsx`, `SearchOverlay.tsx`, `ShoppingBagDrawer.tsx`.
+- **Unused UI Primitives**: Removed unused UI folders `components/ui/Divider/` and `components/ui/Feedback/`.
+- **Empty Asset Directories**: Removed empty directories under `public/images/`.
+
 ## [Sprint 2E] - 2026-07-28
 ### Added
 - **Domain-Oriented Data Layer (`services/domain/`)**: Built domain modules for `product`, `collection`, `category`, `homepage`, `navigation`, `journal`, and `loyalty`. Each module includes `types.ts`, `schema.ts` (Zod), `dummy.ts`, `mapper.ts`, and `service.ts`.

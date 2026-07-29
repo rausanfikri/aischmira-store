@@ -1,264 +1,125 @@
-# AISCHMIRA.STORE
-
-Official website for **AISCHMIRA** — a premium women's fashion brand from Indonesia.
+# AISCHMIRA.STORE — Enterprise Digital Flagship Platform
 
 > *Crafted to comfort. Designed to stand out.*
 
 ---
 
-## Project Overview
+## 1. Purpose
+This repository contains the source code, architecture specifications, design tokens, and domain services for **AISCHMIRA.STORE** — the official digital flagship platform for AISCHMIRA luxury fashion.
 
-AISCHMIRA.STORE is the digital flagship for the AISCHMIRA fashion brand. It is **not** a marketplace. It is an editorial, luxury brand experience — more akin to Loro Piana, Massimo Dutti, or The Row than to any e-commerce marketplace.
+## 2. Scope
+Covers all web client applications, server components, domain service layers, static prototype data models, design tokens, and integration pipelines across the AISCHMIRA digital ecosystem.
 
-The website currently operates as a **Next.js prototype** backed by typed static data. All purchase intent is directed to **WhatsApp Business** for a personal, concierge-style experience. The architecture is designed so that future integrations (WooCommerce, CRM, analytics) can be introduced behind a service layer without changing the presentation components.
+## 3. Overview
+AISCHMIRA.STORE is built as an editorial luxury flagship experience. It is **not** a commodity e-commerce marketplace. The platform combines high-end visual storytelling, generous whitespace, Cormorant Garamond typography, and a personalized WhatsApp Concierge Commerce flow.
 
 | Attribute | Detail |
-| --- | --- |
-| **Version** | `0.1.0` (Prototype) |
-| **Status** | Active Development |
-| **Platform** | Vercel |
-| **Domain** | [aischmira.store](https://aischmira.store) |
+| :--- | :--- |
+| **Framework** | Next.js App Router (v16.2.10) |
+| **Language** | TypeScript (v5 strict mode) |
+| **Styling** | Tailwind CSS v4 (`@tailwindcss/postcss`) |
+| **Validation** | Zod Runtime Schema Validation |
+| **State** | Zustand Global Client Stores |
+| **Checkout** | WhatsApp Concierge Commerce (`+62 851-2134-4848`) |
+| **Deployment** | Vercel Platform ([aischmira.store](https://aischmira.store)) |
 
 ---
 
-## Vision
+## 4. Architecture
 
-To become the leading digital experience for premium Indonesian women's fashion — connecting inspiration, community, and commerce in a single, elegant ecosystem.
+The codebase follows an enterprise domain-oriented architecture separating UI presentation, domain business logic, and data storage:
 
-## Mission
-
-- Present a world-class shopping experience that reflects the quality and identity of the brand.
-- Build lasting relationships with customers through thoughtful design and communication.
-- Unify all sales channels under one cohesive digital presence.
-- Lay the technical foundation for AISCHMIRA's long-term digital transformation.
-
----
-
-## Brand Identity
-
-AISCHMIRA's visual language is **warm gold, clean whitespace, and editorial typography**.
-
-| Token | Value | Purpose |
-| --- | --- | --- |
-| Primary | `#D9AE20` | CTA, buttons, active states |
-| Secondary | `#D5A12A` | Supporting brand treatment |
-| Accent | `#D19D28` | Dividers, badges, small highlights |
-| Background | `#FAFAF8` | Off-white page background |
-| Surface | `#FFFFFF` | Cards, navigation, form surfaces |
-| Text | `#2B2B2B` | Primary body text |
-| Text Secondary | `#6D6D6D` | Metadata, captions |
-| Border | `#ECE8DE` | Warm dividers and borders |
-
-Gold is a premium accent — never a dominant fill. The website uses off-white, warm white, and cream surfaces. Avoid pure black or full-gold backgrounds.
-
-**Typography**: Cormorant Garamond (headings) · Inter (body).
-
-Full brand guidelines → [`docs/21_BRAND_GUIDELINES.md`](docs/21_BRAND_GUIDELINES.md)
-Full design token reference → [`docs/04_DESIGN_SYSTEM.md`](docs/04_DESIGN_SYSTEM.md)
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-| --- | --- |
-| Framework | Next.js 16 (App Router, Turbopack) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS v4 via `@tailwindcss/postcss` |
-| Motion | Framer Motion |
-| Icons | Lucide React · react-icons (social) |
-| Forms | React Hook Form + Zod |
-| UI Utilities | clsx · tailwind-merge · class-variance-authority |
-| Linting | ESLint (Next.js Core Web Vitals + TypeScript) |
-| Deployment | Vercel |
-| Source Control | GitHub |
-
-Full tech stack details → [`docs/03_TECH_STACK.md`](docs/03_TECH_STACK.md)
-
----
-
-## Folder Structure
-
-```
-aischmira-store/
-├── app/                    # App Router — routes, layout, metadata
-├── components/
-│   ├── common/             # Shared cross-cutting components
-│   ├── layout/             # Site chrome: Navbar, Footer, AnnouncementBar
-│   ├── product/            # Product-specific composed components
-│   ├── sections/           # Homepage and editorial page sections
-│   └── ui/                 # Atomic design primitives
-│       ├── Badge/
-│       ├── Button/
-│       ├── Card/
-│       ├── Divider/
-│       ├── Feedback/
-│       ├── Form/
-│       ├── Overlay/
-│       └── Typography/
-├── data/                   # Typed static/prototype content
-├── docs/                   # Project documentation
-├── hooks/                  # Custom React hooks
-├── lib/                    # Pure utilities, formatters, theme helpers
-├── public/                 # Static assets (images, logo, fonts, icons)
-├── services/               # Future API/service integrations
-├── styles/                 # Global CSS and design-token source of truth
-│   ├── theme.css           # Token definitions
-│   └── globals.css         # Tailwind config and base styles
-└── types/                  # Shared domain and content types
+```text
+app/                 App Router routes, pages, and root layout
+components/          UI Presentation Components
+  account/           User account & dashboard views
+  collections/       Collection page views
+  layout/            Site chrome layout (Header/, Footer, Drawers, Modals)
+  products/          Product detail view components
+  search/            Search overlay results
+  sections/          Composed homepage editorial sections
+  ui/                Reusable UI primitives (Badge, Button, Card, ProductCard, SkeletonLoader)
+data/                Typed prototype static content
+docs/                Enterprise specifications, API plans, and guidelines
+hooks/               Custom React hooks
+lib/                 Pure helpers, formatters, and theme access utilities
+providers/           React Context Providers
+services/            Domain business logic, service layers, and Zod schemas
+  domain/            Domain modules (product, collection, category, homepage, navigation, journal, loyalty)
+store/               Zustand state stores (useShopStore, useUIStore)
+styles/              Global CSS and design token source (theme.css, globals.css)
+types/               TypeScript domain interfaces index
+public/              Static production assets (logo, hero imagery, product visuals)
 ```
 
-Full architecture → [`ARCHITECTURE.md`](ARCHITECTURE.md)
-Full project structure → [`docs/05_PROJECT_STRUCTURE.md`](docs/05_PROJECT_STRUCTURE.md)
-
 ---
 
-## Architecture Overview
-
-```
-┌─────────────────────────────────────────────┐
-│                 App Router                  │
-│          (routes, layouts, metadata)        │
-├─────────────────────────────────────────────┤
-│              Page Sections                  │
-│  (Hero, FeaturedCollection, ProductHighlight │
-│   BrandStory, Lookbook, Newsletter, etc.)   │
-├─────────────────────────────────────────────┤
-│            UI Primitives Layer              │
-│  (Button, Card, Badge, Form, Typography)    │
-├─────────────────────────────────────────────┤
-│         Layout Components Layer             │
-│     (Navbar, Footer, AnnouncementBar)       │
-├─────────────────────────────────────────────┤
-│        Data / Services / Types              │
-│  data/ → static    services/ → future API   │
-│              types/ → domain models         │
-├─────────────────────────────────────────────┤
-│           Design Token Layer                │
-│   styles/theme.css → styles/globals.css     │
-│        → Tailwind v4 @theme {}              │
-└─────────────────────────────────────────────┘
-```
-
-Key architectural principles:
-- **Server components by default.** Add `"use client"` only when state, effects, or browser APIs require it.
-- **Composition over inheritance.** Small, focused components that compose into page sections.
-- **Separation of concerns.** UI components never fetch APIs directly. All external access goes through `services/`.
-- **Design tokens as single source of truth.** All colors, spacing, shadows, and radii are defined in `styles/theme.css` and registered with Tailwind in `styles/globals.css`.
-
----
-
-## Development Workflow
+## 5. Implementation & Getting Started
 
 ### Prerequisites
+- Node.js `^20.0.0` or higher
+- npm `^10.0.0` or higher
 
-- Node.js ≥ 20
-- npm ≥ 10
-
-### Getting Started
-
+### Installation & Local Development
 ```bash
-# Clone the repository
+# Clone repository
 git clone https://github.com/rausanfikri/aischmira-store.git
 cd aischmira-store
 
 # Install dependencies
 npm install
 
-# Start development server
+# Run local development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Available Scripts
-
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start development server (Turbopack) |
-| `npm run build` | Production build |
-| `npm run start` | Serve production build |
-| `npm run lint` | Run ESLint |
-
-### Quality Gates
-
-Every change must pass before merge:
-
+### Quality Assurance Commands
 ```bash
-npm run build   # Zero TypeScript errors, zero build errors
-npm run lint    # Zero ESLint errors
+# Run ESLint validation
+npm run lint
+
+# Run production build compilation
+npm run build
+
+# Start production server
+npm run start
 ```
 
 ---
 
-## Deployment
+## 6. Examples & Documentation Index
 
-The project deploys to **Vercel** via GitHub integration.
+Comprehensive technical specifications are available in the repository index:
 
-| Branch | Environment |
-| --- | --- |
-| `main` | Production |
-| `develop` | Preview / Staging |
-| `feature/*` | Preview (per-PR) |
-
-Deployment flow → [`docs/12_GIT_WORKFLOW.md`](docs/12_GIT_WORKFLOW.md)
-Release plan → [`docs/18_RELEASE_PLAN.md`](docs/18_RELEASE_PLAN.md)
-
----
-
-## AI Workflow
-
-This repository is designed for **AI-assisted development**. AI agents should:
-
-1. Read `AGENTS.md` before making any changes.
-2. Read relevant `docs/` files before coding.
-3. Inspect existing implementation before proposing architecture.
-4. Reuse existing components — never duplicate.
-5. Follow the design token system — never hardcode colors or spacing.
-6. Run `npm run build` and `npm run lint` after every change.
-7. Update documentation when architecture changes.
-
-Full AI workflow → [`docs/25_AI_DEVELOPMENT_WORKFLOW.md`](docs/25_AI_DEVELOPMENT_WORKFLOW.md)
-Agent instructions → [`AGENTS.md`](AGENTS.md)
+- **[DESIGN_SYSTEM.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/DESIGN_SYSTEM.md)** — Typography, spacing, color tokens, radii, shadows, glassmorphism, UI controls, motion, and accessibility rules.
+- **[CODING_STANDARDS.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/CODING_STANDARDS.md)** — Engineering standards, import ordering, RSC rules, service layers, and Zod validation.
+- **[DATA_MODEL.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/DATA_MODEL.md)** — Domain entity definitions (Product, Collection, Category, Customer, Loyalty, Inventory, Pricing).
+- **[API_STRATEGY.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/API_STRATEGY.md)** — Multi-layer sync architecture (`BigSeller OMS` → `Sync Worker` → `Supabase` → `Next.js` → `Website`).
+- **[DECISIONS.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/DECISIONS.md)** — Architecture Decision Records (ADRs).
+- **[BIGSELLER_SYNC.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/BIGSELLER_SYNC.md)** — BigSeller OMS integration specification.
+- **[SUPABASE_SCHEMA.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/SUPABASE_SCHEMA.md)** — PostgreSQL schema & RLS security strategy.
+- **[WHATSAPP_CHECKOUT.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/WHATSAPP_CHECKOUT.md)** — WhatsApp Concierge checkout message protocol.
+- **[LOYALTY_SYSTEM.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/LOYALTY_SYSTEM.md)** — Member loyalty points, tiers, and referral engine.
 
 ---
 
-## Repository Standards
-
-- **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `chore:`, `test:`)
-- **Branches**: `main`, `develop`, `feature/*`, `fix/*`, `hotfix/*`
-- **TypeScript**: Strict mode, no `any` without justification
-- **Styling**: Design tokens only — no hardcoded colors
-- **Components**: Named exports, Atomic Design, composition-first
-- **Imports**: Absolute imports via `@/*` alias
-
-Contribution guidelines → [`CONTRIBUTING.md`](CONTRIBUTING.md)
-Coding standards → [`docs/11_CODING_STANDARDS.md`](docs/11_CODING_STANDARDS.md)
+## 7. Future Improvements
+- **Sprint F2**: CMS Ready Architecture & Dummy Data Refactor.
+- **Phase 3**: Supabase PostgreSQL integration & BigSeller real-time stock sync.
+- **Phase 4**: WhatsApp Concierge Automation & Customer Loyalty Dashboard.
 
 ---
 
-## Documentation Index
-
-| Document | Description |
-| --- | --- |
-| [`AGENTS.md`](AGENTS.md) | AI agent instructions |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Technical architecture |
-| [`CHANGELOG.md`](CHANGELOG.md) | Release history |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution guidelines |
-| [`DECISIONS.md`](DECISIONS.md) | Architecture decision records |
-| [`ROADMAP.md`](ROADMAP.md) | Long-term development roadmap |
-| [`TASKS.md`](TASKS.md) | Product backlog by sprint |
-| [`docs/`](docs/) | Full project documentation |
+## 8. References
+- [AGENTS.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/AGENTS.md)
+- [ROADMAP.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/ROADMAP.md)
+- [CHANGELOG.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/CHANGELOG.md)
+- [TASKS.md](file:///c:/Users/rausa/OneDrive/Documents/GitHub/aischmira-store/TASKS.md)
 
 ---
 
-## License
-
-This is a private repository. All rights reserved by AISCHMIRA.
-
----
-
-<p align="center">
-  <strong>AISCHMIRA</strong><br>
-  <em>Crafted to comfort. Designed to stand out.</em>
-</p>
+## 9. Change History
+- **2026-07-29 (Sprint F1)**: Complete enterprise refactoring, root log cleanup, and documentation suite expansion.
+- **2026-07-28 (Sprint 2E)**: CMS Ready Architecture & Domain Data Layer implementation.
