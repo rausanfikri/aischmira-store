@@ -1,14 +1,18 @@
-// Feature flags to control visibility and execution of modules
 export const FEATURES = {
-  WISHLIST_ENABLED: false,
-  LOYALTY_ENABLED: false,
-  MEMBER_ENABLED: false,
-  CHECKOUT_ENABLED: true, // Dummy checkout redirect to WhatsApp
+  journal: true,
+  wishlist: false,
+  checkout: true, // WhatsApp Concierge commerce
+  loyalty: false,
+  member: false,
+  analytics: true,
+  search: true,
+  cms: false,
+  bigseller: false,
+  supabase: false,
 } as const;
 
 export type FeatureFlag = keyof typeof FEATURES;
 
 export function isFeatureEnabled(flag: FeatureFlag): boolean {
-  // In the future, this might read from an environment variable or LaunchDarkly
-  return FEATURES[flag];
+  return FEATURES[flag] ?? false;
 }

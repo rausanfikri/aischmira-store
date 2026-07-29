@@ -1,7 +1,7 @@
-import { ICollectionRepository, Collection } from '../../domain/collection';
-import { Result, success } from '../../domain/types/Result';
+import { ICollectionRepository, Collection } from '@/domain/collection';
+import { Result, success } from '@/shared/types/Result';
 import { container } from '../../infrastructure/di/container';
-import { logger } from '../../infrastructure/logger';
+import { logger } from '@/shared/logger';
 
 export class GetCollectionUseCase {
   constructor(private collectionRepo: ICollectionRepository = container.collections) {}
@@ -9,7 +9,7 @@ export class GetCollectionUseCase {
   async execute(slug: string): Promise<Result<Collection | null>> {
     logger.info(`Executing GetCollectionUseCase for slug: ${slug}`);
     
-    const result = await this.collectionRepo.findBySlug(slug);
+    const result = await this.collectionRepo.getBySlug(slug);
     
     if (result.isFailure) {
       logger.error('Failed to get collection', result.error);

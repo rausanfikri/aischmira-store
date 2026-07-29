@@ -1,2 +1,8 @@
-// Authentication Provider Stub (Future Supabase Auth context)
-export const AuthProviderStub = () => null;
+import { createContext } from 'react';
+
+export interface AuthContextValue {
+  isAuthenticated: boolean;
+  userId: string | null;
+}
+
+export const AuthContext = createContext<AuthContextValue | undefined>(undefined);

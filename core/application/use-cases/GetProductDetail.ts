@@ -1,7 +1,7 @@
-import { IProductRepository, Product } from '../../domain/product';
-import { Result, success } from '../../domain/types/Result';
+import { IProductRepository, Product } from '@/domain/product';
+import { Result, success } from '@/shared/types/Result';
 import { container } from '../../infrastructure/di/container';
-import { logger } from '../../infrastructure/logger';
+import { logger } from '@/shared/logger';
 
 export class GetProductDetailUseCase {
   constructor(private productRepo: IProductRepository = container.products) {}
@@ -9,7 +9,7 @@ export class GetProductDetailUseCase {
   async execute(slug: string): Promise<Result<Product | null>> {
     logger.info(`Executing GetProductDetailUseCase for slug: ${slug}`);
     
-    const result = await this.productRepo.findBySlug(slug);
+    const result = await this.productRepo.getBySlug(slug);
     
     if (result.isFailure) {
       logger.error('Failed to get product detail', result.error);

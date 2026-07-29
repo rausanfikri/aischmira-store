@@ -1,13 +1,9 @@
-import { IProductRepository } from '../../domain/product';
-import { ICollectionRepository } from '../../domain/collection';
-import { ICategoryRepository } from '../../domain/category';
+import { IProductRepository, DummyProductRepository } from '@/domain/product';
+import { ICollectionRepository, DummyCollectionRepository } from '@/domain/collection';
+import { ICategoryRepository, DummyCategoryRepository } from '@/domain/category';
+import { INavigationRepository, DummyNavigationRepository } from '@/domain/navigation';
 import { IHomepageRepository } from '../../domain/homepage';
-import { INavigationRepository } from '../../domain/navigation';
-import { DummyProductRepository } from '../repositories/dummy/DummyProductRepository';
-import { DummyCollectionRepository } from '../repositories/dummy/DummyCollectionRepository';
-import { DummyCategoryRepository } from '../repositories/dummy/DummyCategoryRepository';
 import { DummyHomepageRepository } from '../repositories/dummy/DummyHomepageRepository';
-import { DummyNavigationRepository } from '../repositories/dummy/DummyNavigationRepository';
 
 // This is a simple manual DI container for the prototype.
 // As the app grows, a proper DI library (like awilix or tsyringe) could be introduced, 

@@ -1,2 +1,10 @@
-// Theme Provider Stub (Future Theme context & mode switching)
-export const ThemeProviderStub = () => null;
+import { createContext } from 'react';
+
+export type ThemeMode = 'light' | 'dark' | 'system';
+
+export interface ThemeContextValue {
+  theme: ThemeMode;
+  setTheme: (theme: ThemeMode) => void;
+}
+
+export const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);

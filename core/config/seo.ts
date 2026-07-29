@@ -1,4 +1,6 @@
-export const SEO_CONFIG = {
+import { SEOConfig, SEOConfigSchema } from './schema';
+
+const seoConfigData: SEOConfig = {
   defaultTitle: 'AISCHMIRA — Editorial Luxury Fashion Flagship',
   titleTemplate: '%s | AISCHMIRA',
   defaultDescription: 'Discover timeless luxury and editorial fashion collections from AISCHMIRA.',
@@ -8,4 +10,10 @@ export const SEO_CONFIG = {
     locale: 'en_US',
     siteName: 'AISCHMIRA',
   },
-} as const;
+  twitter: {
+    card: 'summary_large_image',
+    site: '@aischmira',
+  },
+};
+
+export const SEO_CONFIG: SEOConfig = SEOConfigSchema.parse(seoConfigData);
