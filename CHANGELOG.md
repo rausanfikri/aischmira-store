@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint C1.9] - 2026-07-30
+### Added
+- **`MembershipService` & Domain Entities (`domain/membership/`, `services/membership.service.ts`)**: Created membership domain module and `MembershipService` providing `getMembershipProfile()`, `getMembershipTiers()`, `getPointsHistory()`, and `getStyleProfile()`.
+- **Luxury Membership & Loyalty Routes (`app/account/membership/page.tsx`, `app/account/loyalty/page.tsx`)**: Created primary `/account/membership` route featuring Digital Virtual Membership Card with gold foil accents, Tier Progress Roadmap (Classic -> Silver -> Gold -> Platinum -> VIP Atelier), Benefits Matrix, Style Profile Preference Sanctuary, Points & Activity Ledger, and Privé Referral link generator. Zero direct static dummy data imports.
+- **Dedicated Membership Architecture (`MEMBERSHIP_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Membership Architecture, Tier Configuration, Style Profile Architecture, BigSeller Sync, and Supabase Storage.
+
+## [Sprint C1.8] - 2026-07-30
+### Added
+- **`OrderService` & Domain Entities (`domain/order/`, `services/order.service.ts`)**: Built order domain definitions and `OrderService` providing `getOrders()`, `getOrderById()`, and `getTracking()`.
+- **Luxury Order History & Detail Routes (`app/account/orders/page.tsx`, `app/account/orders/[orderId]/page.tsx`)**: Built Order Sanctuary list page with status filters and detailed `/account/orders/[orderId]` view featuring interactive courier tracking timeline, itemized SKU breakdown, financial summary box, delivery recipient card, and direct WhatsApp concierge support trigger.
+- **Dedicated Order Architecture (`ORDER_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Order Architecture, Order Status Lifecycle, Tracking Timeline Architecture, BigSeller Sync, and Supabase Order Storage.
+
+## [Sprint C1.7] - 2026-07-30
+### Added
+- **`CustomerService` & Domain Entities (`domain/customer/`, `services/customer.service.ts`)**: Created customer domain module and `CustomerService` providing `getCustomerProfile()`, `getCustomerOrders()`, `getCustomerLoyalty()`, and `getSavedLooks()`.
+- **Luxury Client Portal Foundation (`app/account/page.tsx`, `app/account/dashboard/page.tsx`, `app/account/loyalty/page.tsx`, `app/account/saved-looks/page.tsx`, `app/account/settings/page.tsx`)**: Built private sanctuary portal featuring Client Overview Card, Order History tracking, Privé Tier progress bar (*Privé Gold* to *Privé Noir*), Curated Saved Looks, and Passkeys Security Settings. Zero direct static dummy data imports.
+- **Dedicated Client Architecture (`CUSTOMER_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Client Portal Architecture, Data Flow, Navigation Hierarchy, Supabase Auth Readiness, and BigSeller Sync.
+
+## [Sprint C1.6] - 2026-07-30
+### Added
+- **`WhatsAppService` & `CheckoutService` (`services/whatsapp.service.ts`, `services/checkout.service.ts`)**: Built dynamic `WhatsAppService` consuming `ConfigurationService` for zero hardcoded phone numbers, configurable Markdown template builder, BigSeller ERP payload mapping (`toBigSellerPayload`), and Supabase draft order tracking (`toSupabaseDraftOrder`).
+- **Luxury Concierge Checkout Route (`app/checkout/page.tsx`)**: Created `/checkout` order review page featuring Privé Header, Itemized Order Summary, Customer Information form, Shipping Preference selector, Signature Gift Box & Calligraphic Note options, Atelier Notes textarea, Live WhatsApp Message Preview, and "Continue with WhatsApp Concierge" primary button. Zero payment gateways or credit card inputs.
+- **Dedicated Checkout Architecture (`CHECKOUT_ARCHITECTURE.md`)**: Created comprehensive documentation detailing business model, end-to-end concierge flow, message builder specifications, configuration strategy, and ERP/DB payload contracts.
+
+## [Sprint C1.5] - 2026-07-30
+### Added
+- **Enhanced `ShoppingBagService` (`services/shopping-bag.service.ts`)**: Extended service with `getBagDetails()`, `buildWhatsAppCheckoutUrl()`, and `getBagRecommendations()` supporting item subtotals, free shipping progress tracking (IDR 3,000,000 threshold), and signature gift packaging payloads.
+- **Luxury Shopping Bag Route (`app/bag/page.tsx`, `app/cart/page.tsx`)**: Created primary `/bag` route (with `/cart` re-exporting `BagPage`) featuring Concierge header, Free Shipping Progress Bar, Bag Items Table with variant details & quantity controls, Signature Gift Packaging panel, Order Summary Card, and WhatsApp Checkout CTA.
+
+### Changed
+- **Cart Drawer Data Flow (`components/layout/CartDrawer.tsx`)**: Refactored `CartDrawer` slide-over component to resolve domain products dynamically via `ShoppingBagService` & `ProductService`. Completely eliminated direct static dummy data imports.
+
 ## [Sprint C1.4] - 2026-07-30
 ### Added
 - **Enhanced `WishlistService` (`services/wishlist.service.ts`)**: Extended service with `getWishlistProducts()`, `getWishlistSummary()`, and `getWishlistRecommendations()` supporting summary metrics, category filters, and curated recommendations.

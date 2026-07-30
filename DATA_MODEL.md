@@ -1,6 +1,6 @@
 # AISCHMIRA.STORE — Enterprise Domain Data Model Specification
 
-**Version:** 1.9.0 (Sprint C1.4 — Luxury Wishlist Personal Closet Model)  
+**Version:** 2.4.0 (Sprint C1.9 — Loyalty & Membership Model)  
 **Source of Truth:** `domain/collection/`, `domain/navigation/`, `core/config/`  
 
 ---

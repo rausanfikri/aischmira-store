@@ -1,7 +1,7 @@
 # AISCHMIRA.STORE — Enterprise System Architecture
 
-**Last Updated:** July 30, 2026 (Sprint C1.4 — Luxury Wishlist Experience)  
-**Status:** Personal Closet Wishlist Architecture Fully Integrated  
+**Last Updated:** July 30, 2026 (Sprint C1.9 — Luxury Loyalty & Membership Experience)  
+**Status:** Phase 4 Platform Architecture Fully Integrated  
 
 ---
 
@@ -9,64 +9,57 @@
 
 AISCHMIRA.STORE is built as an editorial luxury fashion flagship digital experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Clean Architecture principles.
 
-In **Sprint C1.4**, the **Luxury Wishlist Experience** (`app/wishlist/page.tsx`, `components/layout/WishlistDrawer.tsx`, `services/wishlist.service.ts`) was re-architected into a "Personal Closet":
-- Rebuilt `app/wishlist/page.tsx` as a client page consuming `WishlistService.getWishlistProducts()`, `WishlistService.getWishlistSummary()`, and `ProductService`. Zero direct static dummy imports.
-- Extended `WishlistService` (`services/wishlist.service.ts`) with summary metrics, category filters, and curated wardrobe recommendations.
-- Refactored **`WishlistDrawer`** (`components/layout/WishlistDrawer.tsx`) to resolve saved items via `WishlistService` & `ProductService` dynamically.
+In **Sprint C1.9**, the **Luxury Loyalty & Membership Experience** (`/account/membership`, `/account/loyalty`, `services/membership.service.ts`, `domain/membership/`, `MEMBERSHIP_ARCHITECTURE.md`) was fully implemented:
+- Built primary `/account/membership` route featuring Digital Virtual Membership Card with gold foil accents, Tier Progress Roadmap (Classic -> Silver -> Gold -> Platinum -> VIP Atelier), Benefits Matrix, Style Profile Preference Sanctuary, Points & Activity Ledger, and Privé Referral link generator. Zero direct static dummy data imports.
+- Created `MembershipService` (`services/membership.service.ts`) exposing `getMembershipProfile()`, `getMembershipTiers()`, `getPointsHistory()`, and `getStyleProfile()`.
+- Re-architected `/account/loyalty` to re-export `MembershipPage` for complete route compatibility.
 
 ---
 
-## 2. Wishlist Personal Closet Architecture & Data Flow
+## 2. Membership & Loyalty Data Flow
 
 ```text
-               User Saved Product IDs (useShopStore Local Storage)
-                                 │
-                                 ▼
-                    services/wishlist.service.ts
-                   (WishlistService.getWishlistProducts)
-                                 │
-                                 ▼
-                     services/product.service.ts
-                    (ProductService.getProducts)
-                                 │
-                                 ▼
-                           Product Entity
-                                 │
-          ┌──────────────────────┴──────────────────────┐
-          ▼                                             ▼
-app/wishlist/page.tsx (Personal Closet)      components/layout/WishlistDrawer.tsx
-          │                                             │
-          ├── Wardrobe Summary Bar                      ├── Closet Item List
-          ├── Category Filter Pills                     ├── Move to Shopping Bag Action
-          ├── Closet Product Grid                       └── View Full Closet Page CTA
-          └── Inspired Recommendations
+              Client Navigates to /account/membership or /loyalty
+                                    │
+                                    ▼
+                     services/membership.service.ts
+                          (MembershipService)
+                                    │
+       ┌────────────────────────────┼────────────────────────────┐
+       ▼                            ▼                            ▼
+getMembershipProfile()      getMembershipTiers()        getPointsHistory()
+       │                            │                            │
+       ▼                            ▼                            ▼
+MembershipEntity             MembershipTier List         PointsActivity List
+       │                            │                            │
+       └────────────────────────────┼────────────────────────────┘
+                                    │
+                                    ▼
+                       /account/membership Page
+  (Digital Virtual Card, Tier Roadmap, Style Profile, Points Ledger, Referral Card)
 ```
 
 ---
 
-## 3. Search System Architecture & Data Flow
+## 3. Order Management & Tracking Data Flow
 
 ```text
-               User Search Query (UI Input or URL ?q=)
-                                 │
-                                 ▼
-                     services/search.service.ts
-                     (SearchService.globalSearch)
-                                 │
-           ┌─────────────────────┴─────────────────────┐
-           ▼                                           ▼
-services/product.service.ts                 services/collection.service.ts
- (ProductService.searchProducts)            (CollectionService.searchCollections)
-           │                                           │
-           ▼                                           ▼
-     Product Entity                              Collection Entity
-           └─────────────────────┬─────────────────────┘
-                                 │
-                                 ▼
-                  components/search/SearchResults.tsx
-                                 │
-          ┌──────────────────────┼──────────────────────┐
-          ▼                      ▼                      ▼
-  Matching Garments     Matching Collections    Discovery Selections
-   (ProductCard.tsx)    (Collection Card Link)    (Fallback Products)
+             Client Navigates to /account/orders or /[orderId]
+                                    │
+                                    ▼
+                       services/order.service.ts
+                            (OrderService)
+                                    │
+            ┌───────────────────────┴───────────────────────┐
+            ▼                                               ▼
+      getOrders()                                    getOrderById()
+            │                                               │
+            ▼                                               ▼
+   OrderEntity List                                 OrderEntity Detail
+            │                                               │
+            ▼                                               ▼
+/account/orders List Page                     /account/orders/[orderId] Page
+ (Filter Pills, Totals)                         (Interactive Tracking Timeline,
+                                                 Item SKUs, Recipient Address,
+                                                 WhatsApp Support Button)
 ```

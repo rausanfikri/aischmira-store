@@ -96,15 +96,30 @@
 - **Data Flow**: Consumes `WishlistService.getWishlistProducts()`, `WishlistService.getWishlistSummary()`, and `ProductService.getProducts()`. Zero direct static dummy imports.
 - **State Persistence & Enterprise Readiness**: Local state persistence via `useShopStore`, with service contracts prepared for Supabase customer account sync and BigSeller price/stock webhooks.
 
-## Shopping Bag
-- **Purpose**: Accumulate items for WhatsApp purchase.
-- **Requirements**: Slide-out drawer, item quantity adjustment, total calculation, proceed to WhatsApp CTA.
-- **Data**: Consumes `ShoppingBagService`.
+## Shopping Bag & Checkout (Enterprise Luxury Commerce)
+- **Purpose**: Calm, trustworthy luxury checkout experience inspired by *Apple, COS, Totême, Loro Piana, Loewe, Hermès, and Patris*.
+- **Surfaces**:
+  - `CartDrawer`: Radix UI slide-over drawer with item thumbnails, variant specifications, quantity controls, subtotal calculation, free shipping progress tracking, and WhatsApp checkout CTA.
+  - `/bag` Route (and `/cart` route alias): Full shopping bag portal featuring Header & Concierge Badge, Free Shipping Progress Bar (IDR 3,000,000 threshold), Bag Items Table with variant details & quantity controls, Signature Gift Packaging panel (complimentary gift box + calligraphic note textarea), Order Summary Card (subtotal, shipping, VAT notice, promo code input, grand total), WhatsApp Checkout CTA, and Curated Recommendations ("Curated for You").
+- **Data Flow**: Consumes `ShoppingBagService.getBagDetails()`, `ShoppingBagService.buildWhatsAppCheckoutUrl()`, and `ProductService.getProducts()`. Zero direct static dummy data imports.
+- **Enterprise Integration Readiness**: Models include `sku`, `variantSku`, `inventory`, `warehouse`, and `promotion` mapping prepared for BigSeller ERP sync and Supabase persistent cart drafts.
 
-## Checkout (WhatsApp)
-- **Purpose**: Order submission via WhatsApp Concierge.
-- **Requirements**: Formats bag contents into a pre-filled WhatsApp message string and redirects to `wa.me`.
+## Checkout & WhatsApp Concierge (Enterprise Luxury Commerce)
+- **Purpose**: Private order consultation and review portal designed to feel like entering a personal consultation with a fashion advisor.
+- **Surfaces**:
+  - `/checkout` Route: Full checkout review portal featuring Privé Header, Itemized Order Summary (Products, Variants, Quantities, SKUs, Unit Prices, Subtotals, VAT Notice, Grand Total), Customer Information form (FullName, Phone, Email, Delivery Address, City), Shipping Preference selector (Concierge Express, Boutique Pickup, Personal Courier), Signature Packaging & Calligraphic Note panel, Atelier Notes textarea, Live WhatsApp Message Preview Box, and "Continue with WhatsApp Concierge" primary button. Zero payment gateways or credit card inputs.
+- **Data Flow**: Consumes `CheckoutService.prepareCheckoutReview()`, `WhatsAppService.generateWhatsAppUrl()`, and `ConfigurationService.getContactConfig()`. Zero direct static dummy data imports or hardcoded phone numbers.
+- **Enterprise Integration Readiness**: Mappers include `toBigSellerPayload()` for direct BigSeller ERP order entry and `toSupabaseDraftOrder()` for customer order draft tracking.
 
-## Member & Privé Loyalty (Future)
-- **Purpose**: Customer identity and privileges.
-- **Requirements**: Registration, login, profile management, points tracking, order history.
+## Client Portal & Privé Sanctuary (Enterprise Luxury Commerce)
+- **Purpose**: Private customer sanctuary where brand clients manage identity, order tracking, Privé loyalty rewards, saved looks, and security settings.
+- **Surfaces**:
+  - `/account` & `/account/dashboard` Routes: Sanctuary dashboard featuring Identity Overview Card (Customer Name, Tier, Member Since, Points, Preferred Size & Color), Order Status Card, Loyalty Highlights, and Quick Action Shortcuts.
+  - `/account/profile` Route: Personal measurements, contact details, and multiple delivery address management.
+  - `/account/orders` Route: Detailed order history tracking, status badges (Draft, Processing, Shipped, Delivered), and concierge tracking triggers.
+## Loyalty & Membership (Enterprise Customer Platform)
+- **Purpose**: Cultivate long-term brand relationships via digital membership cards, tier progression, style profile preference sanctuaries, and points ledgers.
+- **Surfaces**:
+  - `/account/membership` Route (and `/account/loyalty` route alias): Digital Virtual Membership Card with gold foil accents, Tier Progress Roadmap (Classic -> Silver -> Gold -> Platinum -> VIP Atelier), Benefits Matrix, Style Profile Preference Sanctuary, Points & Activity Ledger, and Privé Referral link generator.
+- **Data Flow**: Consumes `MembershipService.getMembershipProfile()`, `MembershipService.getMembershipTiers()`, `MembershipService.getPointsHistory()`, and `MembershipService.getStyleProfile()`. Zero direct static dummy data imports.
+- **Enterprise Integration Readiness**: Contracts map `memberId`, `membershipCardNumber`, `lifetimePoints`, `currentTier`, `styleProfile`, and `pointsHistory` ready for BigSeller ERP customer loyalty sync and Supabase database tables.
