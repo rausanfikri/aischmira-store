@@ -3,18 +3,18 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/types";
-import { ExtendedCollection } from "@/data/collections";
+import { Product } from "@/domain/product";
+import { Collection } from "@/domain/collection";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { ProductCardSkeleton } from "@/components/ui/SkeletonLoader";
 import { SlidersHorizontal, X, MessageCircle, Gem, Sparkles, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CollectionDetailClientProps {
-  collection: ExtendedCollection;
+  collection: Collection;
   products: Product[];
   allProducts?: Product[];
-  relatedCollections: ExtendedCollection[];
+  relatedCollections: Collection[];
 }
 
 export function CollectionDetailClient({
@@ -55,9 +55,10 @@ export function CollectionDetailClient({
       if (!hasSize) return false;
     }
 
-    if (priceRange === "under-1m" && product.basePrice >= 1000000) return false;
-    if (priceRange === "1m-2m" && (product.basePrice < 1000000 || product.basePrice > 2000000)) return false;
-    if (priceRange === "above-2m" && product.basePrice <= 2000000) return false;
+    const productPrice = product.price ?? (product as unknown as { basePrice?: number }).basePrice ?? 0;
+    if (priceRange === "under-1m" && productPrice >= 1000000) return false;
+    if (priceRange === "1m-2m" && (productPrice < 1000000 || productPrice > 2000000)) return false;
+    if (priceRange === "above-2m" && productPrice <= 2000000) return false;
 
     if (availability === "in-stock") {
       const hasStock = product.variants.some((v) => v.stock > 0);
@@ -69,8 +70,10 @@ export function CollectionDetailClient({
 
   // Sort products
   filteredProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === "price-asc") return a.basePrice - b.basePrice;
-    if (sortBy === "price-desc") return b.basePrice - a.basePrice;
+    const priceA = a.price ?? (a as unknown as { basePrice?: number }).basePrice ?? 0;
+    const priceB = b.price ?? (b as unknown as { basePrice?: number }).basePrice ?? 0;
+    if (sortBy === "price-asc") return priceA - priceB;
+    if (sortBy === "price-desc") return priceB - priceA;
     if (sortBy === "newest") return new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime();
     if (sortBy === "best-selling") return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
     return 0;
@@ -352,7 +355,7 @@ export function CollectionDetailClient({
         {displayedProducts.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {displayedProducts.map((product, idx) => (
-              <React.Fragment key={product.id}>
+              <React.Fragment key={product.sku || (product as unknown as { id?: string }).id || idx}>
                 {/* Regular Product Card */}
                 <ProductCard product={product} />
 

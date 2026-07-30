@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Product } from "@/types";
+import { Product } from "@/domain/product";
 import { useShopStore } from "@/store/useShopStore";
 import { Heart, Ruler, Share2, MessageCircle, Check, ChevronDown, Gem, Shirt, Sparkles, Truck, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -28,15 +28,17 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const addToCart = useShopStore((state) => state.addToCart);
   const toggleWishlist = useShopStore((state) => state.toggleWishlist);
   const wishlist = useShopStore((state) => state.wishlist);
-  const isWishlisted = wishlist.some((w) => w.productId === product.id);
 
-  const [selectedVariantId, setSelectedVariantId] = React.useState(product.variants[0]?.id || "");
+  const productId = product.sku || (product as unknown as { id?: string }).id || "product_id";
+  const isWishlisted = wishlist.some((w) => w.productId === productId);
+
+  const [selectedVariantId, setSelectedVariantId] = React.useState(product.variants[0]?.id || product.sku || "");
   const [quantity, setQuantity] = React.useState(1);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = React.useState(false);
   const [showAddedToast, setShowAddedToast] = React.useState(false);
 
-  const selectedVariant = product.variants.find((v) => v.id === selectedVariantId) || product.variants[0];
-  const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 });
+  const selectedVariant = product.variants.find((v) => v.id === selectedVariantId || v.sku === selectedVariantId) || product.variants[0];
+  const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: product.currency || "IDR", minimumFractionDigits: 0 });
 
   // Get unique sizes and colors
   const sizes = Array.from(new Set(product.variants.map((v) => v.size)));
@@ -45,8 +47,8 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const handleAddToCart = () => {
     if (!selectedVariant) return;
     addToCart({
-      productId: product.id,
-      variantId: selectedVariant.id,
+      productId,
+      variantId: selectedVariant.id || selectedVariant.sku,
       quantity,
     });
     setShowAddedToast(true);
@@ -102,8 +104,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         <h1 className="font-heading italic text-3xl md:text-5xl text-text mb-3 font-light">{product.name}</h1>
         <div className="flex items-center gap-4 flex-wrap">
           <p className="font-body text-xl md:text-2xl font-light text-text/90">
-            {formatter.format(selectedVariant?.price || product.basePrice)}
+            {formatter.format(selectedVariant?.price || product.price || (product as unknown as { basePrice?: number }).basePrice || 0)}
           </p>
+          {product.compareAtPrice && product.compareAtPrice > product.price && (
+            <span className="font-body text-sm text-text/40 line-through">
+              {formatter.format(product.compareAtPrice)}
+            </span>
+          )}
           {selectedVariant?.stock && selectedVariant.stock < 5 ? (
             <span className="font-body text-[9px] tracking-widest uppercase bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-1 rounded-full">
               Limited &bull; Only {selectedVariant.stock} left
@@ -253,7 +260,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
         </button>
 
         <button
-          onClick={() => toggleWishlist(product.id)}
+          onClick={() => toggleWishlist(productId)}
           className="w-full sm:w-14 py-4 sm:py-0 flex items-center justify-center border border-border/70 hover:border-primary hover:text-primary transition-colors rounded-sm"
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >

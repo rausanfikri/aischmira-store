@@ -1,17 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Product } from "@/types";
-import { productsData } from "@/data/products";
+import { Product } from "@/domain/product";
 import { ProductCard } from "@/components/ui/ProductCard";
 
 const RECENTLY_VIEWED_KEY = "aischmira_recently_viewed_ids_v1";
 
 interface RecentlyViewedProps {
   currentProductId: string;
+  allProducts?: Product[];
 }
 
-export function RecentlyViewed({ currentProductId }: RecentlyViewedProps) {
+export function RecentlyViewed({ currentProductId, allProducts = [] }: RecentlyViewedProps) {
   const [recentProducts, setRecentProducts] = React.useState<Product[]>([]);
 
   React.useEffect(() => {
@@ -25,16 +25,15 @@ export function RecentlyViewed({ currentProductId }: RecentlyViewedProps) {
 
       // Filter out current product for display
       const displayIds = ids.filter((id) => id !== currentProductId).slice(0, 4);
-      const matched = productsData.filter((p) => displayIds.includes(p.id));
+      const matched = allProducts.filter((p) => displayIds.includes(p.sku || (p as unknown as { id?: string }).id || ""));
       
-      // Update state async via requestAnimationFrame to avoid synchronous setState inside effect
       requestAnimationFrame(() => {
         setRecentProducts(matched);
       });
     } catch {
-      // Fallback
+      // Ignore storage error fallbacks
     }
-  }, [currentProductId]);
+  }, [currentProductId, allProducts]);
 
   if (recentProducts.length === 0) return null;
 
@@ -53,7 +52,7 @@ export function RecentlyViewed({ currentProductId }: RecentlyViewedProps) {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {recentProducts.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <ProductCard key={p.sku || (p as unknown as { id?: string }).id} product={p} />
         ))}
       </div>
     </section>

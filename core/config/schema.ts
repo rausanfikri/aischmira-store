@@ -66,8 +66,51 @@ export const SEOConfigSchema = z.object({
   }),
 });
 
+export const BrandStoryBlockSchema = z.object({
+  id: z.string(),
+  type: z.enum(['philosophy', 'craftsmanship', 'materials', 'lifestyle', 'detail']),
+  eyebrow: z.string(),
+  title: z.string(),
+  headline: z.string().optional(),
+  quote: z.string().optional(),
+  paragraphs: z.array(z.string()),
+  cta: z.object({
+    label: z.string(),
+    href: z.string(),
+  }).optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+    caption: z.string().optional(),
+    aspectRatio: z.enum(['portrait', 'landscape', 'square']),
+  }),
+  layoutOrder: z.enum(['image-left', 'image-right']),
+  highlights: z.array(z.object({
+    icon: z.string(),
+    title: z.string(),
+    description: z.string(),
+  })).optional(),
+});
+
+export const BrandStoryConfigSchema = z.object({
+  header: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
+  }),
+  blocks: z.array(BrandStoryBlockSchema),
+  pillars: z.array(z.object({
+    id: z.string(),
+    icon: z.string(),
+    title: z.string(),
+    description: z.string(),
+  })),
+});
+
 export type BrandConfig = z.infer<typeof BrandConfigSchema>;
 export type ContactConfig = z.infer<typeof ContactConfigSchema>;
 export type CompanyConfig = z.infer<typeof CompanyConfigSchema>;
 export type AnnouncementConfig = z.infer<typeof AnnouncementConfigSchema>;
 export type SEOConfig = z.infer<typeof SEOConfigSchema>;
+export type BrandStoryBlock = z.infer<typeof BrandStoryBlockSchema>;
+export type BrandStoryConfig = z.infer<typeof BrandStoryConfigSchema>;

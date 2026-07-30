@@ -9,6 +9,8 @@ import { FooterService, footerService } from './footer.service';
 import { SearchService, searchService } from './search.service';
 import { WishlistService, wishlistService } from './wishlist.service';
 import { ShoppingBagService, shoppingBagService } from './shopping-bag.service';
+import { LookbookService, lookbookService } from './lookbook.service';
+import { TestimonialService, testimonialService } from './testimonial.service';
 
 export interface IServiceRegistry {
   product: ProductService;
@@ -22,6 +24,8 @@ export interface IServiceRegistry {
   search: SearchService;
   wishlist: WishlistService;
   shoppingBag: ShoppingBagService;
+  lookbook: LookbookService;
+  testimonial: TestimonialService;
 }
 
 export class ServiceRegistry implements IServiceRegistry {
@@ -36,6 +40,8 @@ export class ServiceRegistry implements IServiceRegistry {
   public search: SearchService;
   public wishlist: WishlistService;
   public shoppingBag: ShoppingBagService;
+  public lookbook: LookbookService;
+  public testimonial: TestimonialService;
 
   constructor(overrides?: Partial<IServiceRegistry>) {
     this.product = overrides?.product ?? productService;
@@ -49,6 +55,8 @@ export class ServiceRegistry implements IServiceRegistry {
     this.search = overrides?.search ?? searchService;
     this.wishlist = overrides?.wishlist ?? wishlistService;
     this.shoppingBag = overrides?.shoppingBag ?? shoppingBagService;
+    this.lookbook = overrides?.lookbook ?? lookbookService;
+    this.testimonial = overrides?.testimonial ?? testimonialService;
   }
 }
 

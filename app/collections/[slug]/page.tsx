@@ -1,79 +1,100 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { collectionsData } from "@/data/collections";
-import { productsData } from "@/data/products";
 import { Metadata } from "next";
+import { collectionService } from "@/services/collection.service";
+import { productService } from "@/services/product.service";
+import { CollectionDetailHero } from "@/components/collections/CollectionDetailHero";
+import { CollectionEditorialStory } from "@/components/collections/CollectionEditorialStory";
+import { CollectionInfoSpecs } from "@/components/collections/CollectionInfoSpecs";
+import { CollectionFeaturedLooks } from "@/components/collections/CollectionFeaturedLooks";
 import { CollectionDetailClient } from "@/components/collections/CollectionDetailClient";
-import { ChevronRight } from "lucide-react";
+import { CollectionDetailRelated } from "@/components/collections/CollectionDetailRelated";
+import { CollectionEditorialCTA } from "@/components/collections/CollectionEditorialCTA";
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const collection = collectionsData.find((c) => c.slug === params.slug);
+interface CollectionDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: CollectionDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await collectionService.getCollectionBySlug(slug);
+  const collection = result.isSuccess ? result.value : null;
+
   if (!collection) return { title: "Collection Not Found | AISCHMIRA" };
-  
+
   return {
-    title: `${collection.name} Collection | AISCHMIRA`,
+    title: `${collection.name} Collection | AISCHMIRA Luxury Editorial`,
     description: collection.description,
+    openGraph: {
+      title: `${collection.name} Collection | AISCHMIRA`,
+      description: collection.description,
+      images: collection.coverImage ? [{ url: collection.coverImage }] : [],
+    },
   };
 }
 
-export function generateStaticParams() {
-  return collectionsData.map((c) => ({ slug: c.slug }));
+export async function generateStaticParams() {
+  const result = await collectionService.getCollections();
+  const collections = result.isSuccess ? result.value : [];
+  return collections.map((c) => ({ slug: c.slug }));
 }
 
-export default function CollectionDetailPage({ params }: { params: { slug: string } }) {
-  const collection = collectionsData.find((c) => c.slug === params.slug);
+export default async function CollectionDetailPage({ params }: CollectionDetailPageProps) {
+  const { slug } = await params;
+  const collectionResult = await collectionService.getCollectionBySlug(slug);
+  const collection = collectionResult.isSuccess ? collectionResult.value : null;
+
   if (!collection) notFound();
 
-  const products = productsData.filter((p) => p.collectionId === collection.id);
-  const relatedCollections = collectionsData.filter((c) => c.id !== collection.id).slice(0, 3);
+  // Fetch products via ProductService filtering for this collection
+  const productsResult = await productService.getProducts();
+  const allProducts = productsResult.isSuccess ? productsResult.value : [];
+  const products = allProducts.filter((p) => p.collectionId === collection.id);
+
+  // Fetch related collections dynamically via CollectionService
+  const collectionsResult = await collectionService.getCollections();
+  const allCollections = collectionsResult.isSuccess ? collectionsResult.value : [];
+  const relatedCollections = allCollections.filter((c) => c.id !== collection.id).slice(0, 3);
 
   return (
-    <div className="pt-[88px] pb-24 md:pb-36 bg-background min-h-screen">
-      
-      {/* Collection Hero Banner */}
-      <div className="relative w-full h-[50vh] md:h-[60vh] mb-12 md:mb-16 bg-text">
-        <Image 
-          src={collection.coverImage} 
-          alt={collection.name} 
-          fill 
-          className="object-cover object-center scale-[1.02]"
-          priority
-          quality={95}
-        />
-        <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-center px-6">
-          
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-4">
-            <ol className="flex items-center gap-2 font-body text-[10px] tracking-[0.25em] uppercase text-surface/70">
-              <li><Link href="/" className="hover:text-surface transition-colors">Home</Link></li>
-              <li><ChevronRight size={10} className="text-surface/40" /></li>
-              <li><Link href="/collections" className="hover:text-surface transition-colors">Collections</Link></li>
-              <li><ChevronRight size={10} className="text-surface/40" /></li>
-              <li className="text-surface font-medium">{collection.name}</li>
-            </ol>
-          </nav>
+    <main className="min-h-screen bg-background pt-[72px] md:pt-[88px]">
+      {/* 1. Collection Hero Section */}
+      <CollectionDetailHero collection={collection} productCount={products.length} />
 
-          <span className="font-body text-[10px] tracking-[0.35em] uppercase text-surface/80 mb-3 block">
-            {collection.category} Edit
-          </span>
-          <h1 className="font-heading italic text-5xl md:text-7xl lg:text-8xl text-surface mb-6 drop-shadow-lg font-light">
-            {collection.name}
-          </h1>
-          <p className="font-body text-xs md:text-sm tracking-editorial uppercase text-surface/90 max-w-[760px] leading-relaxed drop-shadow-md font-light">
-            {collection.description}
-          </p>
+      {/* 2. Editorial Story Narrative */}
+      <CollectionEditorialStory collection={collection} />
+
+      {/* 3. Collection Information & Atelier Specs */}
+      <CollectionInfoSpecs collection={collection} />
+
+      {/* 4. Featured Lookbook Showcase */}
+      <CollectionFeaturedLooks collection={collection} products={products} />
+
+      {/* 5. Product Showcase Catalog with Multi-Facet Filters & Sorting */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container-custom">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+            <span className="font-body text-[10px] tracking-[0.35em] uppercase text-primary font-bold block">
+              Curated Garment Catalog
+            </span>
+            <h2 className="font-heading italic text-3xl sm:text-4xl text-text">
+              The Complete {collection.name} Wardrobe
+            </h2>
+          </div>
+
+          <CollectionDetailClient
+            collection={collection}
+            products={products}
+            allProducts={allProducts}
+            relatedCollections={relatedCollections}
+          />
         </div>
-      </div>
+      </section>
 
-      {/* Interactive Products, Filters & Narrative Details */}
-      <CollectionDetailClient
-        collection={collection}
-        products={products}
-        allProducts={productsData}
-        relatedCollections={relatedCollections}
-      />
+      {/* 6. Dynamic Related Collections */}
+      <CollectionDetailRelated relatedCollections={relatedCollections} />
 
-    </div>
+      {/* 7. Concierge & Personal Styling CTA */}
+      <CollectionEditorialCTA collection={collection} />
+    </main>
   );
 }

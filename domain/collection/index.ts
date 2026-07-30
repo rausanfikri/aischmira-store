@@ -3,6 +3,7 @@ export * from './schema';
 export * from './dto';
 export * from './repository';
 export * from './mapper';
+export * from './types';
 export * from './dummy.repository';
 export * from './service';
 export * from './use-cases';

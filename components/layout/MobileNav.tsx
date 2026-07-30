@@ -7,47 +7,24 @@ import { useUIStore } from "@/store/useUIStore";
 import { useShopStore } from "@/store/useShopStore";
 import { ChevronDown, Search, User as UserIcon, Heart, ShoppingBag, MessageCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Collection } from "@/domain/collection/entity";
+import type { Category } from "@/domain/category/entity";
 
-const COLLECTIONS = {
-  signature: [
-    { name: "FEMME", slug: "femme" },
-    { name: "HER", slug: "her" },
-    { name: "SHE", slug: "she" },
-  ],
-  classic: [
-    { name: "Bianca", slug: "bianca" },
-    { name: "Priscila", slug: "priscila" },
-    { name: "Safira", slug: "safira" },
-    { name: "Briana", slug: "briana" },
-    { name: "Tifani", slug: "tifani" },
-    { name: "Zamira", slug: "zamira" },
-    { name: "Gendis", slug: "gendis" },
-    { name: "Amara", slug: "amara" },
-    { name: "Dasya", slug: "dasya" },
-    { name: "Jolly", slug: "jolly" },
-    { name: "Aveline", slug: "aveline" },
-    { name: "Luna", slug: "luna" },
-  ],
-  special: [
-    { name: "AM Monogram", slug: "am-monogram" },
-    { name: "Floral Meadow", slug: "floral-meadow" },
-    { name: "Chili Chic", slug: "chili-chic" },
-    { name: "Garlic Bloom", slug: "garlic-bloom" },
-    { name: "Spice Blossom", slug: "spice-blossom" },
-  ],
-};
+const SIGNATURE_SLUGS = new Set(["femme", "her", "she"]);
+const SPECIAL_SLUGS = new Set([
+  "am-monogram",
+  "floral-meadow",
+  "chili-chic",
+  "garlic-bloom",
+  "spice-blossom",
+]);
 
-const CATEGORIES = [
-  { name: "Outerwear", slug: "outerwear" },
-  { name: "Tops", slug: "tops" },
-  { name: "Bottoms", slug: "bottoms" },
-  { name: "Dress", slug: "dress" },
-  { name: "Accessories", slug: "accessories" },
-  { name: "Long Pyjama Set", slug: "long-pyjama" },
-  { name: "Short Pyjama Set", slug: "short-pyjama" },
-];
+interface MobileNavProps {
+  collections: Collection[];
+  categories: Category[];
+}
 
-export default function MobileNav() {
+export default function MobileNav({ collections, categories }: MobileNavProps) {
   const mobileOpen = useUIStore((state) => state.mobileOpen);
   const setMobileOpen = useUIStore((state) => state.setMobileOpen);
   const setSearchOpen = useUIStore((state) => state.setSearchOpen);
@@ -59,7 +36,7 @@ export default function MobileNav() {
   const wishlist = useShopStore((state) => state.wishlist);
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  const [collectionsExpanded, setCollectionsExpanded] = React.useState(false);
+  const [collectionsExpanded, setCollectionsExpanded] = React.useState(true);
   const [categoriesExpanded, setCategoriesExpanded] = React.useState(false);
 
   const handleAction = (action: () => void) => {
@@ -67,121 +44,155 @@ export default function MobileNav() {
     action();
   };
 
+  const signature = collections.filter((c) => SIGNATURE_SLUGS.has(c.slug));
+  const special = collections.filter((c) => SPECIAL_SLUGS.has(c.slug));
+  const classic = collections.filter(
+    (c) => !SIGNATURE_SLUGS.has(c.slug) && !SPECIAL_SLUGS.has(c.slug)
+  );
+
   return (
     <Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}>
       <Dialog.Trigger asChild>
         <button
-          className="p-2 text-text/80 hover:text-primary transition-colors focus:outline-none"
-          aria-label="Open Navigation Menu"
+          className="min-w-[44px] min-h-[44px] p-2 text-[var(--header-text)] hover:text-primary transition-colors flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
+          aria-label="Open Mobile Navigation Menu"
         >
-          <div className="space-y-1.5 w-6">
-            <span className="block w-6 h-[1.5px] bg-current" />
-            <span className="block w-4 h-[1.5px] bg-current" />
+          <div className="space-y-1.5 w-5">
             <span className="block w-5 h-[1.5px] bg-current" />
+            <span className="block w-3.5 h-[1.5px] bg-current" />
+            <span className="block w-4 h-[1.5px] bg-current" />
           </div>
         </button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut" />
-        <Dialog.Content className="fixed inset-y-0 left-0 z-50 w-full max-w-xs bg-background border-r border-border/40 flex flex-col pt-6 pb-8 px-6 data-[state=open]:animate-enterFromLeft data-[state=closed]:animate-exitToLeft">
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut" />
+        <Dialog.Content className="fixed inset-y-0 left-0 z-50 w-full sm:max-w-md bg-background border-r border-border/40 flex flex-col pt-6 pb-8 px-6 sm:px-8 data-[state=open]:animate-enterFromLeft data-[state=closed]:animate-exitToLeft">
           <Dialog.Title className="sr-only">Mobile Navigation Drawer</Dialog.Title>
-          <Dialog.Description className="sr-only">Mobile navigation links and account triggers.</Dialog.Description>
-          
+          <Dialog.Description className="sr-only">
+            AISCHMIRA mobile navigation links, catalog categories, and account quick triggers.
+          </Dialog.Description>
+
           {/* Header Bar */}
-          <div className="flex items-center justify-between pb-6 border-b border-border/40">
-            <span className="font-heading italic text-xl text-text font-light">AISCHMIRA</span>
+          <div className="flex items-center justify-between pb-6 border-b border-border/30">
+            <span className="font-heading italic text-2xl text-text font-light tracking-wide">
+              AISCHMIRA
+            </span>
             <button
               onClick={() => setMobileOpen(false)}
-              className="p-2 text-text/60 hover:text-text rounded-full focus:outline-none"
-              aria-label="Close menu"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-text/60 hover:text-text rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label="Close Navigation Menu"
             >
-              <X size={20} />
+              <X size={22} />
             </button>
           </div>
 
-          <nav className="flex flex-col gap-6 flex-1 overflow-y-auto pt-6">
-            
-            {/* 1. Collections Accordion */}
-            <div className="border-b border-border/30 pb-4 space-y-3">
+          <nav className="flex flex-col gap-6 flex-1 overflow-y-auto pt-6" aria-label="Mobile Navigation">
+            {/* 1. Collections Section */}
+            <div className="border-b border-border/20 pb-5 space-y-3">
               <button
                 onClick={() => setCollectionsExpanded(!collectionsExpanded)}
-                className="w-full font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                aria-expanded={collectionsExpanded}
               >
                 <span>Collections</span>
-                <ChevronDown size={18} className={cn("transition-transform duration-300", collectionsExpanded && "rotate-180")} />
+                <ChevronDown
+                  size={18}
+                  className={cn("transition-transform duration-300", collectionsExpanded && "rotate-180")}
+                />
               </button>
 
               {collectionsExpanded && (
-                <div className="pl-4 pt-2 space-y-4 font-body text-xs tracking-widest uppercase">
+                <div className="pl-3 pt-2 space-y-4 font-body text-xs tracking-widest uppercase">
                   {/* Signature */}
-                  <div className="space-y-2">
-                    <span className="text-primary font-bold text-[9px] block">Signature</span>
-                    {COLLECTIONS.signature.map((c) => (
-                      <Link
-                        key={c.name}
-                        href={`/collections/${c.slug}`}
-                        onClick={() => setMobileOpen(false)}
-                        className="block py-1 text-text/80 hover:text-primary"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* Classic */}
-                  <div className="space-y-2">
-                    <span className="text-text/40 font-bold text-[9px] block">Classic</span>
-                    <div className="grid grid-cols-2 gap-2">
-                      {COLLECTIONS.classic.map((c) => (
+                  {signature.length > 0 && (
+                    <div className="space-y-2">
+                      <span className="text-primary font-bold text-[9px] tracking-[0.25em] block">
+                        Signature Line
+                      </span>
+                      {signature.map((c) => (
                         <Link
-                          key={c.name}
+                          key={c.id}
                           href={`/collections/${c.slug}`}
                           onClick={() => setMobileOpen(false)}
-                          className="block py-1 text-text/70 hover:text-primary"
+                          className="flex items-center justify-between min-h-[44px] py-2.5 px-3 bg-surface border border-primary/20 hover:border-primary text-text font-medium transition-colors"
                         >
-                          {c.name}
+                          <span className="font-heading italic text-lg font-light">{c.name}</span>
+                          <span className="font-body text-[8px] tracking-widest bg-primary/10 text-primary px-2 py-0.5 font-bold">
+                            Signature
+                          </span>
                         </Link>
                       ))}
                     </div>
-                  </div>
+                  )}
 
-                  {/* Special */}
-                  <div className="space-y-2">
-                    <span className="text-text/40 font-bold text-[9px] block">Special Scarves</span>
-                    {COLLECTIONS.special.map((c) => (
-                      <Link
-                        key={c.name}
-                        href={`/collections/${c.slug}`}
-                        onClick={() => setMobileOpen(false)}
-                        className="block py-1 text-text/70 hover:text-primary"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
-                  </div>
+                  {/* Classic */}
+                  {classic.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <span className="text-text-muted font-bold text-[9px] tracking-[0.25em] block">
+                        Classic Line
+                      </span>
+                      <div className="grid grid-cols-2 gap-2">
+                        {classic.map((c) => (
+                          <Link
+                            key={c.id}
+                            href={`/collections/${c.slug}`}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors"
+                          >
+                            {c.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Special Scarves */}
+                  {special.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <span className="text-text-muted font-bold text-[9px] tracking-[0.25em] block">
+                        Silk Scarves
+                      </span>
+                      <div className="grid grid-cols-2 gap-2">
+                        {special.map((c) => (
+                          <Link
+                            key={c.id}
+                            href={`/collections/${c.slug}`}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors"
+                          >
+                            {c.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
-            {/* 2. Categories Accordion */}
-            <div className="border-b border-border/30 pb-4 space-y-3">
+            {/* 2. Categories Section */}
+            <div className="border-b border-border/20 pb-5 space-y-3">
               <button
                 onClick={() => setCategoriesExpanded(!categoriesExpanded)}
-                className="w-full font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                aria-expanded={categoriesExpanded}
               >
                 <span>Categories</span>
-                <ChevronDown size={18} className={cn("transition-transform duration-300", categoriesExpanded && "rotate-180")} />
+                <ChevronDown
+                  size={18}
+                  className={cn("transition-transform duration-300", categoriesExpanded && "rotate-180")}
+                />
               </button>
 
               {categoriesExpanded && (
-                <div className="pl-4 pt-2 flex flex-col gap-2 font-body text-xs tracking-widest uppercase text-text/70">
-                  {CATEGORIES.map((cat) => (
+                <div className="pl-3 pt-2 grid grid-cols-2 gap-2 font-body text-xs tracking-widest uppercase">
+                  {categories.map((cat) => (
                     <Link
-                      key={cat.name}
+                      key={cat.id}
                       href={`/collections?category=${encodeURIComponent(cat.slug)}`}
                       onClick={() => setMobileOpen(false)}
-                      className="py-1 hover:text-primary"
+                      className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors font-medium"
                     >
                       {cat.name}
                     </Link>
@@ -190,49 +201,48 @@ export default function MobileNav() {
               )}
             </div>
 
-            {/* 3. Member Quick Triggers */}
+            {/* 3. Member Actions */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <button
                 onClick={() => handleAction(() => setSearchOpen(true))}
-                className="p-3 bg-surface border border-border/40 rounded-sm font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors"
               >
                 <Search size={16} /> Search
               </button>
 
               <button
                 onClick={() => handleAction(() => setAccountOpen(true))}
-                className="p-3 bg-surface border border-border/40 rounded-sm font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors"
               >
                 <UserIcon size={16} /> Account
               </button>
 
               <button
                 onClick={() => handleAction(() => setWishlistOpen(true))}
-                className="p-3 bg-surface border border-border/40 rounded-sm font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary relative"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative"
               >
                 <Heart size={16} /> Wishlist ({wishlist.length})
               </button>
 
               <button
                 onClick={() => handleAction(() => setCartOpen(true))}
-                className="p-3 bg-surface border border-border/40 rounded-sm font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary relative"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative"
               >
                 <ShoppingBag size={16} /> Bag ({cartCount})
               </button>
             </div>
 
             {/* WhatsApp Concierge */}
-            <div className="mt-auto pt-4">
+            <div className="mt-auto pt-6">
               <a
                 href="https://wa.me/6285121344848"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-whatsapp text-white font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-sm flex items-center justify-center gap-2 font-medium shadow-sm"
+                className="w-full min-h-[48px] bg-whatsapp hover:bg-whatsapp-hover text-white font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-xs flex items-center justify-center gap-2 font-medium shadow-xs transition-colors"
               >
-                <MessageCircle size={15} /> Chat via WhatsApp
+                <MessageCircle size={16} /> Chat via WhatsApp
               </a>
             </div>
-
           </nav>
         </Dialog.Content>
       </Dialog.Portal>

@@ -2,6 +2,128 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint C1.4] - 2026-07-30
+### Added
+- **Enhanced `WishlistService` (`services/wishlist.service.ts`)**: Extended service with `getWishlistProducts()`, `getWishlistSummary()`, and `getWishlistRecommendations()` supporting summary metrics, category filters, and curated recommendations.
+- **Luxury Personal Closet Experience (`app/wishlist/page.tsx`)**: Re-architected `/wishlist` into an editorial wardrobe sanctuary featuring Privé badge, Wardrobe Summary & Category Filter Bar, Closet Grid with "Move to Bag" & WhatsApp Concierge actions, Inspired Recommendations, and high-fashion empty state.
+
+### Changed
+- **Wishlist Drawer Data Flow (`components/layout/WishlistDrawer.tsx`)**: Refactored `WishlistDrawer` slide-over component to resolve domain products dynamically via `WishlistService` & `ProductService`. Completely eliminated direct static dummy data imports.
+
+## [Sprint C1.3] - 2026-07-30
+### Added
+- **Search & Discovery System Architecture (`SEARCH_ARCHITECTURE.md`)**: Documented multi-channel search & discovery engine, clean data flow, filter contracts, and SEO parameter protection strategies.
+- **Site-Wide Search Overlay (`components/search/SearchModal.tsx`)**: Created accessible site-wide modal overlay triggerable via header search icon or keyboard shortcut (`Cmd/Ctrl + K`) with live autocomplete suggestions, recent search history memory (`localStorage`), trending keyword pills, and focus management.
+- **Enhanced `SearchService` (`services/search.service.ts`)**: Extended `SearchService` with `globalSearch()`, `getTrendingSearches()`, `getSuggestions()`, and `getDiscoveryData()` supporting multi-facet filtering and sorting options.
+
+### Changed
+- **Search Results Page RSC Flow (`app/search/page.tsx`, `components/search/SearchResults.tsx`)**: Re-architected dynamic `/search` route into an async RSC consuming `SearchService`, `ProductService`, and `CollectionService`. Completely eliminated direct static dummy data imports.
+
+## [Sprint C1.2] - 2026-07-30
+### Added
+- **Structured JSON-LD SEO Component (`components/products/ProductJsonLd.tsx`)**: Created dynamic JSON-LD metadata generator embedding Schema.org `Product` (name, sku, image, price, currency, availability, brand) and `BreadcrumbList` schemas.
+- **Enterprise Product Detail Refactoring (`components/products/`)**: Refactored `ProductInfo.tsx`, `ProductEditorial.tsx`, `RecentlyViewed.tsx`, and `StickyWhatsAppCTA.tsx` to natively consume the domain `Product` entity (`@/domain/product`), supporting variant selection, price comparison strikethrough (`compareAtPrice`), quantity validation, wishlist toggling, and accordions.
+
+### Changed
+- **Server Component Data Flow (`app/products/[slug]/page.tsx`)**: Re-architected dynamic Product Detail route into an async RSC consuming `ProductService.getProductBySlug()` and `CollectionService.getCollections()`. Completely eliminated direct static dummy data imports.
+
+## [Sprint C1.1] - 2026-07-30
+### Added
+- **Luxury Collection Detail Story-First Architecture (`components/collections/`)**: Built 6 dedicated presentation components:
+  - `CollectionDetailHero.tsx` (High-impact hero imagery, breadcrumbs, title, subtitle, description, season, and campaign badges)
+  - `CollectionEditorialStory.tsx` (Narrative inspiration statement, designer atelier notes quote, and creative direction philosophy)
+  - `CollectionInfoSpecs.tsx` (Signature textiles composition, artisanal lineage, and BigSeller/CMS reference metadata)
+  - `CollectionFeaturedLooks.tsx` (Staggered 3-look editorial showcase highlighting key silhouettes before product grid)
+  - `CollectionDetailRelated.tsx` (Curated recommendations from `CollectionService` without hardcoded relationships)
+  - `CollectionEditorialCTA.tsx` (Personal WhatsApp styling concierge and next collection story invitation)
+
+### Changed
+- **Collection Detail RSC Flow (`app/collections/[slug]/page.tsx`)**: Re-architected dynamic route into a story-first magazine layout consuming `CollectionService.getCollectionBySlug()`, `ProductService.getProducts()`, and `CollectionService.getCollections()`. Zero direct static dummy imports.
+
+## [Sprint C1.0] - 2026-07-30
+### Added
+- **CMS & BigSeller Ready Collection Domain Extensions (`domain/collection/`)**: Enriched `Collection` Entity, DTO, Zod Schema, and Mapper with `season`, `campaignBadge`, `campaignId`, `videoUrl`, `cmsId`, `locale`, `productSkuList`, `categoryMapping`, `bigSellerCollectionId`, and `inventoryAggregation`.
+- **Collection Filter, Sort & Pagination Contracts (`domain/collection/types.ts`)**: Built typed interfaces `CollectionFilterOptions`, `CollectionSortOption`, `CollectionPaginationOptions`, and `CollectionQueryParams` establishing future catalog expansion architecture.
+- **Flagship Collections Magazine Presentation UI (`components/collections/`)**: Created 6 dedicated high-fashion presentation components:
+  - `CollectionsHero.tsx` (Magazine hero header with live catalog badge and key metrics bar)
+  - `CollectionsEditorialIntro.tsx` (Atmospheric story statement & creative direction philosophy)
+  - `CollectionHighlightSection.tsx` (Asymmetrical spotlight showcasing signature edit story, designer atelier notes, and material tags)
+  - `SeasonalCampaignBanner.tsx` (Full-bleed high-fashion campaign break section)
+  - `RelatedCollectionsSection.tsx` (Curated exploratory edits strip)
+  - `CollectionsNewsletterCTA.tsx` (VIP Privé invitation and newsletter subscription card)
+  - Updated `CollectionsClient.tsx` (Interactive card grid, category pills, sort dropdown, and story breaks consuming domain entities)
+
+### Changed
+- **Server Component Data Flow (`app/collections/page.tsx`)**: Refactored `CollectionsPage` into an async RSC consuming `CollectionService.getCollections()` and `ProductService.getProducts()`. Removed all direct static dummy data imports.
+- **Collection Detail Dynamic Route (`app/collections/[slug]/page.tsx`)**: Updated to consume `collectionService.getCollectionBySlug()` and Next.js 15 async route parameters.
+
+## [Sprint U1.7] - 2026-07-30
+### Added
+- **Testimonial Domain Architecture (`domain/testimonial/`)**: Created `Testimonial`, `TestimonialAuthor`, and `CommunityStat` domain entities, Zod validation schemas (`TestimonialSchema`, `CommunityStatSchema`), DTO contracts, `ITestimonialRepository`, and `DummyTestimonialRepository` backed by `data/testimonials.ts`.
+- **TestimonialService (`services/testimonial.service.ts`)**: Built `TestimonialService` and registered `testimonial: TestimonialService` in `ServiceRegistry`.
+- **Luxury Testimonials & Community UI (`components/sections/LuxuryTestimonials/`)**: Built 3 presentation components:
+  - `LuxuryTestimonials.tsx` (primary section container & header)
+  - `TestimonialCard.tsx` (editorial quote block, verified patron badge, and collection tag)
+  - `CommunityStatsBar.tsx` (4-column minimal stat grid)
+
+### Changed
+- **Homepage Integration (`app/page.tsx`)**: Fetched `testimonials` and `communityStats` via `services.testimonial.getFeaturedTestimonials()` and `getCommunityStats()` on the server and rendered `LuxuryTestimonials` section on the homepage.
+
+## [Sprint U1.6] - 2026-07-30
+### Added
+- **Lookbook Domain Architecture (`domain/lookbook/`)**: Created `LookbookCampaign` and `LookbookBlock` domain models, Zod validation schemas (`LookbookCampaignSchema`, `LookbookBlockSchema`), DTO contracts, `ILookbookRepository`, and `DummyLookbookRepository` backed by `data/lookbook.ts`.
+- **LookbookService (`services/lookbook.service.ts`)**: Built `LookbookService` and registered `lookbook: LookbookService` in `ServiceRegistry`.
+- **High-Fashion Editorial Lookbook UI (`components/sections/EditorialLookbook/`)**: Built 7 modular presentation components:
+  - `EditorialLookbook.tsx` (primary section container & campaign header)
+  - `LookbookBlockRenderer.tsx` (modular block dispatcher)
+  - `LookbookCampaignBanner.tsx` (full-bleed campaign hero)
+  - `LookbookSplitLayout.tsx` (asymmetrical 7-col/5-col split story + photo)
+  - `LookbookQuoteBlock.tsx` (centered 6xl italic quote with gold line accent)
+  - `LookbookImagePair.tsx` (staggered dual portrait photography grid)
+  - `LookbookImageGallery.tsx` (3-photo horizontal film strip)
+  - `LookbookEditorialText.tsx` (closing narrative + CTA link)
+
+### Changed
+- **Homepage Integration (`app/page.tsx`)**: Fetched `lookbookCampaign` via `services.lookbook.getActiveCampaign()` on the server and rendered `EditorialLookbook` section on the homepage.
+
+## [Sprint U1.5] - 2026-07-30
+### Added
+- **CMS-Ready Brand Story Configuration (`core/config/brandStory.ts` & `schema.ts`)**: Built validated `BrandStoryConfigSchema` and `BrandStoryBlockSchema` exposing modular brand narrative blocks, typography hierarchy, imagery captions, layout orders, and 4 brand pillars.
+- **BrandService Extension (`services/brand.service.ts`)**: Extended `BrandService` with `getBrandStory()` method delivering domain configuration.
+- **Modular Brand Story Block Component (`components/sections/BrandStoryBlock.tsx`)**: Created reusable `BrandStoryBlock` component with alternating `image-left` and `image-right` layouts, Cormorant Garamond quotes, and staggered scroll reveals.
+
+### Changed
+- **BrandStory Section Redesign (`components/sections/BrandStory.tsx`)**: Refactored `BrandStory` section to consume `BrandStoryConfig` from `BrandService` via `app/page.tsx` async RSC, completely eliminating hardcoded React component copy.
+
+## [Sprint U1.4] - 2026-07-29
+### Added
+- **Luxury Editorial Product Card (`components/ui/ProductCard.tsx`)**: Rebuilt ProductCard with dual-image hover cross-fade (primary photo → secondary lifestyle detail), status badges ("Flagship"), IDR price formatting with compareAtPrice strikethrough, accessible wishlist toggle, and subtle "Explore Piece" quick-action overlay.
+- **Editorial Featured Products Section (`components/sections/FeaturedProducts.tsx`)**: Redesigned homepage products section into a curated flagship showcase with Cormorant Garamond italic headings, generous section spacing (`py-24 md:py-36`), 4-column desktop grid, and staggered Framer Motion entrance reveals (`[0.16, 1, 0.3, 1]` easing).
+
+### Changed
+- **Zero Dummy Imports Verification**: Verified `FeaturedProducts` receives entity array strictly from `ProductService.getFeaturedProducts()` via `app/page.tsx`.
+
+## [Sprint U1.3] - 2026-07-29
+### Added
+- **Luxury Featured Collections Component (`components/ui/CollectionCard.tsx`)**: Reusable high-fashion collection card component with `hero` (split 12-column story layout with artisanal materials badges) and `editorial` (3/4 vertical portrait layout) variants.
+- **Asymmetrical Editorial Section Layout (`components/sections/NewCollections.tsx`)**: Redesigned homepage collections section into a storytelling narrative with primary featured edit (FEMME hero card) and 2-column secondary grid (HER & SHE editorial cards), generous vertical rhythm (`py-24 md:py-36`), and staggered Framer Motion entrance animations.
+
+### Changed
+- **Zero Dummy Imports Verification**: Verified `NewCollections` receives entity array strictly from `CollectionService.getFeaturedCollections()` via `app/page.tsx`.
+
+## [Sprint U1.2] - 2026-07-29
+### Added
+- **Premium Navigation & Mega Menu Architecture (`components/layout/Header/`)**: Redesigned header with perfectly centered Logo anchor, 3-column CSS Grid layout (`grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]`), and pure gold hover states.
+- **Service-Driven Navigation Data**: `MegaMenuCollections.tsx` and `DropdownCategories.tsx` consume data from `CollectionService` and `CategoryService` via `Header.tsx`.
+- **Dynamic Sticky Header Positioning (`HeaderShell.tsx`)**: Header calculates `top` offset dynamically based on `AnnouncementBar` state (`var(--announcement-height)`), preventing overlap without hardcoded CSS values.
+- **Accessible Mobile Drawer (`MobileNav.tsx`)**: Full-screen mobile navigation drawer with 48px+ touch targets, keyboard navigation, focus trapping, collections/categories accordions, and WhatsApp concierge trigger.
+
+### Changed
+- **Header Link Pruning**: Removed Journal and About links from desktop header navigation row; navigation menu displays strictly Collections and Categories.
+
+### Removed
+- **Legacy Navigation Components**: Deleted `components/layout/DesktopNav.tsx` and `components/layout/MegaMenu.tsx` to ensure single source of truth within `components/layout/Header/`.
+
 ## [Sprint F1] - 2026-07-29
 ### Added
 - **4 Enterprise Documentation Specifications**: Created `DESIGN_SYSTEM.md`, `CODING_STANDARDS.md`, `DATA_MODEL.md`, and `API_STRATEGY.md` (and updated corresponding `docs/` references).

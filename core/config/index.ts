@@ -1,4 +1,5 @@
 import { BRAND_CONFIG } from './brand';
+import { BRAND_STORY_CONFIG } from './brandStory';
 import { CONTACT_CONFIG } from './contact';
 import { COMPANY_CONFIG } from './company';
 import { NAVIGATION_CONFIG } from './navigation';
@@ -13,6 +14,7 @@ import { THEME_CONFIG } from './theme';
 
 export const Config = {
   brand: BRAND_CONFIG,
+  brandStory: BRAND_STORY_CONFIG,
   contact: CONTACT_CONFIG,
   company: COMPANY_CONFIG,
   navigation: NAVIGATION_CONFIG,
@@ -28,6 +30,7 @@ export const Config = {
 
 export * from './schema';
 export * from './brand';
+export * from './brandStory';
 export * from './contact';
 export * from './company';
 export * from './navigation';

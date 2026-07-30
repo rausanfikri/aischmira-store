@@ -9,6 +9,8 @@ export * from './footer.service';
 export * from './search.service';
 export * from './wishlist.service';
 export * from './shopping-bag.service';
+export * from './lookbook.service';
+export * from './testimonial.service';
 export * from './registry';
 export * from './container';
 export * from './providers';

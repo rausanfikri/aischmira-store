@@ -2,19 +2,21 @@
 
 import * as React from "react";
 import { MessageCircle, ShoppingBag } from "lucide-react";
-import { Product, Variant } from "@/types";
+import { Product, ProductVariant } from "@/domain/product";
 import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
 import { useShopStore } from "@/store/useShopStore";
 
 interface StickyWhatsAppCTAProps {
   product: Product;
-  selectedVariant?: Variant;
+  selectedVariant?: ProductVariant;
 }
 
 export function StickyWhatsAppCTA({ product, selectedVariant }: StickyWhatsAppCTAProps) {
   const addToCart = useShopStore((state) => state.addToCart);
   const variant = selectedVariant || product.variants[0];
-  const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 });
+  const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: product.currency || "IDR", minimumFractionDigits: 0 });
+
+  const productId = product.sku || (product as unknown as { id?: string }).id || "product_id";
 
   const handleWhatsAppCheckout = () => {
     const selectedColorName = variant?.color || "Standard";
@@ -28,8 +30,8 @@ export function StickyWhatsAppCTA({ product, selectedVariant }: StickyWhatsAppCT
   const handleAddToCart = () => {
     if (!variant) return;
     addToCart({
-      productId: product.id,
-      variantId: variant.id,
+      productId,
+      variantId: variant.id || variant.sku,
       quantity: 1,
     });
   };
@@ -42,7 +44,7 @@ export function StickyWhatsAppCTA({ product, selectedVariant }: StickyWhatsAppCT
             {product.name}
           </span>
           <span className="font-body text-xs font-bold text-primary">
-            {formatter.format(variant?.price || product.basePrice)}
+            {formatter.format(variant?.price || product.price || (product as unknown as { basePrice?: number }).basePrice || 0)}
           </span>
         </div>
 

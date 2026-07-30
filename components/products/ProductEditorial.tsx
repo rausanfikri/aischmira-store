@@ -1,14 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Product } from "@/types";
-import { ExtendedCollection } from "@/data/collections";
+import { Product } from "@/domain/product";
+import { Collection } from "@/domain/collection";
 import { motion } from "framer-motion";
 import { Sparkles, Gem, Palette, Heart } from "lucide-react";
 
 interface ProductEditorialProps {
   product: Product;
-  collection: ExtendedCollection | null;
+  collection: Collection | null;
 }
 
 /* Scroll-triggered fade-in variant */

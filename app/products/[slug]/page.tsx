@@ -1,89 +1,137 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { productsData } from "@/data/products";
-import { collectionsData } from "@/data/collections";
 import { Metadata } from "next";
+import { productService } from "@/services/product.service";
+import { collectionService } from "@/services/collection.service";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductInfo } from "@/components/products/ProductInfo";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { RecentlyViewed } from "@/components/products/RecentlyViewed";
 import { StickyWhatsAppCTA } from "@/components/products/StickyWhatsAppCTA";
 import { ProductEditorial } from "@/components/products/ProductEditorial";
+import { ProductJsonLd } from "@/components/products/ProductJsonLd";
 import { ChevronRight, MessageCircle } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const product = productsData.find((p) => p.slug === params.slug);
+interface ProductDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await productService.getProductBySlug(slug);
+  const product = result.isSuccess ? result.value : null;
+
   if (!product) return { title: "Product Not Found | AISCHMIRA" };
 
   return {
-    title: `${product.name} | AISCHMIRA`,
+    title: `${product.name} | AISCHMIRA Flagship Luxury`,
     description: product.description,
+    openGraph: {
+      title: `${product.name} | AISCHMIRA`,
+      description: product.description,
+      images: product.images && product.images[0] ? [{ url: product.images[0] }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.name} | AISCHMIRA`,
+      description: product.description,
+    },
   };
 }
 
-export function generateStaticParams() {
-  return productsData.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const result = await productService.getProducts();
+  const products = result.isSuccess ? result.value : [];
+  return products.map((p) => ({ slug: p.slug }));
 }
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = productsData.find((p) => p.slug === params.slug);
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const { slug } = await params;
+  
+  // Fetch product via ProductService
+  const productResult = await productService.getProductBySlug(slug);
+  const product = productResult.isSuccess ? productResult.value : null;
+
   if (!product) notFound();
 
-  const collection = collectionsData.find((c) => c.id === product.collectionId);
+  // Fetch collections via CollectionService to resolve collection details
+  const collectionsResult = await collectionService.getCollections();
+  const collections = collectionsResult.isSuccess ? collectionsResult.value : [];
+  const collection = collections.find((c) => c.id === product.collectionId) || null;
 
-  const relatedProducts = product.relatedProductIds
-    ? productsData.filter((p) => product.relatedProductIds?.includes(p.id))
-    : productsData.filter((p) => p.collectionId === product.collectionId && p.id !== product.id).slice(0, 4);
+  // Fetch all products to get related products & complete the look
+  const productsResult = await productService.getProducts();
+  const allProducts = productsResult.isSuccess ? productsResult.value : [];
+
+  const relatedProducts = allProducts
+    .filter((p) => p.collectionId === product.collectionId && p.sku !== product.sku)
+    .slice(0, 4);
 
   const whatsAppConciergeUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello AISCHMIRA Concierge, I have a question regarding ${product.name}.`
+    `Hello AISCHMIRA Styling Concierge, I have an inquiry regarding ${product.name} (${product.sku}).`
   )}`;
 
   return (
-    <div className="pt-8 md:pt-12 pb-28 md:pb-36 bg-background min-h-screen">
-      <div className="container-custom">
+    <main className="pt-8 md:pt-12 pb-28 md:pb-36 bg-background min-h-screen">
+      {/* Dynamic JSON-LD Structured Data Schema for SEO */}
+      <ProductJsonLd product={product} collection={collection} />
 
+      <div className="container-custom">
         {/* 1. Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="mb-8 md:mb-10">
           <ol className="flex items-center gap-2 font-body text-[10px] tracking-[0.25em] uppercase text-text/50 flex-wrap">
-            <li><Link href="/" className="hover:text-text transition-colors">Home</Link></li>
-            <li><ChevronRight size={10} className="text-text/30" /></li>
-            <li><Link href="/collections" className="hover:text-text transition-colors">Collections</Link></li>
+            <li>
+              <Link href="/" className="hover:text-text transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>
+              <ChevronRight size={10} className="text-text/30" />
+            </li>
+            <li>
+              <Link href="/collections" className="hover:text-text transition-colors">
+                Collections
+              </Link>
+            </li>
             {collection && (
               <>
-                <li><ChevronRight size={10} className="text-text/30" /></li>
-                <li><Link href={`/collections/${collection.slug}`} className="hover:text-text transition-colors">{collection.name}</Link></li>
+                <li>
+                  <ChevronRight size={10} className="text-text/30" />
+                </li>
+                <li>
+                  <Link href={`/collections/${collection.slug}`} className="hover:text-text transition-colors">
+                    {collection.name}
+                  </Link>
+                </li>
               </>
             )}
-            <li><ChevronRight size={10} className="text-text/30" /></li>
+            <li>
+              <ChevronRight size={10} className="text-text/30" />
+            </li>
             <li className="text-text font-medium">{product.name}</li>
           </ol>
         </nav>
 
         {/* 2. Gallery & Product Information Split View */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 mb-24 md:mb-32">
-
-          {/* Gallery */}
+          {/* Gallery Column */}
           <div className="w-full lg:w-7/12">
-            <ProductGallery images={product.images} />
+            <ProductGallery images={product.images || []} />
           </div>
 
-          {/* Product Info & Selectors */}
+          {/* Product Info & Selectors Column */}
           <div className="w-full lg:w-5/12">
             <ProductInfo product={product} />
           </div>
-
         </div>
-
       </div>
 
-      {/* 3. Editorial Storytelling Sections */}
-      <ProductEditorial product={product} collection={collection || null} />
+      {/* 3. Editorial Storytelling & Atelier Craftsmanship */}
+      <ProductEditorial product={product} collection={collection} />
 
       <div className="container-custom space-y-24 md:space-y-32">
-
-        {/* 4. Related Products / Complete the Look */}
+        {/* 4. Complete the Look / Styling Suggestions */}
         {relatedProducts.length > 0 && (
           <section className="space-y-10">
             <div className="flex items-center justify-between border-b border-border/40 pb-6">
@@ -105,43 +153,41 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {relatedProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.sku} product={p} />
               ))}
             </div>
           </section>
         )}
 
-        {/* 5. Recently Viewed */}
-        <RecentlyViewed currentProductId={product.id} />
+        {/* 5. Client Browsing History (Recently Viewed) */}
+        <RecentlyViewed currentProductId={product.sku} allProducts={allProducts} />
 
-        {/* 6. WhatsApp Concierge CTA */}
+        {/* 6. WhatsApp Personal Styling Concierge Section */}
         <section className="bg-surface p-10 md:p-16 border border-border/40 rounded-sm text-center space-y-6 max-w-[960px] mx-auto">
           <span className="font-body text-[10px] tracking-[0.3em] uppercase text-text/50 block">
             Dedicated Fashion Concierge
           </span>
           <h3 className="font-heading italic text-3xl md:text-4xl text-text font-light">
-            Need Personal Sizing or Styling Assistance?
+            Need Personal Sizing or Bespoke Tailoring Assistance?
           </h3>
-          <p className="font-body text-xs md:text-sm text-text/70 leading-relaxed font-light prose-reading">
-            Connect directly with an AISCHMIRA fashion advisor on WhatsApp for instant guidance on fit, color matching, and worldwide delivery.
+          <p className="font-body text-xs md:text-sm text-text/70 leading-relaxed font-light max-w-xl mx-auto">
+            Connect directly with an AISCHMIRA fashion director on WhatsApp for instant guidance on fit, silk care, and worldwide delivery.
           </p>
           <div>
             <a
               href={whatsAppConciergeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 bg-whatsapp text-white font-body text-[10px] tracking-[0.2em] uppercase py-4 px-10 rounded-sm font-medium hover:opacity-95 transition-opacity"
+              className="inline-flex items-center gap-2.5 bg-whatsapp text-white font-body text-[10px] tracking-[0.2em] uppercase py-4 px-10 rounded-sm font-medium hover:opacity-95 transition-opacity shadow-md"
             >
               <MessageCircle size={16} /> Consult Styling Concierge
             </a>
           </div>
         </section>
-
       </div>
 
       {/* 7. Sticky Mobile WhatsApp CTA Bar */}
       <StickyWhatsAppCTA product={product} />
-
-    </div>
+    </main>
   );
 }

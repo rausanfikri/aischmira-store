@@ -7,7 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useUIStore } from "@/store/useUIStore";
 import { useShopStore } from "@/store/useShopStore";
-import { productsData } from "@/data/products";
+import { wishlistService } from "@/services/wishlist.service";
+import { Product } from "@/domain/product";
 
 export function WishlistDrawer() {
   const wishlistOpen = useUIStore((state) => state.wishlistOpen);
@@ -17,9 +18,23 @@ export function WishlistDrawer() {
   const toggleWishlist = useShopStore((state) => state.toggleWishlist);
   const addToCart = useShopStore((state) => state.addToCart);
 
-  const wishlistedProducts = wishlist
-    .map((item) => productsData.find((p) => p.id === item.productId))
-    .filter(Boolean);
+  const [wishlistedProducts, setWishlistedProducts] = React.useState<Product[]>([]);
+
+  const wishlistIds = React.useMemo(() => wishlist.map((item) => item.productId), [wishlist]);
+
+  // Fetch wishlisted products via WishlistService
+  React.useEffect(() => {
+    if (wishlistIds.length === 0) {
+      requestAnimationFrame(() => setWishlistedProducts([]));
+      return;
+    }
+
+    wishlistService.getWishlistProducts(wishlistIds).then((res) => {
+      if (res.isSuccess) {
+        setWishlistedProducts(res.value);
+      }
+    });
+  }, [wishlistIds]);
 
   const formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -27,16 +42,23 @@ export function WishlistDrawer() {
     minimumFractionDigits: 0,
   });
 
-  const handleMoveToBag = (productId: string) => {
-    const product = productsData.find((p) => p.id === productId);
-    if (product && product.variants[0]) {
+  const handleMoveToBag = (product: Product) => {
+    const productId = product.sku || (product as unknown as { id?: string }).id || "";
+    const variant = product.variants[0];
+
+    if (variant) {
       addToCart({
-        productId: product.id,
-        variantId: product.variants[0].id,
+        productId,
+        variantId: variant.id || variant.sku,
         quantity: 1,
       });
       toggleWishlist(productId);
     }
+  };
+
+  const handleRemove = (product: Product) => {
+    const productId = product.sku || (product as unknown as { id?: string }).id || "";
+    toggleWishlist(productId);
   };
 
   return (
@@ -49,8 +71,8 @@ export function WishlistDrawer() {
           <div className="flex items-center justify-between p-6 border-b border-border/40 bg-background/50">
             <div className="flex items-center gap-2">
               <Heart size={18} strokeWidth={1.5} className="text-primary fill-primary" />
-              <Dialog.Title className="font-heading italic text-2xl text-text">
-                Saved Wishlist ({wishlistedProducts.length})
+              <Dialog.Title className="font-heading italic text-2xl text-text font-light">
+                Personal Closet ({wishlistedProducts.length})
               </Dialog.Title>
             </div>
             <Dialog.Description className="sr-only">Your saved AISCHMIRA luxury items.</Dialog.Description>
@@ -68,17 +90,17 @@ export function WishlistDrawer() {
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {wishlistedProducts.length === 0 ? (
               
-              /* Elegant Empty State */
+              /* High-Fashion Empty State */
               <div className="h-full flex flex-col items-center justify-center text-center py-20 space-y-6">
                 <div className="w-16 h-16 rounded-full bg-background border border-border/40 flex items-center justify-center text-text/40">
                   <Heart size={28} strokeWidth={1.2} />
                 </div>
                 <div className="space-y-2 max-w-xs">
                   <h3 className="font-heading italic text-2xl text-text font-light">
-                    Your Wishlist is Empty
+                    Your Personal Closet Awaits
                   </h3>
                   <p className="font-body text-xs text-text/60 font-light leading-relaxed">
-                    Explore our flagship collections to save your favorite silhouettes and silk scarves.
+                    Save your favorite silhouettes, tailored blazers, and silk scarves while exploring our flagship edits.
                   </p>
                 </div>
                 <Link
@@ -96,9 +118,12 @@ export function WishlistDrawer() {
               <div className="space-y-4">
                 {wishlistedProducts.map((product) => {
                   if (!product) return null;
+                  const itemPrice = product.price || product.variants[0]?.price || 0;
+                  const imageSrc = product.images?.[0] || "/images/products/placeholder.png";
+
                   return (
                     <div
-                      key={product.id}
+                      key={product.sku}
                       className="flex items-center gap-4 p-3 bg-background border border-border/40 rounded-sm relative group"
                     >
                       {/* Image Thumbnail */}
@@ -108,15 +133,19 @@ export function WishlistDrawer() {
                         className="relative w-20 h-24 shrink-0 bg-surface rounded-sm overflow-hidden border border-border/30"
                       >
                         <Image
-                          src={product.images[0]}
+                          src={imageSrc}
                           alt={product.name}
                           fill
                           className="object-cover object-center"
+                          sizes="80px"
                         />
                       </Link>
 
                       {/* Info & Actions */}
                       <div className="flex-1 min-w-0 space-y-1">
+                        <span className="font-body text-[9px] tracking-widest uppercase text-text/50 block">
+                          {product.categoryId || "Garment"}
+                        </span>
                         <Link
                           href={`/products/${product.slug}`}
                           onClick={() => setWishlistOpen(false)}
@@ -125,11 +154,11 @@ export function WishlistDrawer() {
                           {product.name}
                         </Link>
                         <p className="font-body text-xs font-normal text-text/80">
-                          {formatter.format(product.basePrice)}
+                          {formatter.format(itemPrice)}
                         </p>
 
                         <button
-                          onClick={() => handleMoveToBag(product.id)}
+                          onClick={() => handleMoveToBag(product)}
                           className="mt-2 text-[9px] tracking-widest uppercase text-primary hover:underline font-bold flex items-center gap-1"
                         >
                           <ShoppingBag size={12} /> Move to Shopping Bag
@@ -138,7 +167,7 @@ export function WishlistDrawer() {
 
                       {/* Remove Button */}
                       <button
-                        onClick={() => toggleWishlist(product.id)}
+                        onClick={() => handleRemove(product)}
                         className="text-text/40 hover:text-text p-2 transition-colors focus:outline-none"
                         aria-label={`Remove ${product.name} from wishlist`}
                       >
@@ -160,7 +189,7 @@ export function WishlistDrawer() {
                 onClick={() => setWishlistOpen(false)}
                 className="w-full bg-text text-surface py-4 text-[10px] tracking-[0.2em] uppercase font-body hover:bg-primary transition-colors rounded-sm font-medium block text-center shadow-sm"
               >
-                View Full Wishlist Page &rarr;
+                View Full Personal Closet Page &rarr;
               </Link>
             </div>
           )}

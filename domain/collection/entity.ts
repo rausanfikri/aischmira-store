@@ -13,6 +13,22 @@ export interface Collection {
   title: string;
   subtitle?: string;
   description: string;
+  category?: 'all' | 'newest' | 'classic' | 'scarf' | string;
+  season?: string;
+  campaignId?: string;
+  campaignBadge?: string;
+  videoUrl?: string;
+  cmsId?: string;
+  locale?: string;
+  productSkuList?: string[];
+  categoryMapping?: Record<string, string>;
+  bigSellerCollectionId?: string;
+  inventoryAggregation?: {
+    totalUnits: number;
+    inStockCount: number;
+  };
+  ctaLabel?: string;
+  productCount?: number;
   heroImage?: string;
   coverImage: string;
   thumbnail?: string;

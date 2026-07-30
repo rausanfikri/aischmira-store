@@ -1,123 +1,93 @@
 "use client";
 
-import Image from "next/image";
+import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Product } from "@/domain/product";
-import { useShopStore } from "@/store/useShopStore";
-import { Heart, MessageCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { getWhatsAppInquiryUrl } from "@/lib/whatsapp";
+import type { Product } from "@/domain/product/entity";
+import { ProductCard } from "@/components/ui/ProductCard";
 
 interface FeaturedProductsProps {
   products?: Product[];
 }
 
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 export function FeaturedProducts({ products = [] }: FeaturedProductsProps) {
-  const toggleWishlist = useShopStore((state) => state.toggleWishlist);
-  const wishlist = useShopStore((state) => state.wishlist);
-
-  const formatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
-
-  const handleWhatsAppOrder = (productName: string, price: number) => {
-    const message = `Hello AISCHMIRA Concierge, I would like to order the ${productName} (${formatter.format(price)}). Could you assist me with available sizes and delivery?`;
-    const url = getWhatsAppInquiryUrl(message);
-    window.open(url, "_blank");
-  };
+  if (!products || products.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="bg-surface py-24 md:py-36 border-b border-border/40">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-        
+    <section
+      className="bg-surface py-24 md:py-36 border-b border-border/30 overflow-hidden"
+      aria-label="AISCHMIRA Featured Flagship Products"
+    >
+      <div className="mx-auto max-w-[1280px] px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <span className="font-body text-[10px] tracking-[0.25em] uppercase text-text/50 block mb-3">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6">
+          <div className="space-y-3 max-w-xl">
+            <motion.span
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.9, ease }}
+              className="font-body text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-primary font-bold block"
+            >
               Curated Highlights
-            </span>
-            <h2 className="font-heading italic text-4xl md:text-5xl lg:text-6xl text-text">
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 1.1, delay: 0.15, ease }}
+              className="font-heading italic text-4xl sm:text-5xl lg:text-6xl text-text font-light leading-tight"
+            >
               Featured Flagship Pieces
-            </h2>
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.9, delay: 0.3, ease }}
+              className="font-body text-xs sm:text-sm tracking-widest uppercase text-text-muted font-light leading-relaxed"
+            >
+              Hand-finished garments crafted from pure mulberry silk, architectural cuts, and Indonesian heritage.
+            </motion.p>
           </div>
-          <Link
-            href="/collections"
-            className="font-body text-[10px] tracking-[0.2em] uppercase text-text hover:text-primary transition-colors border-b border-text hover:border-primary pb-1 font-medium self-start md:self-auto"
+
+          <motion.div
+            initial={{ opacity: 0, x: 16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.9, delay: 0.4, ease }}
+            className="self-start md:self-auto"
           >
-            Explore Full Library &rarr;
-          </Link>
+            <Link
+              href="/collections"
+              className="inline-flex items-center gap-2 group font-body text-[10px] tracking-[0.25em] uppercase text-text hover:text-primary transition-colors py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary rounded-xs"
+            >
+              <span>Explore Full Library</span>
+              <span className="group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
+            </Link>
+          </motion.div>
         </div>
 
-        {/* 4-Column Luxury Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8">
-          {products.map((product, idx) => {
-            const isWishlisted = wishlist.some((w) => w.productId === product.sku);
-            return (
-              <motion.div
-                key={product.sku}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: idx * 0.15 }}
-                className="group flex flex-col relative"
-              >
-                {/* Image Box */}
-                <div className="relative aspect-[3/4] w-full bg-background overflow-hidden rounded-sm mb-4 border border-border/30">
-                  <Link href={`/products/${product.slug}`} className="block inset-0 absolute">
-                    <Image
-                      src={product.images[0] || "/images/products/placeholder.png"}
-                      alt={product.name}
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                    />
-                  </Link>
-
-                  {/* Wishlist Button */}
-                  <button
-                    onClick={() => toggleWishlist(product.sku)}
-                    className="absolute top-3 right-3 z-10 bg-background/80 backdrop-blur-sm p-2 rounded-full text-text hover:text-primary transition-colors shadow-sm"
-                    aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                  >
-                    <Heart
-                      size={16}
-                      strokeWidth={1.5}
-                      className={cn("transition-colors", isWishlisted && "fill-primary text-primary")}
-                    />
-                  </button>
-                </div>
-
-                {/* Information */}
-                <div className="flex flex-col space-y-2 flex-1">
-                  <span className="font-body text-[9px] tracking-widest uppercase text-text/50">
-                    {product.categoryId}
-                  </span>
-                  <Link
-                    href={`/products/${product.slug}`}
-                    className="font-heading italic text-lg text-text group-hover:text-primary transition-colors line-clamp-1"
-                  >
-                    {product.name}
-                  </Link>
-                  <p className="font-body text-xs font-light text-text/80">
-                    {formatter.format(product.price)}
-                  </p>
-
-                  {/* WhatsApp Quick CTA */}
-                  <button
-                    onClick={() => handleWhatsAppOrder(product.name, product.price)}
-                    className="mt-3 w-full bg-whatsapp text-white font-body text-[9px] tracking-[0.2em] uppercase py-2.5 rounded-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 font-medium"
-                  >
-                    <MessageCircle size={13} /> Order via WhatsApp
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
+        {/* Curated Product Grid — 2 cols mobile, 4 cols desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 lg:gap-x-8 lg:gap-y-16">
+          {products.map((product, idx) => (
+            <motion.div
+              key={product.sku}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.9, delay: idx * 0.15, ease }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
         </div>
-
       </div>
     </section>
   );

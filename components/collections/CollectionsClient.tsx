@@ -3,19 +3,19 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/types";
-import { ExtendedCollection } from "@/data/collections";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Collection } from "@/domain/collection";
+import { Sparkles, ArrowRight } from "lucide-react";
 
 interface CollectionsClientProps {
-  collections: ExtendedCollection[];
-  products: Product[];
+  collections: Collection[];
+  productCounts?: Record<string, number>;
 }
 
-export function CollectionsClient({ collections, products }: CollectionsClientProps) {
+export function CollectionsClient({ collections, productCounts = {} }: CollectionsClientProps) {
   const [activeCategory, setActiveCategory] = React.useState<"all" | "newest" | "classic" | "scarf">("all");
-  const [sortBy, setSortBy] = React.useState<"featured" | "newest" | "alpha">("featured");
+  const [sortBy, setSortBy] = React.useState<"featured" | "newest" | "alpha" | "pieces">("featured");
 
   const categoryTabs = [
     { id: "all", label: "All Collections" },
@@ -25,8 +25,9 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
   ];
 
   // Helper to count products per collection
-  const getProductCount = (collectionId: string) => {
-    return products.filter((p) => p.collectionId === collectionId).length;
+  const getProductCount = (collection: Collection) => {
+    if (collection.productCount !== undefined) return collection.productCount;
+    return productCounts[collection.id] || 0;
   };
 
   // Filter collections
@@ -39,13 +40,16 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
   filteredCollections = [...filteredCollections].sort((a, b) => {
     if (sortBy === "alpha") return a.name.localeCompare(b.name);
     if (sortBy === "newest") {
-      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
-      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
       return dateB - dateA;
     }
+    if (sortBy === "pieces") {
+      return getProductCount(b) - getProductCount(a);
+    }
     // Default featured sort
-    if (a.isFeatured && !b.isFeatured) return -1;
-    if (!a.isFeatured && b.isFeatured) return 1;
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
     return 0;
   });
 
@@ -62,7 +66,7 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
               key={tab.id}
               onClick={() => setActiveCategory(tab.id as "all" | "newest" | "classic" | "scarf")}
               className={cn(
-                "font-body text-[10px] md:text-xs tracking-widest uppercase transition-all duration-300 px-4 py-2 rounded-sm border whitespace-nowrap font-medium",
+                "font-body text-[10px] md:text-xs tracking-widest uppercase transition-all duration-300 px-4 py-2 rounded-sm border whitespace-nowrap font-medium cursor-pointer",
                 activeCategory === tab.id
                   ? "bg-text text-surface border-text shadow-sm"
                   : "bg-surface text-text/70 border-border/50 hover:border-text hover:text-text"
@@ -78,12 +82,13 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
           <span>Sort by:</span>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "featured" | "newest" | "alpha")}
+            onChange={(e) => setSortBy(e.target.value as "featured" | "newest" | "alpha" | "pieces")}
             className="bg-transparent border-b border-border/60 text-text font-body text-[10px] tracking-widest uppercase py-1 focus:outline-none focus:border-primary cursor-pointer"
           >
-            <option value="featured">Featured</option>
-            <option value="newest">Newest First</option>
+            <option value="featured">Featured First</option>
+            <option value="newest">Newest Released</option>
             <option value="alpha">Alphabetical (A&ndash;Z)</option>
+            <option value="pieces">Curated Pieces</option>
           </select>
         </div>
 
@@ -93,7 +98,7 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
       {filteredCollections.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredCollections.map((collection, idx) => {
-            const count = getProductCount(collection.id);
+            const count = getProductCount(collection);
             return (
               <React.Fragment key={collection.id}>
                 <motion.div
@@ -121,29 +126,40 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
                     {/* Floating Badges */}
                     <div className="absolute top-4 left-4 right-4 flex justify-between items-center text-surface">
                       <span className="font-body text-[8px] tracking-[0.25em] uppercase text-surface/90 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-sm border border-surface/20">
-                        {collection.category}
+                        {collection.season || collection.category || "Capsule"}
                       </span>
-                      {collection.isFeatured && (
-                        <span className="font-body text-[8px] tracking-[0.25em] uppercase text-primary bg-black/60 backdrop-blur-md border border-primary/40 px-2.5 py-1 rounded-sm font-bold">
-                          Featured
+                      {collection.campaignBadge && (
+                        <span className="font-body text-[8px] tracking-[0.25em] uppercase text-primary bg-black/60 backdrop-blur-md border border-primary/40 px-2.5 py-1 rounded-sm font-bold flex items-center gap-1">
+                          <Sparkles className="w-2.5 h-2.5" />
+                          {collection.campaignBadge}
                         </span>
                       )}
                     </div>
 
-                    {/* Title Overlay */}
+                    {/* Title & Subtitle Overlay */}
                     <div className="absolute bottom-6 left-6 right-6 text-surface">
                       <h2 className="font-heading italic text-3xl md:text-4xl text-surface tracking-wide drop-shadow-md">
                         {collection.name}
                       </h2>
+                      {collection.subtitle && (
+                        <p className="font-body text-[9px] tracking-wider uppercase text-surface/80 mt-1 font-light line-clamp-1">
+                          {collection.subtitle}
+                        </p>
+                      )}
                     </div>
                   </Link>
 
                   {/* Card Information Body */}
                   <div className="p-6 md:p-8 flex flex-col flex-1 justify-between space-y-6">
                     <div className="space-y-3">
-                      <span className="font-body text-[9px] tracking-widest uppercase text-text/40 block">
-                        {count} {count === 1 ? "Curated Piece" : "Curated Pieces"}
-                      </span>
+                      <div className="flex items-center justify-between font-body text-[9px] tracking-widest uppercase text-text/50">
+                        <span>{count} {count === 1 ? "Curated Piece" : "Curated Pieces"}</span>
+                        {collection.bigSellerCollectionId && (
+                          <span className="text-[8px] text-text/30" title={`BigSeller Ref: ${collection.bigSellerCollectionId}`}>
+                            BS Registered
+                          </span>
+                        )}
+                      </div>
                       <p className="font-body text-xs text-text/70 leading-relaxed font-light line-clamp-2">
                         {collection.description}
                       </p>
@@ -151,9 +167,10 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
 
                     <Link
                       href={`/collections/${collection.slug}`}
-                      className="w-full bg-text text-surface hover:bg-primary transition-colors font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-sm font-medium text-center block"
+                      className="group/btn w-full bg-text text-surface hover:bg-primary hover:text-surface transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase py-3.5 rounded-sm font-medium text-center flex items-center justify-center gap-2"
                     >
-                      Explore Collection
+                      <span>{collection.ctaLabel || "Explore Collection"}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </motion.div>
@@ -162,9 +179,9 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
                 {idx === 5 && (
                   <div className="col-span-full my-6 p-10 bg-surface border border-border/40 text-center space-y-3 rounded-sm">
                     <span className="font-body text-[9px] tracking-[0.3em] uppercase text-primary font-bold block">
-                      Craft & Lineage
+                      Artisanal Heritage & Studio Craft
                     </span>
-                    <h3 className="font-heading italic text-3xl text-text font-light">
+                    <h3 className="font-heading italic text-3xl text-text font-light max-w-xl mx-auto">
                       &ldquo;Conceived in quiet elegance. Born of pure mulberry silk.&rdquo;
                     </h3>
                   </div>
@@ -182,7 +199,7 @@ export function CollectionsClient({ collections, products }: CollectionsClientPr
           </p>
           <button
             onClick={() => setActiveCategory("all")}
-            className="mt-2 bg-text text-surface font-body text-[10px] tracking-[0.2em] uppercase py-3.5 px-8 rounded-sm hover:bg-primary transition-colors inline-block"
+            className="mt-2 bg-text text-surface font-body text-[10px] tracking-[0.2em] uppercase py-3.5 px-8 rounded-sm hover:bg-primary transition-colors inline-block cursor-pointer"
           >
             Show All Collections
           </button>
