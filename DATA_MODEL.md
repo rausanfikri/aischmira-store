@@ -1,6 +1,6 @@
 # AISCHMIRA.STORE — Enterprise Domain Data Model Specification
 
-**Version:** 2.4.0 (Sprint C1.9 — Loyalty & Membership Model)  
+**Version:** 3.0.0 (Sprint I1.0 — Enterprise Integration Model)  
 **Source of Truth:** `domain/collection/`, `domain/navigation/`, `core/config/`  
 
 ---

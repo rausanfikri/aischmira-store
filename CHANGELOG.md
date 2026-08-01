@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint I1.0] - 2026-07-31
+### Added
+- **Core Integration Contracts (`core/integration/contracts/`)**: Created vendor-independent interfaces `IProductProvider`, `IInventoryProvider`, `IPriceProvider`, `ICustomerProvider`, `IOrderProvider`, `IContentProvider`, and `IAnalyticsProvider`.
+- **Provider Adapters & Dependency Injection Container (`core/integration/adapters/`, `core/integration/container.ts`)**: Built structural provider adapter stubs (`BigSellerAdapter`, `SupabaseAdapter`, `CMSAdapter`, `AnalyticsAdapter`) and lightweight DI container (`IntegrationContainer`) resolving active adapters dynamically based on feature flags.
+- **Environment & Resilience Layer (`core/config/`, `core/integration/logger/`, `core/integration/resilience/`)**: Created Zod environment variable schema validator (`env.ts`), environment-driven feature flags (`feature-flags.ts`), structured logger (`AppLogger`), and retry/timeout resilience policies (`ResiliencePolicy`). Zero external API calls executed.
+- **Dedicated Integration Architecture (`INTEGRATION_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Integration Architecture, Provider Contracts, Adapter Specifications, and Feature Flag Control.
+
+## [Sprint C2.0] - 2026-07-31
+### Added
+- **`SavedLooksService` & Domain Entities (`domain/look/`, `services/saved-looks.service.ts`)**: Built look domain definitions and `SavedLooksService` providing `getSavedLooks()`, `getLookBySlug()`, `getLooksByOccasion()`, and `getLookDetails()`.
+- **Luxury Digital Wardrobe & Editorial Look Routes (`app/account/saved-looks/page.tsx`, `app/looks/[slug]/page.tsx`)**: Re-architected `/account/saved-looks` list page with occasion filter pills, color swatches, piece counts, and created `/looks/[slug]` editorial look detail page featuring full-height cover imagery, outfit narrative, stylist recommendations, included garments grid, and "Add Entire Look to Shopping Bag" single-click trigger. Zero direct static dummy data imports.
+- **Dedicated Saved Looks Architecture (`SAVED_LOOKS_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Digital Wardrobe Architecture, Occasion Taxonomy, BigSeller Sync, and Supabase Storage.
+
 ## [Sprint C1.9] - 2026-07-30
 ### Added
 - **`MembershipService` & Domain Entities (`domain/membership/`, `services/membership.service.ts`)**: Created membership domain module and `MembershipService` providing `getMembershipProfile()`, `getMembershipTiers()`, `getPointsHistory()`, and `getStyleProfile()`.

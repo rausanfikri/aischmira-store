@@ -117,9 +117,10 @@
   - `/account` & `/account/dashboard` Routes: Sanctuary dashboard featuring Identity Overview Card (Customer Name, Tier, Member Since, Points, Preferred Size & Color), Order Status Card, Loyalty Highlights, and Quick Action Shortcuts.
   - `/account/profile` Route: Personal measurements, contact details, and multiple delivery address management.
   - `/account/orders` Route: Detailed order history tracking, status badges (Draft, Processing, Shipped, Delivered), and concierge tracking triggers.
-## Loyalty & Membership (Enterprise Customer Platform)
-- **Purpose**: Cultivate long-term brand relationships via digital membership cards, tier progression, style profile preference sanctuaries, and points ledgers.
+## Saved Looks & Digital Wardrobe (Enterprise Personal Styling)
+- **Purpose**: Allow clients to save and explore complete outfit assemblies curated during runway presentations and private showroom consultations.
 - **Surfaces**:
-  - `/account/membership` Route (and `/account/loyalty` route alias): Digital Virtual Membership Card with gold foil accents, Tier Progress Roadmap (Classic -> Silver -> Gold -> Platinum -> VIP Atelier), Benefits Matrix, Style Profile Preference Sanctuary, Points & Activity Ledger, and Privé Referral link generator.
-- **Data Flow**: Consumes `MembershipService.getMembershipProfile()`, `MembershipService.getMembershipTiers()`, `MembershipService.getPointsHistory()`, and `MembershipService.getStyleProfile()`. Zero direct static dummy data imports.
-- **Enterprise Integration Readiness**: Contracts map `memberId`, `membershipCardNumber`, `lifetimePoints`, `currentTier`, `styleProfile`, and `pointsHistory` ready for BigSeller ERP customer loyalty sync and Supabase database tables.
+  - `/account/saved-looks` Route: Sanctuary list view with occasion filter pills (Formal, Office, Travel, Ramadan, Wedding), cover imagery, color swatches, piece counts, total estimated values, and detail CTAs.
+  - `/looks/[slug]` Route: Editorial Look Detail page featuring full-height cover imagery, outfit story narrative, stylist recommendations, included garments grid, and primary "Add Entire Look to Shopping Bag" CTA button.
+- **Data Flow**: Consumes `SavedLooksService.getSavedLooks()` and `SavedLooksService.getLookDetails()` (resolving products via `ProductService.getProducts()`). Zero direct static dummy data imports.
+- **Enterprise Integration Readiness**: Contracts map `slug`, `productSkus`, `occasion`, `colorPalette`, and `totalEstimatedValue` ready for BigSeller ERP outfit bundles and Supabase customer wardrobe tables.

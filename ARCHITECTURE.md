@@ -1,7 +1,7 @@
 # AISCHMIRA.STORE — Enterprise System Architecture
 
-**Last Updated:** July 30, 2026 (Sprint C1.9 — Luxury Loyalty & Membership Experience)  
-**Status:** Phase 4 Platform Architecture Fully Integrated  
+**Last Updated:** July 31, 2026 (Sprint I1.0 — Enterprise Integration Layer Foundation)  
+**Status:** Phase 5 Integration Architecture Fully Established  
 
 ---
 
@@ -9,57 +9,62 @@
 
 AISCHMIRA.STORE is built as an editorial luxury fashion flagship digital experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Clean Architecture principles.
 
-In **Sprint C1.9**, the **Luxury Loyalty & Membership Experience** (`/account/membership`, `/account/loyalty`, `services/membership.service.ts`, `domain/membership/`, `MEMBERSHIP_ARCHITECTURE.md`) was fully implemented:
-- Built primary `/account/membership` route featuring Digital Virtual Membership Card with gold foil accents, Tier Progress Roadmap (Classic -> Silver -> Gold -> Platinum -> VIP Atelier), Benefits Matrix, Style Profile Preference Sanctuary, Points & Activity Ledger, and Privé Referral link generator. Zero direct static dummy data imports.
-- Created `MembershipService` (`services/membership.service.ts`) exposing `getMembershipProfile()`, `getMembershipTiers()`, `getPointsHistory()`, and `getStyleProfile()`.
-- Re-architected `/account/loyalty` to re-export `MembershipPage` for complete route compatibility.
+In **Sprint I1.0**, the **Enterprise Integration Layer Foundation** (`core/integration/`, `core/config/`, `INTEGRATION_ARCHITECTURE.md`) was fully implemented:
+- Created vendor-independent provider contracts (`IProductProvider`, `IInventoryProvider`, `IPriceProvider`, `ICustomerProvider`, `IOrderProvider`, `IContentProvider`, `IAnalyticsProvider`).
+- Implemented structural provider adapters (`BigSellerAdapter`, `SupabaseAdapter`, `CMSAdapter`, `AnalyticsAdapter`) and lightweight DI container (`IntegrationContainer`).
+- Built Zod environment schema validation (`core/config/env.ts`), feature flags (`core/config/feature-flags.ts`), structured logger (`AppLogger`), and resiliency policies (`ResiliencePolicy`). Zero external live network API calls executed.
 
 ---
 
-## 2. Membership & Loyalty Data Flow
+## 2. Target Integration Architecture
 
 ```text
-              Client Navigates to /account/membership or /loyalty
-                                    │
-                                    ▼
-                     services/membership.service.ts
-                          (MembershipService)
-                                    │
-       ┌────────────────────────────┼────────────────────────────┐
-       ▼                            ▼                            ▼
-getMembershipProfile()      getMembershipTiers()        getPointsHistory()
-       │                            │                            │
-       ▼                            ▼                            ▼
-MembershipEntity             MembershipTier List         PointsActivity List
-       │                            │                            │
-       └────────────────────────────┼────────────────────────────┘
-                                    │
-                                    ▼
-                       /account/membership Page
-  (Digital Virtual Card, Tier Roadmap, Style Profile, Points Ledger, Referral Card)
+                                UI Components
+                                     │
+                                     ▼
+                            Application Services
+                           (services/*.service.ts)
+                                     │
+                                     ▼
+                          Repository / Domain Layer
+                           (domain/* & contracts)
+                                     │
+                                     ▼
+                           Integration Container
+                        (core/integration/container.ts)
+                                     │
+         ┌───────────────────────────┼───────────────────────────┐
+         ▼                           ▼                           ▼
+  BigSellerAdapter            SupabaseAdapter                CMSAdapter
+  (Inventory, Orders)        (Customer, Auth)                (Content)
+         │                           │                           │
+         ▼                           ▼                           ▼
+   BigSeller ERP               Supabase DB                  Headless CMS
 ```
 
 ---
 
-## 3. Order Management & Tracking Data Flow
+## 3. Digital Wardrobe & Saved Looks Data Flow
 
 ```text
-             Client Navigates to /account/orders or /[orderId]
+            Client Navigates to /account/saved-looks or /looks/[slug]
                                     │
                                     ▼
-                       services/order.service.ts
-                            (OrderService)
+                    services/saved-looks.service.ts
+                          (SavedLooksService)
                                     │
             ┌───────────────────────┴───────────────────────┐
             ▼                                               ▼
-      getOrders()                                    getOrderById()
+     getSavedLooks()                                 getLookDetails()
             │                                               │
             ▼                                               ▼
-   OrderEntity List                                 OrderEntity Detail
-            │                                               │
-            ▼                                               ▼
-/account/orders List Page                     /account/orders/[orderId] Page
- (Filter Pills, Totals)                         (Interactive Tracking Timeline,
-                                                 Item SKUs, Recipient Address,
-                                                 WhatsApp Support Button)
+   SavedLookEntity List                             SavedLookDetail
+            │                                     (Resolves Product Entity
+            ▼                                     via ProductService.getProducts)
+/account/saved-looks List Page                              │
+  (Occasion Filter Pills,                                   ▼
+   Color Swatches, Totals)                         /looks/[slug] Detail Page
+                                                   (Editorial Hero, Story,
+                                                    Included Garments Grid,
+                                                    Add Entire Look CTA)
 ```
