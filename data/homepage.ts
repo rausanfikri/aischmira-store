@@ -12,8 +12,8 @@ export const homepageData: Homepage = {
     ctaLink: "/collections",
     position: "hero",
   },
-  featuredCollections: ["col_1", "col_2", "col_3"],
-  newArrivals: ["prod_1", "prod_2", "prod_3", "prod_4"],
+  featuredCollections: ["col_she", "col_femme", "col_her"],
+  newArrivals: ["prod_7", "prod_1", "prod_2", "prod_3"],
   promotionalBanners: [],
   testimonials: [
     {

@@ -124,3 +124,9 @@
   - `/looks/[slug]` Route: Editorial Look Detail page featuring full-height cover imagery, outfit story narrative, stylist recommendations, included garments grid, and primary "Add Entire Look to Shopping Bag" CTA button.
 - **Data Flow**: Consumes `SavedLooksService.getSavedLooks()` and `SavedLooksService.getLookDetails()` (resolving products via `ProductService.getProducts()`). Zero direct static dummy data imports.
 - **Enterprise Integration Readiness**: Contracts map `slug`, `productSkus`, `occasion`, `colorPalette`, and `totalEstimatedValue` ready for BigSeller ERP outfit bundles and Supabase customer wardrobe tables.
+
+## SHE Dress Product Media Integration
+- **Purpose**: Official media architecture integration replacing all placeholder assets for the SHE Dress Collection across PDP, Collection detail, Search, Wishlist, Shopping Bag, Lookbook, and Saved Looks.
+- **Media Pipeline**: Structured assets stored under `public/images/products/she-dress/` with 5 distinct colorways (Pure White, Onyx Black, Ivory Cream, Crimson Red, Blush Pink).
+- **SEO & CMS Mapping**: Standardized lowercase hyphenated filenames (`she-dress-hero-white-01.jpg`, `she-dress-front-black-01.jpg`, etc.) mapped to typed CMS metadata specs and BigSeller ERP multi-channel variant slots.
+- **Performance & Accessibility**: Next.js `next/image` with responsive `sizes`, hero image `priority` preloading, `aspect-[3/4]` wrappers to eliminate CLS, and WCAG AA descriptive `alt` tags.

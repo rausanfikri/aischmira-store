@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint M1.0] - 2026-08-03
+### Added
+- **SHE Dress Collection Official Product Media Integration**: Integrated official RAW photography assets for the SHE Dress Collection into `public/images/products/she-dress/` across 5 distinct colorways (Pure White, Onyx Black, Ivory Cream, Crimson Red, Blush Pink).
+- **Product Domain & Collection Sync (`data/products.ts`, `data/collections.ts`, `data/homepage.ts`, `data/lookbook.ts`, `services/saved-looks.service.ts`)**: Updated `SHE Dress` entity (`SHE-001`), `SHE Collection` (`col_she`), Homepage `featuredCollections` & `newArrivals`, Lookbook editorial blocks, and `The SHE Couture Ensemble` saved look with high-resolution official assets.
+- **CMS Metadata & BigSeller Mapping (`PRODUCT_MEDIA.md`)**: Created comprehensive media architecture documentation detailing image classification, SEO filename conventions, CMS metadata JSON specification, BigSeller multi-channel ERP mapping, and WCAG AA accessibility/performance standards.
+
 ## [Sprint I1.1] - 2026-08-01
 ### Added
 - **BigSeller DTO Layer & Provider Contracts (`core/integration/bigseller/dto/`, `core/integration/bigseller/contracts/`)**: Created type-safe BigSeller DTOs (`ProductDTO`, `VariantDTO`, `InventoryDTO`, `PriceDTO`, `OrderDTO`, `WarehouseDTO`, `PromotionDTO`) and provider contracts (`IShipmentProvider`, `IWarehouseProvider`, `IPromotionProvider`, `ICategoryProvider`, `IProductSynchronizationProvider`).

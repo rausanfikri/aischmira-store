@@ -70,9 +70,9 @@ export const lookbookData = [
             aspectRatio: "portrait"
           },
           {
-            src: "/images/products/placeholder.png",
-            alt: "SHE Double-Faced Silk Drape",
-            caption: "Double-faced silk satin in warm ivory",
+            src: "/images/products/she-dress/she-dress-editorial-crimson-01.jpg",
+            alt: "SHE Basque Waist Silk Drape in Crimson",
+            caption: "100% Mulberry silk satin in Crimson Red",
             aspectRatio: "portrait"
           }
         ]

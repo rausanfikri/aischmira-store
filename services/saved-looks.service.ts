@@ -46,6 +46,19 @@ export class SavedLooksService {
       itemCount: 2,
       totalEstimatedValue: 8700000,
     },
+    {
+      id: 'look_104',
+      slug: 'she-couture-ensemble',
+      name: 'The SHE Couture Ensemble',
+      season: 'Spring / Summer 2026',
+      occasion: 'Formal',
+      coverImage: '/images/products/she-dress/she-dress-hero-white-01.jpg',
+      colorPalette: ['#FFFFFF', '#000000', '#8B0000'],
+      description: 'A striking vintage-inspired silhouette featuring a fitted basque waist, puff sleeves, and sweeping gathered skirt.',
+      productSkus: ['SHE-001', 'BNC-001'],
+      itemCount: 2,
+      totalEstimatedValue: 9800000,
+    },
   ];
 
   public async getSavedLooks(): Promise<Result<SavedLookEntity[], AppError>> {

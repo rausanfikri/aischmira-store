@@ -71,12 +71,39 @@ export const productsData: Product[] = [
     ...COMMON_PRODUCT_DATA
   },
   {
-    id: "prod_7", name: "She Draped Skirt", slug: "she-draped-skirt", sku: "SHE-001",
-    categoryId: "Bottoms", collectionId: "col_she",
-    description: "A beautifully draped midi skirt that moves fluidly with every step.",
-    basePrice: 890000,
-    variants: MOCK_VARIANTS.map(v => ({ ...v, price: 890000, id: `v_${Math.random()}` })),
-    ...COMMON_PRODUCT_DATA
+    id: "prod_7",
+    name: "SHE Dress",
+    slug: "she-dress",
+    sku: "SHE-001",
+    categoryId: "Dress",
+    collectionId: "col_she",
+    description: "A vintage-inspired luxury midi dress featuring puff sleeves, a fitted basque waist, front fabric-covered buttons, and a sweeping gathered A-line skirt.",
+    story: "Inspired by the quiet confidence and timeless grace of modern femininity, the SHE Dress combines structured waist architecture with fluid drapery.",
+    material: "100% Premium Silk Satin with Habotai Silk lining. Features hand-covered silk buttons and precision basque waist seam construction.",
+    basePrice: 1890000,
+    isFeatured: true,
+    images: [
+      "/images/products/she-dress/she-dress-hero-white-01.jpg",
+      "/images/products/she-dress/she-dress-front-black-01.jpg",
+      "/images/products/she-dress/she-dress-lifestyle-ivory-01.jpg",
+      "/images/products/she-dress/she-dress-editorial-crimson-01.jpg",
+      "/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg"
+    ],
+    variants: [
+      { id: "v_she_wht_s", sku: "SHE-001-WHT-S", color: "Pure White", size: "S", price: 1890000, stock: 8, images: ["/images/products/she-dress/she-dress-hero-white-01.jpg"] },
+      { id: "v_she_wht_m", sku: "SHE-001-WHT-M", color: "Pure White", size: "M", price: 1890000, stock: 12, images: ["/images/products/she-dress/she-dress-hero-white-01.jpg"] },
+      { id: "v_she_wht_l", sku: "SHE-001-WHT-L", color: "Pure White", size: "L", price: 1890000, stock: 5, images: ["/images/products/she-dress/she-dress-hero-white-01.jpg"] },
+      { id: "v_she_blk_s", sku: "SHE-001-BLK-S", color: "Onyx Black", size: "S", price: 1890000, stock: 10, images: ["/images/products/she-dress/she-dress-front-black-01.jpg"] },
+      { id: "v_she_blk_m", sku: "SHE-001-BLK-M", color: "Onyx Black", size: "M", price: 1890000, stock: 15, images: ["/images/products/she-dress/she-dress-front-black-01.jpg"] },
+      { id: "v_she_ivr_s", sku: "SHE-001-IVR-S", color: "Ivory Cream", size: "S", price: 1890000, stock: 7, images: ["/images/products/she-dress/she-dress-lifestyle-ivory-01.jpg"] },
+      { id: "v_she_red_s", sku: "SHE-001-RED-S", color: "Crimson Red", size: "S", price: 1890000, stock: 6, images: ["/images/products/she-dress/she-dress-editorial-crimson-01.jpg"] },
+      { id: "v_she_pnk_s", sku: "SHE-001-PNK-S", color: "Blush Pink", size: "S", price: 1890000, stock: 9, images: ["/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg"] }
+    ],
+    relatedProductIds: ["prod_1", "prod_2", "prod_10"],
+    careInstruction: "Dry clean only. Do not bleach. Iron on low heat. Store hanging in a garment bag.",
+    shippingInfo: "Complimentary express shipping on all orders. Delivered in our signature AISCHMIRA packaging. Returns accepted within 14 days.",
+    createdAt: "2026-07-01T00:00:00Z",
+    updatedAt: "2026-08-03T00:00:00Z"
   },
   {
     id: "prod_8", name: "Jolly Lounge Set", slug: "jolly-lounge-set", sku: "JLY-001",
