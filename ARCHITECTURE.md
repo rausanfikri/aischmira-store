@@ -1,7 +1,7 @@
 # AISCHMIRA.STORE — Enterprise System Architecture
 
-**Last Updated:** July 31, 2026 (Sprint I1.0 — Enterprise Integration Layer Foundation)  
-**Status:** Phase 5 Integration Architecture Fully Established  
+**Last Updated:** August 1, 2026 (Sprint I1.1 — BigSeller Domain Integration Ports & Adapters)  
+**Status:** Phase 5 BigSeller Ports & Adapters Architecture Integrated  
 
 ---
 
@@ -9,14 +9,41 @@
 
 AISCHMIRA.STORE is built as an editorial luxury fashion flagship digital experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Clean Architecture principles.
 
-In **Sprint I1.0**, the **Enterprise Integration Layer Foundation** (`core/integration/`, `core/config/`, `INTEGRATION_ARCHITECTURE.md`) was fully implemented:
-- Created vendor-independent provider contracts (`IProductProvider`, `IInventoryProvider`, `IPriceProvider`, `ICustomerProvider`, `IOrderProvider`, `IContentProvider`, `IAnalyticsProvider`).
-- Implemented structural provider adapters (`BigSellerAdapter`, `SupabaseAdapter`, `CMSAdapter`, `AnalyticsAdapter`) and lightweight DI container (`IntegrationContainer`).
-- Built Zod environment schema validation (`core/config/env.ts`), feature flags (`core/config/feature-flags.ts`), structured logger (`AppLogger`), and resiliency policies (`ResiliencePolicy`). Zero external live network API calls executed.
+In **Sprint I1.1**, the **BigSeller Domain Integration Architecture** (`core/integration/bigseller/`, `BIGSELLER_ARCHITECTURE.md`) was fully implemented:
+- Created type-safe BigSeller DTOs (`ProductDTO`, `VariantDTO`, `InventoryDTO`, `PriceDTO`, `OrderDTO`, `WarehouseDTO`, `PromotionDTO`) and Zod validation schemas (`schemas.ts`).
+- Built provider contracts (`IShipmentProvider`, `IWarehouseProvider`, `IPromotionProvider`, `ICategoryProvider`, `IProductSynchronizationProvider`) and domain mappers (`BigSellerProductMapper`, `BigSellerInventoryMapper`, `BigSellerOrderMapper`).
+- Implemented domain services (`BigSellerInventoryService`, `BigSellerPricingService`, `BigSellerWarehouseService`, `BigSellerPromotionService`, `ProductSynchronizationService`) and updated `BigSellerAdapter` cleanly without HTTP calls.
 
 ---
 
-## 2. Target Integration Architecture
+## 2. BigSeller Ports & Adapters Architecture
+
+```text
+                                Presentation UI
+                                       │
+                                       ▼
+                              Domain Application
+                             (services/*.service.ts)
+                                       │
+                                       ▼
+                               Provider Contracts
+                    (IInventoryProvider, IOrderProvider, etc.)
+                                       │
+                                       ▼
+                               BigSellerAdapter
+                     (core/integration/adapters/bigseller.adapter.ts)
+                                       │
+            ┌──────────────────────────┼──────────────────────────┐
+            ▼                          ▼                          ▼
+BigSellerProductMapper     BigSellerInventoryMapper     BigSellerOrderMapper
+            │                          │                          │
+            ▼                          ▼                          ▼
+     ProductDTO List            InventoryDTO List           OrderDTO Detail
+```
+
+---
+
+## 3. Integration Foundation Data Flow
 
 ```text
                                 UI Components
@@ -40,31 +67,4 @@ In **Sprint I1.0**, the **Enterprise Integration Layer Foundation** (`core/integ
          │                           │                           │
          ▼                           ▼                           ▼
    BigSeller ERP               Supabase DB                  Headless CMS
-```
-
----
-
-## 3. Digital Wardrobe & Saved Looks Data Flow
-
-```text
-            Client Navigates to /account/saved-looks or /looks/[slug]
-                                    │
-                                    ▼
-                    services/saved-looks.service.ts
-                          (SavedLooksService)
-                                    │
-            ┌───────────────────────┴───────────────────────┐
-            ▼                                               ▼
-     getSavedLooks()                                 getLookDetails()
-            │                                               │
-            ▼                                               ▼
-   SavedLookEntity List                             SavedLookDetail
-            │                                     (Resolves Product Entity
-            ▼                                     via ProductService.getProducts)
-/account/saved-looks List Page                              │
-  (Occasion Filter Pills,                                   ▼
-   Color Swatches, Totals)                         /looks/[slug] Detail Page
-                                                   (Editorial Hero, Story,
-                                                    Included Garments Grid,
-                                                    Add Entire Look CTA)
 ```

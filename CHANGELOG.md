@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Sprint I1.1] - 2026-08-01
+### Added
+- **BigSeller DTO Layer & Provider Contracts (`core/integration/bigseller/dto/`, `core/integration/bigseller/contracts/`)**: Created type-safe BigSeller DTOs (`ProductDTO`, `VariantDTO`, `InventoryDTO`, `PriceDTO`, `OrderDTO`, `WarehouseDTO`, `PromotionDTO`) and provider contracts (`IShipmentProvider`, `IWarehouseProvider`, `IPromotionProvider`, `ICategoryProvider`, `IProductSynchronizationProvider`).
+- **Zod Payload Schemas & Domain Mappers (`core/integration/bigseller/validation/`, `core/integration/bigseller/mappers/`)**: Implemented Zod validation schemas (`schemas.ts`) and domain mappers (`BigSellerProductMapper`, `BigSellerInventoryMapper`, `BigSellerOrderMapper`).
+- **BigSeller Domain Services (`core/integration/bigseller/services/`)**: Created domain services (`BigSellerInventoryService`, `BigSellerPricingService`, `BigSellerWarehouseService`, `BigSellerPromotionService`, `ProductSynchronizationService`) and updated `BigSellerAdapter` without HTTP calls.
+- **Dedicated BigSeller Architecture (`BIGSELLER_ARCHITECTURE.md`)**: Created comprehensive documentation detailing BigSeller Ports & Adapters Architecture, SKU Taxonomy, Inventory Allocations, and Pricing Models.
+
 ## [Sprint I1.0] - 2026-07-31
 ### Added
 - **Core Integration Contracts (`core/integration/contracts/`)**: Created vendor-independent interfaces `IProductProvider`, `IInventoryProvider`, `IPriceProvider`, `ICustomerProvider`, `IOrderProvider`, `IContentProvider`, and `IAnalyticsProvider`.
