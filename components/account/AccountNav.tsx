@@ -2,14 +2,16 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { User, ShoppingBag, Heart, LogOut, MapPin, Crown, Sparkles, Settings } from "lucide-react";
 import { customerService } from "@/services/customer.service";
+import { authService } from "@/services/auth.service";
 import { CustomerProfile } from "@/domain/customer";
 import { cn } from "@/lib/utils";
 
 export function AccountNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [profile, setProfile] = React.useState<CustomerProfile | null>(null);
 
   React.useEffect(() => {
@@ -17,6 +19,12 @@ export function AccountNav() {
       if (res.isSuccess) setProfile(res.value);
     });
   }, []);
+
+  const handleSignOut = async () => {
+    await authService.signOut();
+    router.push("/login");
+    router.refresh();
+  };
 
   const navItems = [
     { href: "/account/dashboard", label: "Dashboard Overview", icon: User },
@@ -36,7 +44,7 @@ export function AccountNav() {
           <div className="flex items-center gap-2 mb-1">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             <span className="font-body text-[9px] tracking-widest uppercase text-amber-800 font-medium">
-              {profile?.membershipTier || "AISCHMIRA Privé"}
+              {profile?.membershipTier || "Classic Tier"}
             </span>
           </div>
           <h3 className="font-heading italic text-xl text-text font-light">
@@ -70,13 +78,14 @@ export function AccountNav() {
           })}
 
           <div className="pt-4 mt-2 border-t border-border/40">
-            <Link
-              href="/login"
-              className="flex items-center gap-3 py-2 px-3 text-text/40 hover:text-red-700 transition-colors"
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-3 py-2 px-3 text-text/50 hover:text-red-700 transition-colors text-left font-body text-[11px] tracking-widest uppercase"
             >
               <LogOut size={15} strokeWidth={1.5} />
               <span>Sign Out</span>
-            </Link>
+            </button>
           </div>
         </nav>
       </div>

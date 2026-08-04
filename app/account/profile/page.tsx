@@ -2,21 +2,45 @@
 
 import * as React from "react";
 import { Check, MapPin, Bell, Shield } from "lucide-react";
+import { customerService } from "@/services/customer.service";
 
 export default function ProfilePage() {
   const [savedSuccess, setSavedSuccess] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [formData, setFormData] = React.useState({
-    firstName: "Jane",
-    lastName: "Doe",
-    email: "jane.doe@example.com",
-    phone: "+62 812 3456 7890",
-    address: "Jl. Senopati No. 42, Kebayoran Baru",
-    city: "Jakarta Selatan",
-    province: "DKI Jakarta",
-    postalCode: "12190",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    province: "",
+    postalCode: "",
     whatsappNotifications: true,
     emailPrivateSales: true,
   });
+
+  React.useEffect(() => {
+    customerService.getCustomerProfile().then((res) => {
+      if (res.isSuccess) {
+        const p = res.value;
+        const defaultAddr = p.addresses.find((a) => a.isDefault) || p.addresses[0];
+        setFormData({
+          firstName: p.firstName || p.fullName.split(" ")[0] || "",
+          lastName: p.lastName || p.fullName.split(" ").slice(1).join(" ") || "",
+          email: p.email || "",
+          phone: p.phone || "",
+          address: defaultAddr?.street || "",
+          city: defaultAddr?.city || "",
+          province: "",
+          postalCode: defaultAddr?.postalCode || "",
+          whatsappNotifications: p.preferences?.whatsappNotifications ?? true,
+          emailPrivateSales: p.preferences?.newsletterSubscribed ?? true,
+        });
+      }
+      setIsLoading(false);
+    });
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value, type, checked } = e.target;
@@ -32,6 +56,14 @@ export default function ProfilePage() {
     setTimeout(() => setSavedSuccess(false), 3000);
   };
 
+  if (isLoading) {
+    return (
+      <div className="py-12 text-center font-body text-xs text-text/50 tracking-widest uppercase animate-pulse">
+        Loading Client Profile Data...
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-10">
       <div>
@@ -46,7 +78,6 @@ export default function ProfilePage() {
       )}
 
       <form onSubmit={handleSave} className="space-y-8">
-        
         {/* Personal Info Section */}
         <div className="space-y-6 bg-background p-6 border border-border/40 rounded-sm">
           <h3 className="font-heading italic text-xl text-text flex items-center gap-2 border-b border-border/30 pb-3">
@@ -82,9 +113,9 @@ export default function ProfilePage() {
               <input
                 type="email"
                 id="email"
+                readOnly
                 value={formData.email}
-                onChange={handleChange}
-                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+                className="border-b border-border/40 bg-transparent py-2 font-body text-sm text-text/70 cursor-not-allowed"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -94,7 +125,8 @@ export default function ProfilePage() {
                 id="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+                placeholder="+62 812 XXXX XXXX"
+                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors placeholder:text-text/30"
               />
             </div>
           </div>
@@ -113,7 +145,8 @@ export default function ProfilePage() {
               id="address"
               value={formData.address}
               onChange={handleChange}
-              className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+              placeholder="Primary Residence / Villa address"
+              className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors placeholder:text-text/30"
             />
           </div>
 
@@ -125,7 +158,8 @@ export default function ProfilePage() {
                 id="city"
                 value={formData.city}
                 onChange={handleChange}
-                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+                placeholder="Jakarta Selatan"
+                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors placeholder:text-text/30"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -135,7 +169,8 @@ export default function ProfilePage() {
                 id="province"
                 value={formData.province}
                 onChange={handleChange}
-                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+                placeholder="DKI Jakarta"
+                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors placeholder:text-text/30"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -145,7 +180,8 @@ export default function ProfilePage() {
                 id="postalCode"
                 value={formData.postalCode}
                 onChange={handleChange}
-                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors"
+                placeholder="12190"
+                className="border-b border-border/60 bg-transparent py-2 font-body text-sm text-text focus:outline-none focus:border-text transition-colors placeholder:text-text/30"
               />
             </div>
           </div>

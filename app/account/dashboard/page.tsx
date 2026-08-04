@@ -10,20 +10,30 @@ export default function AccountDashboardPage() {
   const [profile, setProfile] = React.useState<CustomerProfile | null>(null);
   const [orders, setOrders] = React.useState<CustomerOrderSummary[]>([]);
   const [loyalty, setLoyalty] = React.useState<CustomerLoyaltyInfo | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 });
 
   React.useEffect(() => {
-    customerService.getCustomerProfile().then((res) => {
-      if (res.isSuccess) setProfile(res.value);
-    });
-    customerService.getCustomerOrders().then((res) => {
-      if (res.isSuccess) setOrders(res.value);
-    });
-    customerService.getCustomerLoyalty().then((res) => {
-      if (res.isSuccess) setLoyalty(res.value);
+    Promise.all([
+      customerService.getCustomerProfile(),
+      customerService.getCustomerOrders(),
+      customerService.getCustomerLoyalty(),
+    ]).then(([profileRes, ordersRes, loyaltyRes]) => {
+      if (profileRes.isSuccess) setProfile(profileRes.value);
+      if (ordersRes.isSuccess) setOrders(ordersRes.value);
+      if (loyaltyRes.isSuccess) setLoyalty(loyaltyRes.value);
+      setIsLoading(false);
     });
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="py-12 text-center font-body text-xs text-text/50 tracking-widest uppercase animate-pulse">
+        Loading Client Sanctuary Data...
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-10">
@@ -37,15 +47,15 @@ export default function AccountDashboardPage() {
           </div>
           <div>
             <h3 className="font-heading italic text-2xl text-text font-light">
-              {profile?.fullName || "Lady Katherine"}
+              {profile?.fullName || "Member"}
             </h3>
             <p className="font-body text-xs text-text/60 font-light mt-0.5">
-              Member since {profile?.memberSince || "2024"}
+              Member since {profile?.memberSince || new Date().getFullYear()}
             </p>
           </div>
           <div className="pt-2 border-t border-border/30 font-body text-[10px] tracking-widest uppercase text-text/50 space-y-1">
-            <p>Size: <span className="text-text font-medium">{profile?.preferredSize}</span></p>
-            <p>Palette: <span className="text-text font-medium">{profile?.preferredColor}</span></p>
+            <p>Email: <span className="text-text font-medium truncate block">{profile?.email || "-"}</span></p>
+            {profile?.phone && <p>Phone: <span className="text-text font-medium">{profile.phone}</span></p>}
           </div>
         </div>
 
@@ -57,10 +67,10 @@ export default function AccountDashboardPage() {
           </div>
           <div>
             <h3 className="font-heading italic text-3xl text-text font-light">
-              {loyalty?.currentPoints.toLocaleString() || "2,450"} <span className="text-sm font-body not-italic text-text/60">Pts</span>
+              {(loyalty?.currentPoints ?? 0).toLocaleString()} <span className="text-sm font-body not-italic text-text/60">Pts</span>
             </h3>
             <p className="font-body text-xs text-text/60 font-light mt-0.5">
-              {loyalty?.pointsToNextTier.toLocaleString()} pts to Privé Noir Status
+              {(loyalty?.pointsToNextTier ?? 1000).toLocaleString()} pts to next tier ({loyalty?.tier || "Classic"})
             </p>
           </div>
           <div className="pt-2 border-t border-border/30">
@@ -104,7 +114,7 @@ export default function AccountDashboardPage() {
         </div>
 
         {orders.length === 0 ? (
-          <p className="font-body text-xs text-text/50 font-light py-4">No recent orders found.</p>
+          <p className="font-body text-xs text-text/50 font-light py-4">No order history recorded yet for this account.</p>
         ) : (
           <div className="divide-y divide-border/30">
             {orders.map((order) => (

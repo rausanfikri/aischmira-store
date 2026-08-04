@@ -1,7 +1,7 @@
 # AISCHMIRA.STORE — Enterprise System Architecture
 
-**Last Updated:** August 1, 2026 (Sprint I1.1 — BigSeller Domain Integration Ports & Adapters)  
-**Status:** Phase 5 BigSeller Ports & Adapters Architecture Integrated  
+**Last Updated:** August 4, 2026 (Sprint I1.2 — Real Authentication & Customer Platform)  
+**Status:** Supabase Auth & PostgreSQL Customer Domain Integrated  
 
 ---
 
@@ -9,62 +9,64 @@
 
 AISCHMIRA.STORE is built as an editorial luxury fashion flagship digital experience using Next.js App Router, TypeScript, Tailwind CSS v4, Zod, and Clean Architecture principles.
 
-In **Sprint I1.1**, the **BigSeller Domain Integration Architecture** (`core/integration/bigseller/`, `BIGSELLER_ARCHITECTURE.md`) was fully implemented:
-- Created type-safe BigSeller DTOs (`ProductDTO`, `VariantDTO`, `InventoryDTO`, `PriceDTO`, `OrderDTO`, `WarehouseDTO`, `PromotionDTO`) and Zod validation schemas (`schemas.ts`).
-- Built provider contracts (`IShipmentProvider`, `IWarehouseProvider`, `IPromotionProvider`, `ICategoryProvider`, `IProductSynchronizationProvider`) and domain mappers (`BigSellerProductMapper`, `BigSellerInventoryMapper`, `BigSellerOrderMapper`).
-- Implemented domain services (`BigSellerInventoryService`, `BigSellerPricingService`, `BigSellerWarehouseService`, `BigSellerPromotionService`, `ProductSynchronizationService`) and updated `BigSellerAdapter` cleanly without HTTP calls.
+In **Sprint I1.2**, **Real Authentication & Customer Platform (Supabase)** was fully implemented:
+- Configured Supabase Auth with Google OAuth PKCE authorization code flow and `@supabase/ssr` server/browser client session management.
+- Implemented Next.js Middleware route protection for all `/account/*` routes.
+- Built Clean Architecture Customer Domain layers (`domain/customer`, `core/domain/customer/repository.ts`, `SupabaseCustomerRepository`, `CustomerMapper`, `AuthService`, `CustomerService`).
+- Completely purged all dummy/mock customer data ("Lady Katherine Vance", dummy points, fake orders) across Client Portal, Dashboard, Profile, Loyalty, Wishlist, and Shopping Bag.
+- Created PostgreSQL database migration DDL for 9 relational tables, RLS policies, and `on_auth_user_created` trigger for auto-provisioning profiles and loyalty accounts (0 points, tier: Classic).
 
 ---
 
-## 2. BigSeller Ports & Adapters Architecture
+## 2. Authentication & Customer Domain Clean Architecture
 
 ```text
-                                Presentation UI
+                                 Presentation UI
+                         (app/account/*, app/(auth)/*)
                                        │
                                        ▼
-                              Domain Application
-                             (services/*.service.ts)
+                              Next.js Middleware
+                     (middleware.ts - Session Refresh/Redirect)
                                        │
                                        ▼
-                               Provider Contracts
-                    (IInventoryProvider, IOrderProvider, etc.)
+                              Application Services
+                      (AuthService & CustomerService)
                                        │
                                        ▼
-                               BigSellerAdapter
-                     (core/integration/adapters/bigseller.adapter.ts)
+                           Repository Interface (ICustomerRepository)
                                        │
-            ┌──────────────────────────┼──────────────────────────┐
-            ▼                          ▼                          ▼
-BigSellerProductMapper     BigSellerInventoryMapper     BigSellerOrderMapper
-            │                          │                          │
-            ▼                          ▼                          ▼
-     ProductDTO List            InventoryDTO List           OrderDTO Detail
+                                       ▼
+                       SupabaseCustomerRepository & CustomerMapper
+                                       │
+                                       ▼
+                             Supabase Client (@supabase/ssr)
+                                       │
+                                       ▼
+                      Supabase Auth & PostgreSQL DB Tables
+  (profiles, addresses, loyalty_accounts, wishlist, shopping_bag, saved_looks, etc.)
 ```
 
 ---
 
-## 3. Integration Foundation Data Flow
+## 3. Integration Data Flow
 
 ```text
-                                UI Components
-                                     │
-                                     ▼
-                            Application Services
-                           (services/*.service.ts)
-                                     │
-                                     ▼
-                          Repository / Domain Layer
-                           (domain/* & contracts)
-                                     │
-                                     ▼
-                           Integration Container
-                        (core/integration/container.ts)
-                                     │
-         ┌───────────────────────────┼───────────────────────────┐
-         ▼                           ▼                           ▼
-  BigSellerAdapter            SupabaseAdapter                CMSAdapter
-  (Inventory, Orders)        (Customer, Auth)                (Content)
-         │                           │                           │
-         ▼                           ▼                           ▼
-   BigSeller ERP               Supabase DB                  Headless CMS
+                                 UI Components
+                                      │
+                                      ▼
+                             Application Services
+                      (services/auth.service.ts, customer.service.ts)
+                                      │
+                                      ▼
+                           Repository / Domain Layer
+                    (domain/customer & ICustomerRepository)
+                                      │
+                                      ▼
+                            Integration Layer
+                (core/infrastructure/repositories/supabase)
+                                      │
+         ┌────────────────────────────┼────────────────────────────┐
+         ▼                            ▼                            ▼
+  BigSellerAdapter             Supabase Auth                Supabase DB
+  (Inventory, Orders)        (Google OAuth, PKCE)       (PostgreSQL RLS)
 ```

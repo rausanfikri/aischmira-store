@@ -14,6 +14,8 @@ export default function WishlistPage() {
   const wishlist = useShopStore((state) => state.wishlist);
   const toggleWishlist = useShopStore((state) => state.toggleWishlist);
   const addToCart = useShopStore((state) => state.addToCart);
+  const isInitialized = useShopStore((state) => state.isInitialized);
+  const initializeUserStore = useShopStore((state) => state.initializeUserStore);
 
   const [wishlistedProducts, setWishlistedProducts] = React.useState<Product[]>([]);
   const [recommendations, setRecommendations] = React.useState<Product[]>([]);
@@ -23,6 +25,12 @@ export default function WishlistPage() {
     totalEstimatedValue: 0,
     categoryCounts: {},
   });
+
+  React.useEffect(() => {
+    if (!isInitialized) {
+      initializeUserStore();
+    }
+  }, [isInitialized, initializeUserStore]);
 
   const wishlistIds = React.useMemo(() => wishlist.map((item) => item.productId), [wishlist]);
 

@@ -2,7 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Sprint M1.0] - 2026-08-03
+## [Sprint I1.2] - 2026-08-04
+### Added
+- **Supabase Authentication & Google OAuth (`lib/supabase/`, `services/auth.service.ts`, `app/(auth)/login/page.tsx`, `app/(auth)/auth/callback/route.ts`)**: Integrated `@supabase/ssr` server and browser client session management with automatic PKCE code exchange for Google Sign-In as the primary authentication method. Prepared clean architecture extension points for Apple Login, Email/Password, Magic Link, and OTP.
+- **Next.js Middleware Route Protection (`middleware.ts`)**: Configured automatic session token validation and refresh. Enforced protected route authorization for `/account/*`, redirecting unauthenticated requests to `/login?redirectTo=...`.
+- **Database-Backed Customer Domain & Clean Architecture (`domain/customer/`, `core/domain/customer/repository.ts`, `SupabaseCustomerRepository`, `CustomerMapper`, `CustomerService`)**: Built repository and service layers executing PostgreSQL operations for customer profile management, loyalty tracking, wishlists, shopping bag sync, and saved looks.
+- **Supabase Relational Database Schema & RLS Policies (`supabase/migrations/20260804000000_sprint_i1_2_auth_customer.sql`)**: Created complete PostgreSQL migration script establishing 9 tables (`profiles`, `addresses`, `customer_preferences`, `loyalty_accounts`, `loyalty_transactions`, `wishlist`, `shopping_bag`, `saved_looks`, `order_history_reference`), Row Level Security (RLS) policies, and an `on_auth_user_created` trigger for auto-provisioning profiles and loyalty accounts (0 points, tier: Classic).
+- **BigSeller Mapping Preparation (`profiles.bigseller_customer_id`)**: Added `bigseller_customer_id` column to `profiles` for future BigSeller OMS customer synchronization.
+- **Dedicated Sprint Documentation (`AUTHENTICATION.md`, `SUPABASE_SETUP.md`, `DATABASE_SCHEMA.md`)**: Created comprehensive technical guides covering Supabase Auth, Google OAuth credentials configuration, PKCE callback flows, and database schemas.
+
+### Removed
+- **Static Dummy Data Purge**: Completely purged all hardcoded dummy customer profiles ("Lady Katherine Vance"), mock loyalty points ("2,450"), and mock orders across Client Portal, Dashboard, Profile, Loyalty, Wishlist, and Shopping Bag. UI now exclusively consumes authenticated database state.
+
+
 ### Added
 - **SHE Dress Collection Official Product Media Integration**: Integrated official RAW photography assets for the SHE Dress Collection into `public/images/products/she-dress/` across 5 distinct colorways (Pure White, Onyx Black, Ivory Cream, Crimson Red, Blush Pink).
 - **Product Domain & Collection Sync (`data/products.ts`, `data/collections.ts`, `data/homepage.ts`, `data/lookbook.ts`, `services/saved-looks.service.ts`)**: Updated `SHE Dress` entity (`SHE-001`), `SHE Collection` (`col_she`), Homepage `featuredCollections` & `newArrivals`, Lookbook editorial blocks, and `The SHE Couture Ensemble` saved look with high-resolution official assets.
