@@ -43,20 +43,21 @@ export function Header() {
           <HeaderContainer>
             {/* 
               CSS GRID HEADER COMPOSITION
-              grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr)
-              Mathematically guarantees Logo remains perfectly centered relative to the container/viewport.
+              grid-template-columns: 1fr auto 1fr
+              Mathematically guarantees Logo remains perfectly centered relative to the container/viewport,
+              while Left and Right columns adapt symmetrically without visual overlap.
             */}
-            <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center w-full">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center w-full min-h-[var(--header-height)] py-1">
               {/* Left Column: Mobile Drawer Toggle & Desktop Navigation Links */}
-              <div className="flex items-center gap-4">
-                <div className="lg:hidden">
+              <div className="flex items-center gap-4 justify-start">
+                <div className="lg:hidden flex items-center">
                   <MobileNav collections={collections} categories={categories} />
                 </div>
                 <Navigation collections={collections} categories={categories} />
               </div>
 
               {/* Center Column: AISCHMIRA Brand Flagship Logo */}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center px-2 min-w-0">
                 <Logo scrolled={scrolled} />
               </div>
 

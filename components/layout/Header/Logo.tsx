@@ -15,11 +15,14 @@ export function Logo({ scrolled }: LogoProps) {
   return (
     <Link
       href="/"
-      className="relative flex items-center justify-center shrink-0 transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xs"
+      className="relative flex items-center justify-center shrink max-w-full transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs py-1"
       aria-label="AISCHMIRA Flagship Home"
     >
       {imgError ? (
-        <span className="font-heading text-2xl md:text-3xl tracking-[0.3em] uppercase text-[var(--header-text)] font-light" aria-hidden="true">
+        <span
+          className="font-heading text-lg sm:text-2xl lg:text-3xl tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[var(--header-text)] font-light truncate"
+          aria-hidden="true"
+        >
           AISCHMIRA
         </span>
       ) : (
@@ -29,10 +32,10 @@ export function Logo({ scrolled }: LogoProps) {
           width={220}
           height={70}
           className={cn(
-            "object-contain w-auto transition-all duration-300 ease-in-out",
+            "object-contain max-w-[140px] sm:max-w-[180px] md:max-w-[220px] transition-all duration-300 ease-in-out",
             scrolled
-              ? "h-[36px] md:h-[var(--header-logo-size-scrolled)]"
-              : "h-[36px] md:h-[var(--header-logo-size)]"
+              ? "h-[28px] sm:h-[34px] md:h-[var(--header-logo-size-scrolled)]"
+              : "h-[32px] sm:h-[38px] md:h-[var(--header-logo-size)]"
           )}
           onError={() => setImgError(true)}
           priority

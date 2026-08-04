@@ -2,8 +2,18 @@
 
 ## Navigation & Header
 - **Purpose**: Primary brand anchor, navigation hub, and search/cart triggers.
-- **Desktop Structure**: Centered Logo visual anchor, Collections dropdown, Categories dropdown. Journal & About removed.
-- **Mobile Structure**: Full-screen slide-over drawer (`MobileNav.tsx`) with 48px+ touch targets, Collections accordion, Categories accordion, Member quick triggers (Search, Account, Wishlist, Bag), and WhatsApp Concierge.
+- **Desktop Structure**: CSS Grid 3-Column isolation (`grid-template-columns: 1fr auto 1fr`).
+  - **Left**: Collections ▼ dropdown & Categories ▼ dropdown.
+  - **Center**: AISCHMIRA Flagship Logo (mathematically anchored in viewport center with text clamping and truncation protection).
+  - **Right**: Member action icons (Search, Account, Wishlist, Shopping Bag).
+- **Desktop Dropdown Experience**:
+  - `CollectionsDropdown.tsx`: Populated dynamically from `CollectionService` displaying Signature Line (`FEMME`, `HER Long`, `HER Short`, `SHE Dress`) with status badges, Classic Capsules & Scarves, and curated editorial preview card.
+  - `CategoriesDropdown.tsx`: Populated dynamically from `CategoryService` displaying flagship categories (`Dress`, `Outerwear`, `Trousers`, `Scarf`, etc.) in a CMS & BigSeller OMS ready architecture.
+  - Interactive behavior: Radix UI `NavigationMenu` with smooth animations, hover delay, keyboard arrow navigation, outside click close, Escape key close, and WAI-ARIA menu roles.
+- **Mobile Structure**:
+  - **Top Navigation Bar**: Left Menu Hamburger Toggle, Centered AISCHMIRA Logo, Right Action Icons (`Search` and `Shopping Bag`).
+  - **Mobile Overlap Resolution**: `Wishlist` and `Account` quick actions adaptively transfer into the **Mobile Navigation Drawer** on extra-narrow viewports (< 640px), guaranteeing zero logo collision across all mobile devices (320px – 480px).
+  - **Full-Screen Slide-Over Drawer** (`MobileNav.tsx`): Built with Radix UI `Dialog` primitives, 48px+ touch targets, Collections accordion, Categories accordion, Member quick triggers (Search, Account, Wishlist, Bag), and WhatsApp Concierge CTA.
 - **Behavior**: Sticky header with dynamic top offset below `AnnouncementBar` (`top: var(--announcement-height)` when visible, `top: 0` when dismissed).
 - **Data Flow**: Consumes `CollectionService.getCollections()` and `CategoryService.getCategories()`. Zero hardcoded collection/category arrays.
 
@@ -117,6 +127,7 @@
   - `/account` & `/account/dashboard` Routes: Sanctuary dashboard featuring Identity Overview Card (Customer Name, Tier, Member Since, Points, Preferred Size & Color), Order Status Card, Loyalty Highlights, and Quick Action Shortcuts.
   - `/account/profile` Route: Personal measurements, contact details, and multiple delivery address management.
   - `/account/orders` Route: Detailed order history tracking, status badges (Draft, Processing, Shipped, Delivered), and concierge tracking triggers.
+
 ## Saved Looks & Digital Wardrobe (Enterprise Personal Styling)
 - **Purpose**: Allow clients to save and explore complete outfit assemblies curated during runway presentations and private showroom consultations.
 - **Surfaces**:

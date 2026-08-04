@@ -11,13 +11,6 @@ import type { Collection } from "@/domain/collection/entity";
 import type { Category } from "@/domain/category/entity";
 
 const SIGNATURE_SLUGS = new Set(["femme", "her", "she"]);
-const SPECIAL_SLUGS = new Set([
-  "am-monogram",
-  "floral-meadow",
-  "chili-chic",
-  "garlic-bloom",
-  "spice-blossom",
-]);
 
 interface MobileNavProps {
   collections: Collection[];
@@ -45,22 +38,19 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
   };
 
   const signature = collections.filter((c) => SIGNATURE_SLUGS.has(c.slug));
-  const special = collections.filter((c) => SPECIAL_SLUGS.has(c.slug));
-  const classic = collections.filter(
-    (c) => !SIGNATURE_SLUGS.has(c.slug) && !SPECIAL_SLUGS.has(c.slug)
-  );
+  const classic = collections.filter((c) => !SIGNATURE_SLUGS.has(c.slug));
 
   return (
     <Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}>
       <Dialog.Trigger asChild>
         <button
-          className="min-w-[44px] min-h-[44px] p-2 text-[var(--header-text)] hover:text-primary transition-colors flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
+          className="min-w-[44px] min-h-[44px] p-2 text-[var(--header-text)] hover:text-primary transition-colors flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs cursor-pointer"
           aria-label="Open Mobile Navigation Menu"
         >
           <div className="space-y-1.5 w-5">
-            <span className="block w-5 h-[1.5px] bg-current" />
-            <span className="block w-3.5 h-[1.5px] bg-current" />
-            <span className="block w-4 h-[1.5px] bg-current" />
+            <span className="block w-5 h-[1.5px] bg-current transition-transform" />
+            <span className="block w-3.5 h-[1.5px] bg-current transition-transform" />
+            <span className="block w-4 h-[1.5px] bg-current transition-transform" />
           </div>
         </button>
       </Dialog.Trigger>
@@ -80,7 +70,7 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
             </span>
             <button
               onClick={() => setMobileOpen(false)}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-text/60 hover:text-text rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-text/60 hover:text-text rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
               aria-label="Close Navigation Menu"
             >
               <X size={22} />
@@ -92,8 +82,9 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
             <div className="border-b border-border/20 pb-5 space-y-3">
               <button
                 onClick={() => setCollectionsExpanded(!collectionsExpanded)}
-                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left cursor-pointer"
                 aria-expanded={collectionsExpanded}
+                aria-controls="mobile-collections-panel"
               >
                 <span>Collections</span>
                 <ChevronDown
@@ -103,7 +94,7 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
               </button>
 
               {collectionsExpanded && (
-                <div className="pl-3 pt-2 space-y-4 font-body text-xs tracking-widest uppercase">
+                <div id="mobile-collections-panel" className="pl-3 pt-2 space-y-4 font-body text-xs tracking-widest uppercase">
                   {/* Signature */}
                   {signature.length > 0 && (
                     <div className="space-y-2">
@@ -115,10 +106,10 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
                           key={c.id}
                           href={`/collections/${c.slug}`}
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between min-h-[44px] py-2.5 px-3 bg-surface border border-primary/20 hover:border-primary text-text font-medium transition-colors"
+                          className="flex items-center justify-between min-h-[44px] py-2.5 px-3 bg-surface border border-primary/20 hover:border-primary text-text font-medium transition-colors rounded-xs"
                         >
                           <span className="font-heading italic text-lg font-light">{c.name}</span>
-                          <span className="font-body text-[8px] tracking-widest bg-primary/10 text-primary px-2 py-0.5 font-bold">
+                          <span className="font-body text-[8px] tracking-widest bg-primary/10 text-primary px-2 py-0.5 font-bold rounded-xs">
                             Signature
                           </span>
                         </Link>
@@ -126,11 +117,11 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
                     </div>
                   )}
 
-                  {/* Classic */}
+                  {/* Classic & Capsule Collections */}
                   {classic.length > 0 && (
                     <div className="space-y-2 pt-2">
-                      <span className="text-text-muted font-bold text-[9px] tracking-[0.25em] block">
-                        Classic Line
+                      <span className="text-text/50 font-bold text-[9px] tracking-[0.25em] block">
+                        Capsules & Scarves
                       </span>
                       <div className="grid grid-cols-2 gap-2">
                         {classic.map((c) => (
@@ -138,28 +129,7 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
                             key={c.id}
                             href={`/collections/${c.slug}`}
                             onClick={() => setMobileOpen(false)}
-                            className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors"
-                          >
-                            {c.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Special Scarves */}
-                  {special.length > 0 && (
-                    <div className="space-y-2 pt-2">
-                      <span className="text-text-muted font-bold text-[9px] tracking-[0.25em] block">
-                        Silk Scarves
-                      </span>
-                      <div className="grid grid-cols-2 gap-2">
-                        {special.map((c) => (
-                          <Link
-                            key={c.id}
-                            href={`/collections/${c.slug}`}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors"
+                            className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors rounded-xs font-medium"
                           >
                             {c.name}
                           </Link>
@@ -175,8 +145,9 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
             <div className="border-b border-border/20 pb-5 space-y-3">
               <button
                 onClick={() => setCategoriesExpanded(!categoriesExpanded)}
-                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left"
+                className="w-full min-h-[48px] font-heading italic text-2xl text-text flex items-center justify-between hover:text-primary transition-colors font-light text-left cursor-pointer"
                 aria-expanded={categoriesExpanded}
+                aria-controls="mobile-categories-panel"
               >
                 <span>Categories</span>
                 <ChevronDown
@@ -186,13 +157,13 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
               </button>
 
               {categoriesExpanded && (
-                <div className="pl-3 pt-2 grid grid-cols-2 gap-2 font-body text-xs tracking-widest uppercase">
+                <div id="mobile-categories-panel" className="pl-3 pt-2 grid grid-cols-2 gap-2 font-body text-xs tracking-widest uppercase">
                   {categories.map((cat) => (
                     <Link
                       key={cat.id}
                       href={`/collections?category=${encodeURIComponent(cat.slug)}`}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors font-medium"
+                      className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors rounded-xs font-medium"
                     >
                       {cat.name}
                     </Link>
@@ -201,38 +172,38 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
               )}
             </div>
 
-            {/* 3. Member Actions */}
+            {/* 3. Quick Actions */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <button
                 onClick={() => handleAction(() => setSearchOpen(true))}
-                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors cursor-pointer"
               >
                 <Search size={16} /> Search
               </button>
 
               <button
                 onClick={() => handleAction(() => setAccountOpen(true))}
-                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors cursor-pointer"
               >
                 <UserIcon size={16} /> Account
               </button>
 
               <button
                 onClick={() => handleAction(() => setWishlistOpen(true))}
-                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative cursor-pointer"
               >
                 <Heart size={16} /> Wishlist ({wishlist.length})
               </button>
 
               <button
                 onClick={() => handleAction(() => setCartOpen(true))}
-                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative"
+                className="min-h-[48px] p-3 bg-surface border border-border/40 rounded-xs font-body text-[10px] tracking-widest uppercase text-text flex items-center justify-center gap-2 hover:border-primary transition-colors relative cursor-pointer"
               >
                 <ShoppingBag size={16} /> Bag ({cartCount})
               </button>
             </div>
 
-            {/* WhatsApp Concierge */}
+            {/* WhatsApp Concierge CTA */}
             <div className="mt-auto pt-6">
               <a
                 href="https://wa.me/6285121344848"
