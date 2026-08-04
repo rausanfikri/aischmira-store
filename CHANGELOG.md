@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Hotfix UX-NAV-01.1] - 2026-08-04
+### Fixed
+- **Desktop Navigation Dropdowns (`components/layout/Header/NavLinks.tsx`, `CollectionsDropdown.tsx`, `CategoriesDropdown.tsx`)**:
+  - Resolved issue where Collections and Categories displayed as plain text without opening dropdown panels on Desktop.
+  - Implemented dual interaction model: dropdowns open seamlessly on both **Hover** (with 120ms intent delay) AND **Click** (button toggle).
+  - Redesigned dropdown panels with premium editorial white background (`bg-white`), soft elevation shadow (`shadow-[0_20px_60px_rgba(0,0,0,0.12)]`), rounded corners (`rounded-md`), and spacious padding (`p-8`).
+  - Added Outside Click detection and `Escape` key close handling.
+  - Formatted Collections dropdown to display FEMME, HER Long, HER Short, and SHE Dress from `CollectionService` without hardcoded markup.
+  - Formatted Categories dropdown loaded dynamically from `CategoryService` ready for CMS & BigSeller OMS synchronization.
+  - Verified positioning and layout stability across Desktop viewports (1280px, 1440px, 1536px, 1920px).
+
 ## [Sprint UX-NAV-01] - 2026-08-04
 ### Added
 - **Luxury Desktop Navigation & Dropdown Systems (`components/layout/Header/CollectionsDropdown.tsx`, `components/layout/Header/CategoriesDropdown.tsx`, `components/layout/Header/NavLinks.tsx`)**: Re-architected Desktop navigation layout to feature Left-aligned `Collections` ▼ & `Categories` ▼ dropdowns, mathematically centered AISCHMIRA flagship logo, and Right-aligned member action icons (Search, Account, Wishlist, Shopping Bag).
@@ -32,22 +43,3 @@ All notable changes to this project will be documented in this file.
 - **SHE Dress Collection Official Product Media Integration**: Integrated official RAW photography assets for the SHE Dress Collection into `public/images/products/she-dress/` across 5 distinct colorways (Pure White, Onyx Black, Ivory Cream, Crimson Red, Blush Pink).
 - **Product Domain & Collection Sync (`data/products.ts`, `data/collections.ts`, `data/homepage.ts`, `data/lookbook.ts`, `services/saved-looks.service.ts`)**: Updated `SHE Dress` entity (`SHE-001`), `SHE Collection` (`col_she`), Homepage `featuredCollections` & `newArrivals`, Lookbook editorial blocks, and `The SHE Couture Ensemble` saved look with high-resolution official assets.
 - **CMS Metadata & BigSeller Mapping (`PRODUCT_MEDIA.md`)**: Created comprehensive media architecture documentation detailing image classification, SEO filename conventions, CMS metadata JSON specification, BigSeller multi-channel ERP mapping, and WCAG AA accessibility/performance standards.
-
-## [Sprint I1.1] - 2026-08-01
-### Added
-- **BigSeller DTO Layer & Provider Contracts (`core/integration/bigseller/dto/`, `core/integration/bigseller/contracts/`)**: Created type-safe BigSeller DTOs (`ProductDTO`, `VariantDTO`, `InventoryDTO`, `PriceDTO`, `OrderDTO`, `WarehouseDTO`, `PromotionDTO`) and provider contracts (`IShipmentProvider`, `IWarehouseProvider`, `IPromotionProvider`, `ICategoryProvider`, `IProductSynchronizationProvider`).
-- **Zod Payload Schemas & Domain Mappers (`core/integration/bigseller/validation/`, `core/integration/bigseller/mappers/`)**: Implemented Zod validation schemas (`schemas.ts`) and domain mappers (`BigSellerProductMapper`, `BigSellerInventoryMapper`, `BigSellerOrderMapper`).
-- **BigSeller Domain Services (`core/integration/bigseller/services/`)**: Created domain services (`BigSellerInventoryService`, `BigSellerPricingService`, `BigSellerWarehouseService`, `BigSellerPromotionService`, `ProductSynchronizationService`) and updated `BigSellerAdapter` without HTTP calls.
-- **Dedicated BigSeller Architecture (`BIGSELLER_ARCHITECTURE.md`)**: Created comprehensive documentation detailing BigSeller Ports & Adapters Architecture, SKU Taxonomy, Inventory Allocations, and Pricing Models.
-
-## [Sprint I1.0] - 2026-07-31
-### Added
-- **Core Integration Contracts (`core/integration/contracts/`)**: Created vendor-independent interfaces `IProductProvider`, `IInventoryProvider`, `IPriceProvider`, `ICustomerProvider`, `IOrderProvider`, `IContentProvider`, and `IAnalyticsProvider`.
-- **Provider Adapters & Dependency Injection Container (`core/integration/adapters/`, `core/integration/container.ts`)**: Built structural provider adapter stubs (`BigSellerAdapter`, `SupabaseAdapter`, `CMSAdapter`, `AnalyticsAdapter`) and lightweight DI container (`IntegrationContainer`) resolving active adapters dynamically based on feature flags.
-- **Environment & Resilience Layer (`core/config/`, `core/integration/logger/`, `core/integration/resilience/`)**: Created Zod environment variable schema validator (`env.ts`), environment-driven feature flags (`feature-flags.ts`), structured logger (`AppLogger`), and retry/timeout resilience policies (`ResiliencePolicy`). Zero external API calls executed.
-- **Dedicated Integration Architecture (`INTEGRATION_ARCHITECTURE.md`)**: Created comprehensive documentation detailing Integration Architecture, Provider Contracts, Adapter Specifications, and Feature Flag Control.
-
-## [Sprint C2.0] - 2026-07-31
-### Added
-- **`SavedLooksService` & Domain Entities (`domain/look/`, `services/saved-looks.service.ts`)**: Built look domain definitions and `SavedLooksService` providing `getSavedLooks()`, `getLookBySlug()`, `getLooksByOccasion()`, and `getLookDetails()`.
-- **Luxury Digital Wardrobe & Editorial Look Routes (`app/account/saved-looks/page.tsx`, `app/looks/[slug]/page.tsx`)**: Re-architected `/account/saved-looks` list page with occasion filter pills, color swatches, piece counts, and created `/looks/[slug]` editorial look detail page featuring full-height cover imagery, outfit narrative, stylist recommendations, included garments grid, and "Add Entire Look to Shopping Bag" single-click trigger. Zero direct static dummy data imports.

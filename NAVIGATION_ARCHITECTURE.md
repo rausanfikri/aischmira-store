@@ -5,7 +5,7 @@ AISCHMIRA.STORE employs an editorial, luxury e-commerce navigation architecture 
 
 ---
 
-## Desktop Navigation Specification (≥ 1024px / 1280px)
+## Desktop Navigation Specification (≥ 1024px / 1280px / 1440px / 1920px)
 
 ### Layout Composition (CSS Grid 3-Column Isolation)
 ```text
@@ -17,22 +17,25 @@ AISCHMIRA.STORE employs an editorial, luxury e-commerce navigation architecture 
 - **CSS Grid Rule:** `grid-template-columns: 1fr auto 1fr;`
 - **Center Guarantee:** The AISCHMIRA flagship logo is mathematically anchored to the exact center of the container and viewport regardless of content width on Left or Right columns.
 
-### Dropdown Menu Systems
+### Dropdown Menu Systems & Hotfix Interaction Model
 1. **Collections Dropdown (`CollectionsDropdown.tsx`)**:
    - Populated dynamically from `CollectionService`.
    - Displays Signature Line (`FEMME`, `HER Long`, `HER Short`, `SHE Dress`) with luxury status badges.
-   - Displays Classic Capsules & Silk Scarves.
+   - Displays Classic Capsules & Scarves.
    - Includes curated editorial preview card with quick link to full catalog (`/collections`).
 2. **Categories Dropdown (`CategoriesDropdown.tsx`)**:
    - Populated dynamically from `CategoryService`.
    - CMS-ready & BigSeller OMS sync ready (zero hardcoded component category arrays).
    - Renders flagship categories (`Dress`, `Outerwear`, `Trousers`, `Scarf`, etc.).
 
-### Dropdown Interactions & Accessibility
-- **Mouse Hover & Focus:** Built using Radix UI `NavigationMenu` primitives.
+### Dropdown Interactions & Design Tokens
+- **Triggers:** Left-aligned `Collections` ▼ and `Categories` ▼ buttons in desktop header.
+- **Dual Trigger Support:** Opens seamlessly on both **Hover** (mouse enter intent delay) AND **Click** (button toggle).
+- **Design Tokens:** Editorial white background (`bg-white`), soft elevation shadow (`shadow-[0_20px_60px_rgba(0,0,0,0.12)]`), rounded corners (`rounded-md`), and spacious padding (`p-8`).
+- **Outside Click Close:** Automatically closes active dropdown when clicking outside the component tree.
+- **Escape Key Close:** Instantly closes active dropdown when pressing `Escape`.
 - **Keyboard Navigation:** Full support for `Tab`, `Shift+Tab`, `ArrowUp`, `ArrowDown`, `Enter`, `Space`, and `Escape`.
-- **Outside Click Close:** Automatically closes open dropdown panels when clicking outside the menu boundary.
-- **ARIA Attributes:** Full compliance with WAI-ARIA Menu pattern (`aria-expanded`, `aria-haspopup`, `role="menu"`, `role="menuitem"`).
+- **ARIA Attributes:** Compliant with WAI-ARIA Menu pattern (`aria-expanded`, `aria-haspopup="true"`, `aria-controls`, `role="menu"`, `role="menuitem"`).
 
 ---
 
@@ -65,8 +68,9 @@ AISCHMIRA.STORE employs an editorial, luxury e-commerce navigation architecture 
 
 | Viewport | Range | Navigation Layout Strategy | Right Icons Displayed |
 | :--- | :--- | :--- | :--- |
-| **Desktop** | `≥ 1280px` | Desktop Header with Left Collections & Categories Dropdowns | Search, Account, Wishlist, Bag |
-| **Laptop** | `1024px – 1279px` | Compact Desktop Header with Left Collections & Categories Dropdowns | Search, Account, Wishlist, Bag |
+| **Ultra Desktop** | `≥ 1536px / 1920px` | 3-Column Grid with Left Dropdowns (Hover + Click) | Search, Account, Wishlist, Bag |
+| **Desktop** | `1280px – 1535px` | 3-Column Grid with Left Dropdowns (Hover + Click) | Search, Account, Wishlist, Bag |
+| **Laptop** | `1024px – 1279px` | Compact 3-Column Grid with Left Dropdowns (Hover + Click) | Search, Account, Wishlist, Bag |
 | **Tablet** | `768px – 1023px` | Mobile Header Bar + Slide-Out Drawer | Search, Account, Wishlist, Bag |
 | **Mobile** | `< 768px` | Mobile Header Bar + Slide-Out Drawer (Adaptive Overflow) | Search, Bag (Wishlist & Account in Drawer) |
 
