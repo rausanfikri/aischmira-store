@@ -7,7 +7,7 @@ import { Heart, Ruler, Share2, MessageCircle, Check, ChevronDown, Gem, Shirt, Sp
 import { cn } from "@/lib/utils";
 import * as Accordion from "@radix-ui/react-accordion";
 import { SizeGuideModal } from "@/components/ui/SizeGuideModal";
-import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
+import { getDirectProductWhatsAppUrl } from "@/lib/whatsapp";
 import { motion } from "framer-motion";
 
 interface ProductInfoProps {
@@ -56,11 +56,20 @@ export function ProductInfo({ product }: ProductInfoProps) {
   };
 
   const handleWhatsAppCheckout = () => {
-    const selectedColorName = selectedVariant?.color || "Standard";
+    const selectedColorName = selectedVariant?.color || product.color || "Standard";
     const selectedSizeName = selectedVariant?.size || "Standard";
+    const skuCode = selectedVariant?.skuCode || selectedVariant?.sku || product.sku;
+    const finalPrice = selectedVariant?.price || product.price || 0;
 
-    const message = `Hello AISCHMIRA,\n\nI would like to order:\n\nProduct: ${product.name}\nColor: ${selectedColorName}\nSize: ${selectedSizeName}\n\nPlease assist me with the checkout process.`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const url = getDirectProductWhatsAppUrl({
+      productName: product.name,
+      collection: product.collection,
+      color: selectedColorName,
+      size: selectedSizeName,
+      skuCode,
+      quantity,
+      price: finalPrice,
+    });
     window.open(url, "_blank");
   };
 
@@ -111,15 +120,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
               {formatter.format(product.compareAtPrice)}
             </span>
           )}
-          {selectedVariant?.stock && selectedVariant.stock < 5 ? (
-            <span className="font-body text-[9px] tracking-widest uppercase bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-1 rounded-full">
-              Limited &bull; Only {selectedVariant.stock} left
-            </span>
-          ) : (
-            <span className="font-body text-[9px] tracking-widest uppercase text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-              In Stock &bull; Concierge Ready
-            </span>
-          )}
+          <span className="font-body text-[9px] tracking-widest uppercase text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+            In Stock &bull; Concierge Ready
+          </span>
         </div>
       </motion.div>
 

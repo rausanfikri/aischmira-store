@@ -20,15 +20,28 @@ export class ProductMapper {
     const categoryId = String(rawAny.categoryId ?? rawAny.category_id ?? '');
     const collectionId = rawAny.collectionId ?? rawAny.collection_id ? String(rawAny.collectionId ?? rawAny.collection_id) : undefined;
 
+    const id = rawAny.id ? String(rawAny.id) : undefined;
+    const collection = rawAny.collection ? String(rawAny.collection) : undefined;
+    const category = rawAny.category ? String(rawAny.category) : undefined;
+    const type = rawAny.type ? String(rawAny.type) : undefined;
+    const fabric = rawAny.fabric ? String(rawAny.fabric) : undefined;
+    const color = rawAny.color ? String(rawAny.color) : undefined;
+    const offlineBazaarPrice = rawAny.offlineBazaarPrice !== undefined ? Number(rawAny.offlineBazaarPrice) : undefined;
+
     const rawVariants = Array.isArray(rawAny.variants) ? rawAny.variants : [];
     const variants = rawVariants.map((v: Record<string, unknown>, idx: number) => ({
       id: String(v.id || `var_${idx}`),
       sku: String(v.sku || `${sku}-${idx}`),
-      color: String(v.color || 'Default'),
+      skuNo: v.skuNo !== undefined ? Number(v.skuNo) : undefined,
+      skuCode: v.skuCode ? String(v.skuCode) : String(v.sku || `${sku}-${idx}`),
+      skuName: v.skuName ? String(v.skuName) : undefined,
+      color: String(v.color || color || 'Default'),
       size: String(v.size || 'OS'),
       price: Number(v.price || price),
+      compareAtPrice: v.compareAtPrice !== undefined ? Number(v.compareAtPrice) : (compareAtPrice !== undefined ? Number(compareAtPrice) : undefined),
+      offlineBazaarPrice: v.offlineBazaarPrice !== undefined ? Number(v.offlineBazaarPrice) : offlineBazaarPrice,
       stock: Number(v.stock || 0),
-      images: Array.isArray(v.images) ? (v.images as string[]) : images,
+      images: Array.isArray(v.images) && v.images.length > 0 ? (v.images as string[]) : images,
     }));
 
     const availableStock = Number(rawAny.availableStock ?? rawAny.available_stock ?? variants[0]?.stock ?? 10);
@@ -41,17 +54,25 @@ export class ProductMapper {
     const tags = Array.isArray(rawAny.tags) ? (rawAny.tags as string[]) : [];
 
     return {
+      id,
       sku,
       parentSku: rawAny.parentSku ?? rawAny.parent_sku ? String(rawAny.parentSku ?? rawAny.parent_sku) : undefined,
       slug,
       name,
       description,
       collectionId,
+      collection,
       categoryId,
+      category,
+      type,
+      fabric,
+      color,
       variants,
       images,
       price,
+      basePrice: price,
       compareAtPrice: compareAtPrice !== undefined ? Number(compareAtPrice) : undefined,
+      offlineBazaarPrice,
       currency,
       inventory: {
         availableStock,
@@ -65,10 +86,12 @@ export class ProductMapper {
         description: rawAny.seoDescription ? String(rawAny.seoDescription) : description,
       },
       story: rawAny.story ? String(rawAny.story) : undefined,
-      material: rawAny.material ? String(rawAny.material) : undefined,
+      material: rawAny.material ? String(rawAny.material) : (fabric ? `${fabric} fabrication` : undefined),
       careInstruction: rawAny.careInstruction ? String(rawAny.careInstruction) : undefined,
       shippingInfo: rawAny.shippingInfo ? String(rawAny.shippingInfo) : undefined,
       isFeatured,
+      relatedProductIds: Array.isArray(rawAny.relatedProductIds) ? (rawAny.relatedProductIds as string[]) : undefined,
+      isActive: rawAny.isActive !== undefined ? Boolean(rawAny.isActive) : true,
       createdAt: String(rawAny.createdAt ?? rawAny.created_at ?? new Date().toISOString()),
       updatedAt: String(rawAny.updatedAt ?? rawAny.updated_at ?? new Date().toISOString()),
     };

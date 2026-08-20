@@ -44,13 +44,12 @@ export class DummyProductRepository implements IProductRepository {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private mapToDomain(raw: any): Product {
-    // Map existing dummy data to the new Domain Product schema
     return {
       sku: raw.sku,
       name: raw.name,
       slug: raw.slug,
       description: raw.description,
-      price: raw.basePrice,
+      price: raw.price ?? raw.basePrice ?? 0,
       currency: 'IDR',
       images: raw.images || [],
       categoryIds: [raw.categoryId],

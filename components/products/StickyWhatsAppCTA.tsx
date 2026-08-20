@@ -3,7 +3,7 @@
 import * as React from "react";
 import { MessageCircle, ShoppingBag } from "lucide-react";
 import { Product, ProductVariant } from "@/domain/product";
-import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
+import { getDirectProductWhatsAppUrl } from "@/lib/whatsapp";
 import { useShopStore } from "@/store/useShopStore";
 
 interface StickyWhatsAppCTAProps {
@@ -19,11 +19,20 @@ export function StickyWhatsAppCTA({ product, selectedVariant }: StickyWhatsAppCT
   const productId = product.sku || (product as unknown as { id?: string }).id || "product_id";
 
   const handleWhatsAppCheckout = () => {
-    const selectedColorName = variant?.color || "Standard";
+    const selectedColorName = variant?.color || product.color || "Standard";
     const selectedSizeName = variant?.size || "Standard";
+    const skuCode = variant?.skuCode || variant?.sku || product.sku;
+    const finalPrice = variant?.price || product.price || 0;
 
-    const message = `Hello AISCHMIRA,\n\nI would like to order:\n\nProduct: ${product.name}\nColor: ${selectedColorName}\nSize: ${selectedSizeName}\n\nPlease assist me with the checkout process.`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const url = getDirectProductWhatsAppUrl({
+      productName: product.name,
+      collection: product.collection,
+      color: selectedColorName,
+      size: selectedSizeName,
+      skuCode,
+      quantity: 1,
+      price: finalPrice,
+    });
     window.open(url, "_blank");
   };
 

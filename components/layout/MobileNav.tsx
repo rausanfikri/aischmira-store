@@ -161,7 +161,7 @@ export default function MobileNav({ collections, categories }: MobileNavProps) {
                   {categories.map((cat) => (
                     <Link
                       key={cat.id}
-                      href={`/collections?category=${encodeURIComponent(cat.slug)}`}
+                      href={`/categories/${encodeURIComponent(cat.slug)}`}
                       onClick={() => setMobileOpen(false)}
                       className="flex items-center min-h-[44px] py-2 px-3 bg-surface/60 border border-border/30 hover:border-primary/40 text-text/80 hover:text-primary transition-colors rounded-xs font-medium"
                     >

@@ -70,10 +70,10 @@ export default function MembershipPage() {
         {/* Card Body */}
         <div className="z-10 my-auto py-2">
           <span className="font-mono text-xs md:text-sm tracking-[0.25em] uppercase text-amber-200/90 block">
-            {membership?.membershipCardNumber || "ASC-PRIVE-8891-2026"}
+            {membership?.membershipCardNumber || "ASC-PRIVE-GUEST"}
           </span>
           <h3 className="font-heading italic text-2xl md:text-3xl text-surface mt-1 font-light tracking-wide">
-            {membership?.fullName || "Lady Katherine Vance"}
+            {membership?.fullName || "Privé Member"}
           </h3>
         </div>
 

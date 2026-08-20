@@ -11,6 +11,7 @@ import { ANALYTICS_CONFIG } from './analytics';
 import { FEATURES } from './features';
 import { IMAGE_CONFIG } from './images';
 import { THEME_CONFIG } from './theme';
+import { PROMOTION_CONFIG } from './promotion';
 
 export const Config = {
   brand: BRAND_CONFIG,
@@ -26,6 +27,7 @@ export const Config = {
   features: FEATURES,
   images: IMAGE_CONFIG,
   theme: THEME_CONFIG,
+  promotion: PROMOTION_CONFIG,
 } as const;
 
 export * from './schema';
@@ -43,3 +45,4 @@ export * from './analytics';
 export * from './features';
 export * from './images';
 export * from './theme';
+export * from './promotion';

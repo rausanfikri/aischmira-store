@@ -17,7 +17,13 @@ export class DummyProductRepository implements IProductRepository {
 
   public async getBySku(sku: string): Promise<Result<Product | null, AppError>> {
     try {
-      const found = productsData.find(p => p.sku === sku);
+      const s = sku.toLowerCase().trim();
+      const found = productsData.find(
+        (p) =>
+          (p.sku && p.sku.toLowerCase() === s) ||
+          (p.id && p.id.toLowerCase() === s) ||
+          p.variants.some((v) => v.sku.toLowerCase() === s || (v.skuCode && v.skuCode.toLowerCase() === s) || v.id.toLowerCase() === s)
+      );
       if (!found) return success(null);
       return success(ProductMapper.toEntity(found as unknown as Record<string, unknown>));
     } catch (err) {
@@ -27,7 +33,8 @@ export class DummyProductRepository implements IProductRepository {
 
   public async getBySlug(slug: string): Promise<Result<Product | null, AppError>> {
     try {
-      const found = productsData.find(p => p.slug === slug);
+      const s = slug.toLowerCase().trim();
+      const found = productsData.find((p) => p.slug.toLowerCase() === s);
       if (!found) return success(null);
       return success(ProductMapper.toEntity(found as unknown as Record<string, unknown>));
     } catch (err) {
@@ -38,9 +45,9 @@ export class DummyProductRepository implements IProductRepository {
   public async getFeatured(limit = 4): Promise<Result<Product[], AppError>> {
     try {
       const featured = productsData
-        .filter(p => p.isFeatured)
+        .filter((p) => p.isFeatured)
         .slice(0, limit)
-        .map(p => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
+        .map((p) => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
       return success(featured);
     } catch (err) {
       return failure(new RepositoryError('Failed to fetch featured products', { cause: err }));
@@ -49,9 +56,10 @@ export class DummyProductRepository implements IProductRepository {
 
   public async getByCategory(categoryId: string): Promise<Result<Product[], AppError>> {
     try {
+      const c = categoryId.toLowerCase().trim();
       const filtered = productsData
-        .filter(p => p.categoryId === categoryId)
-        .map(p => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
+        .filter((p) => (p.categoryId && p.categoryId.toLowerCase() === c) || (p.category && p.category.toLowerCase() === c))
+        .map((p) => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
       return success(filtered);
     } catch (err) {
       return failure(new RepositoryError(`Failed to fetch products by category: ${categoryId}`, { cause: err }));
@@ -60,9 +68,10 @@ export class DummyProductRepository implements IProductRepository {
 
   public async getByCollection(collectionId: string): Promise<Result<Product[], AppError>> {
     try {
+      const c = collectionId.toLowerCase().trim();
       const filtered = productsData
-        .filter(p => p.collectionId === collectionId)
-        .map(p => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
+        .filter((p) => (p.collectionId && p.collectionId.toLowerCase() === c) || (p.collection && p.collection.toLowerCase() === c))
+        .map((p) => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
       return success(filtered);
     } catch (err) {
       return failure(new RepositoryError(`Failed to fetch products by collection: ${collectionId}`, { cause: err }));
@@ -74,8 +83,28 @@ export class DummyProductRepository implements IProductRepository {
       const q = query.toLowerCase().trim();
       if (!q) return success([]);
       const results = productsData
-        .filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q))
-        .map(p => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
+        .filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.description.toLowerCase().includes(q) ||
+            (p.sku || '').toLowerCase().includes(q) ||
+            (p.collection || '').toLowerCase().includes(q) ||
+            (p.collectionId || '').toLowerCase().includes(q) ||
+            (p.category || '').toLowerCase().includes(q) ||
+            (p.categoryId || '').toLowerCase().includes(q) ||
+            (p.type || '').toLowerCase().includes(q) ||
+            (p.fabric || '').toLowerCase().includes(q) ||
+            (p.color || '').toLowerCase().includes(q) ||
+            p.variants.some(
+              (v) =>
+                v.sku.toLowerCase().includes(q) ||
+                (v.skuCode && v.skuCode.toLowerCase().includes(q)) ||
+                (v.skuName && v.skuName.toLowerCase().includes(q)) ||
+                v.color.toLowerCase().includes(q) ||
+                v.size.toLowerCase() === q
+            )
+        )
+        .map((p) => ProductMapper.toEntity(p as unknown as Record<string, unknown>));
       return success(results);
     } catch (err) {
       return failure(new RepositoryError(`Failed to search products with query: ${query}`, { cause: err }));

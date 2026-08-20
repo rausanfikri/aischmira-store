@@ -80,45 +80,7 @@ export function NavLinks({ collections, categories }: NavLinksProps) {
       className="relative z-50 flex items-center gap-8"
       onMouseLeave={handleMouseLeave}
     >
-      {/* 1. Collections Trigger & Dropdown */}
-      <div
-        className="relative"
-        onMouseEnter={() => handleMouseEnter("collections")}
-      >
-        <button
-          type="button"
-          onClick={() => handleClickToggle("collections")}
-          className={triggerClass}
-          aria-expanded={openMenu === "collections"}
-          aria-haspopup="true"
-          aria-controls="collections-dropdown-panel"
-          aria-label="Collections Dropdown Menu"
-        >
-          <span>Collections</span>
-          <ChevronDown
-            size={13}
-            className={`relative top-[0.5px] transition-transform duration-300 ease-out text-text/60 group-hover:text-amber-800 ${
-              openMenu === "collections" ? "-rotate-180 text-amber-800" : ""
-            }`}
-            aria-hidden="true"
-          />
-        </button>
-
-        {openMenu === "collections" && (
-          <div
-            id="collections-dropdown-panel"
-            className="absolute top-full left-0 pt-1 z-50"
-            onMouseEnter={() => clearHoverTimeout()}
-          >
-            <CollectionsDropdown
-              collections={collections}
-              onItemClick={() => setOpenMenu(null)}
-            />
-          </div>
-        )}
-      </div>
-
-      {/* 2. Categories Trigger & Dropdown */}
+      {/* 1. Categories Trigger & Dropdown */}
       <div
         className="relative"
         onMouseEnter={() => handleMouseEnter("categories")}
@@ -150,6 +112,44 @@ export function NavLinks({ collections, categories }: NavLinksProps) {
           >
             <CategoriesDropdown
               categories={categories}
+              onItemClick={() => setOpenMenu(null)}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* 2. Collections Trigger & Dropdown */}
+      <div
+        className="relative"
+        onMouseEnter={() => handleMouseEnter("collections")}
+      >
+        <button
+          type="button"
+          onClick={() => handleClickToggle("collections")}
+          className={triggerClass}
+          aria-expanded={openMenu === "collections"}
+          aria-haspopup="true"
+          aria-controls="collections-dropdown-panel"
+          aria-label="Collections Dropdown Menu"
+        >
+          <span>Collections</span>
+          <ChevronDown
+            size={13}
+            className={`relative top-[0.5px] transition-transform duration-300 ease-out text-text/60 group-hover:text-amber-800 ${
+              openMenu === "collections" ? "-rotate-180 text-amber-800" : ""
+            }`}
+            aria-hidden="true"
+          />
+        </button>
+
+        {openMenu === "collections" && (
+          <div
+            id="collections-dropdown-panel"
+            className="absolute top-full left-0 pt-1 z-50"
+            onMouseEnter={() => clearHoverTimeout()}
+          >
+            <CollectionsDropdown
+              collections={collections}
               onItemClick={() => setOpenMenu(null)}
             />
           </div>

@@ -14,11 +14,19 @@ export default function SearchModal() {
   const [query, setQuery] = React.useState("");
 
   const filteredProducts = React.useMemo(() => {
-    if (!query.trim()) return productsData.slice(0, 3);
+    if (!query.trim()) return productsData.slice(0, 4);
+    const q = query.toLowerCase().trim();
     return productsData.filter(
       (p) =>
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.description.toLowerCase().includes(query.toLowerCase())
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        (p.sku || '').toLowerCase().includes(q) ||
+        (p.collection || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q) ||
+        (p.type || '').toLowerCase().includes(q) ||
+        (p.fabric || '').toLowerCase().includes(q) ||
+        (p.color || '').toLowerCase().includes(q) ||
+        p.variants.some((v) => v.sku.toLowerCase().includes(q) || (v.skuCode && v.skuCode.toLowerCase().includes(q)) || (v.skuName && v.skuName.toLowerCase().includes(q)) || v.color.toLowerCase().includes(q) || v.size.toLowerCase() === q)
     );
   }, [query]);
 

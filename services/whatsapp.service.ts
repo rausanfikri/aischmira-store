@@ -1,5 +1,6 @@
 import { ConfigurationService, configurationService } from './configuration.service';
 import { BagItemWithProduct, OrderSummary, GiftPackagingOptions } from './shopping-bag.service';
+import { PROMOTION_CONFIG } from '@/core/config/promotion';
 import { Result, success, failure } from '@/shared/types/Result';
 import { AppError } from '@/shared/errors';
 
@@ -25,6 +26,17 @@ export interface CheckoutMessagePayload {
   specialNotes?: string;
 }
 
+export interface DirectProductCheckoutPayload {
+  productName: string;
+  collection?: string;
+  color: string;
+  size: string;
+  skuCode: string;
+  quantity: number;
+  finalPrice?: number;
+  promoMessage?: string;
+}
+
 export class WhatsAppService {
   constructor(private readonly configSvc: ConfigurationService = configurationService) {}
 
@@ -32,6 +44,44 @@ export class WhatsAppService {
     const contactRes = await this.configSvc.getContactConfig();
     if (!contactRes.isSuccess) return contactRes;
     return success(contactRes.value.whatsapp);
+  }
+
+  public buildDirectProductMessage(payload: DirectProductCheckoutPayload): string {
+    const formatter = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 });
+
+    let msg = `Halo AISCHMIRA, saya ingin membeli:\n\n`;
+    msg += `Product: ${payload.productName}\n`;
+    if (payload.collection) {
+      msg += `Collection: ${payload.collection}\n`;
+    }
+    msg += `Color: ${payload.color}\n`;
+    msg += `Size: ${payload.size}\n`;
+    msg += `SKU: ${payload.skuCode}\n`;
+    msg += `Qty: ${payload.quantity}\n`;
+    if (payload.finalPrice) {
+      msg += `Price: ${formatter.format(payload.finalPrice)}\n`;
+    }
+    msg += `\n`;
+
+    const promoMsg = payload.promoMessage ?? (PROMOTION_CONFIG.enabled ? PROMOTION_CONFIG.message : '');
+    if (promoMsg) {
+      msg += `${promoMsg}\n\n`;
+    }
+
+    msg += `Mohon info ketersediaan dan panduan pembayarannya. Terima kasih!`;
+    return msg;
+  }
+
+  public async generateDirectWhatsAppUrl(payload: DirectProductCheckoutPayload): Promise<Result<string, AppError>> {
+    const numberRes = await this.getWhatsAppNumber();
+    if (!numberRes.isSuccess) return failure(numberRes.error);
+
+    const whatsappNumber = numberRes.value;
+    const rawMessage = this.buildDirectProductMessage(payload);
+    const encodedMessage = encodeURIComponent(rawMessage);
+
+    const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    return success(url);
   }
 
   public buildConciergeMessage(payload: CheckoutMessagePayload): string {
@@ -42,7 +92,7 @@ export class WhatsAppService {
     // 1. Items List
     payload.items.forEach((item, index) => {
       msg += `${index + 1}. ${item.product.name}\n`;
-      msg += `   SKU: ${item.variant.sku || item.product.sku}\n`;
+      msg += `   SKU: ${item.variant.skuCode || item.variant.sku || item.product.sku}\n`;
       msg += `   Color: ${item.variant.color} | Size: ${item.variant.size}\n`;
       msg += `   Quantity: ${item.quantity} x ${formatter.format(item.variant.price)}\n`;
       msg += `   Subtotal: ${formatter.format(item.itemSubtotal)}\n\n`;
@@ -59,6 +109,11 @@ export class WhatsAppService {
         : 'Calculated at Checkout'
     }\n`;
     msg += `Grand Total: ${formatter.format(payload.summary.grandTotal)}\n\n`;
+
+    // Promo Note if active
+    if (PROMOTION_CONFIG.enabled && PROMOTION_CONFIG.message) {
+      msg += `PROMOTION:\n${PROMOTION_CONFIG.message}\n\n`;
+    }
 
     // 3. Customer Details (if provided)
     if (payload.customer?.fullName || payload.customer?.address || payload.customer?.city) {

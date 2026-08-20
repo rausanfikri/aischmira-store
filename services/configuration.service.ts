@@ -1,4 +1,4 @@
-import { Config, BRAND_CONFIG, CONTACT_CONFIG, ANNOUNCEMENT_CONFIG, SEO_CONFIG, FEATURES } from '@/core/config';
+import { Config, BRAND_CONFIG, CONTACT_CONFIG, ANNOUNCEMENT_CONFIG, SEO_CONFIG, FEATURES, PROMOTION_CONFIG } from '@/core/config';
 import { Result, success } from '@/shared/types/Result';
 import { AppError } from '@/shared/errors';
 
@@ -25,6 +25,10 @@ export class ConfigurationService {
 
   public async getFeatureFlags(): Promise<Result<typeof FEATURES, AppError>> {
     return success(FEATURES);
+  }
+
+  public async getPromotionConfig(): Promise<Result<typeof PROMOTION_CONFIG, AppError>> {
+    return success(PROMOTION_CONFIG);
   }
 }
 

@@ -115,12 +115,12 @@ export function Footer() {
               Categories
             </h4>
             <ul className="flex flex-col gap-3 font-body text-xs tracking-widest uppercase text-text/80">
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Outerwear</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Tops & Blouses</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Bottoms & Trousers</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Dresses & Gowns</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Luxury Accessories</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Silk Pyjama Sets</Link></li>
+              <li><Link href="/categories/outerwear" className="hover:text-primary transition-colors">Outerwear</Link></li>
+              <li><Link href="/categories/tops" className="hover:text-primary transition-colors">Tops</Link></li>
+              <li><Link href="/categories/bottoms" className="hover:text-primary transition-colors">Bottoms</Link></li>
+              <li><Link href="/categories/dress" className="hover:text-primary transition-colors">Dress</Link></li>
+              <li><Link href="/categories/pyjamas" className="hover:text-primary transition-colors">Pyjamas</Link></li>
+              <li><Link href="/categories/accessories" className="hover:text-primary transition-colors">Accessories</Link></li>
             </ul>
           </div>
 

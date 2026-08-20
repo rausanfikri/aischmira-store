@@ -20,7 +20,7 @@ export function NavIcons() {
 
   return (
     <div className="flex items-center justify-end gap-0.5 sm:gap-1.5 shrink-0">
-      {/* 1. Search (Visible on all screen sizes) */}
+      {/* 1. Search */}
       <button
         onClick={() => setSearchOpen(true)}
         className={iconBtnClass}
@@ -29,16 +29,7 @@ export function NavIcons() {
         <Search size={18} strokeWidth={1.5} className="sm:w-[20px] sm:h-[20px]" />
       </button>
 
-      {/* 2. Member Account (Visible on Tablet & Desktop) */}
-      <button
-        onClick={() => setAccountOpen(true)}
-        className={`${iconBtnClass} hidden sm:flex`}
-        aria-label="Member Account"
-      >
-        <UserIcon size={18} strokeWidth={1.5} className="sm:w-[20px] sm:h-[20px]" />
-      </button>
-
-      {/* 3. Wishlist (Visible on Tablet/Laptop/Desktop ≥ 640px; accessible in Mobile Drawer on < 640px) */}
+      {/* 2. Wishlist */}
       <button
         onClick={() => setWishlistOpen(true)}
         className={`${iconBtnClass} hidden sm:flex`}
@@ -52,7 +43,7 @@ export function NavIcons() {
         )}
       </button>
 
-      {/* 4. Shopping Bag (Visible on all screen sizes) */}
+      {/* 3. Shopping Bag */}
       <button
         onClick={() => setCartOpen(true)}
         className={iconBtnClass}
@@ -64,6 +55,15 @@ export function NavIcons() {
             {cartCount}
           </span>
         )}
+      </button>
+
+      {/* 4. Customer Account */}
+      <button
+        onClick={() => setAccountOpen(true)}
+        className={`${iconBtnClass} hidden sm:flex`}
+        aria-label="Member Account"
+      >
+        <UserIcon size={18} strokeWidth={1.5} className="sm:w-[20px] sm:h-[20px]" />
       </button>
     </div>
   );

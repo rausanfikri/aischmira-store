@@ -23,7 +23,7 @@ export function CategoriesDropdown({ categories, onItemClick }: CategoriesDropdo
           <Tag size={13} className="text-amber-800" /> Flagship Categories
         </span>
         <Link
-          href="/collections"
+          href="/categories"
           onClick={onItemClick}
           className="font-body text-[9px] tracking-widest uppercase text-amber-800 hover:underline flex items-center gap-1 font-medium"
         >
@@ -35,7 +35,7 @@ export function CategoriesDropdown({ categories, onItemClick }: CategoriesDropdo
         {categories.map((cat) => (
           <li key={cat.id} role="none">
             <Link
-              href={`/collections?category=${encodeURIComponent(cat.slug)}`}
+              href={`/categories/${encodeURIComponent(cat.slug)}`}
               onClick={onItemClick}
               role="menuitem"
               className="group flex flex-col justify-between p-4 bg-surface/50 hover:bg-surface border border-border/30 hover:border-amber-700/40 transition-all duration-200 rounded-sm"
