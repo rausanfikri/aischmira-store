@@ -67,8 +67,8 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.7, ease }}
         >
           <Link
-            href="/collections"
-            className="inline-block bg-surface text-text font-body text-[10px] tracking-[0.25em] uppercase py-4 px-12 font-medium transition-all duration-300 hover:bg-primary hover:text-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs"
+            href="/products"
+            className="inline-block bg-surface text-text font-body text-[10px] tracking-[0.25em] uppercase py-4 px-12 font-medium transition-all duration-300 hover:bg-primary hover:text-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xs cursor-pointer"
           >
             SHOP NOW
           </Link>

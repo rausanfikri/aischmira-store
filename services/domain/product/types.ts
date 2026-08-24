@@ -38,6 +38,8 @@ export interface Product {
   material?: string;
   careInstruction?: string;
   shippingInfo?: string;
+  availableColors?: string[];
+  availableSizes?: string[];
   variants: Variant[];
   images: string[];
   relatedProductIds?: string[];

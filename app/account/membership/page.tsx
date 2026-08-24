@@ -202,17 +202,23 @@ export default function MembershipPage() {
         </h3>
 
         <div className="divide-y divide-border/30">
-          {pointsHistory.map((item) => (
-            <div key={item.id} className="py-4 flex items-center justify-between gap-4">
-              <div>
-                <span className="font-heading italic text-base text-text font-light block">{item.description}</span>
-                <span className="font-body text-[10px] tracking-widest uppercase text-text/50">{item.date} &bull; Type: {item.type}</span>
-              </div>
-              <span className="font-heading italic text-xl text-amber-800 font-light font-medium">
-                +{item.points} Pts
-              </span>
+          {pointsHistory.length === 0 ? (
+            <div className="py-8 text-center text-text/50 font-body text-xs">
+              No points activity recorded yet. Points are earned automatically on confirmed WhatsApp orders.
             </div>
-          ))}
+          ) : (
+            pointsHistory.map((item) => (
+              <div key={item.id} className="py-4 flex items-center justify-between gap-4">
+                <div>
+                  <span className="font-heading italic text-base text-text font-light block">{item.description}</span>
+                  <span className="font-body text-[10px] tracking-widest uppercase text-text/50">{item.date} &bull; Type: {item.type}</span>
+                </div>
+                <span className="font-heading italic text-xl text-amber-800 font-light font-medium">
+                  +{item.points} Pts
+                </span>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

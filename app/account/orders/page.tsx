@@ -69,9 +69,22 @@ export default function OrdersPage() {
 
       {/* Orders List */}
       {filteredOrders.length === 0 ? (
-        <div className="text-center py-16 bg-background border border-border/30 rounded-sm space-y-4">
-          <ShoppingBag size={40} className="text-text/20 mx-auto" />
-          <p className="font-body text-xs tracking-widest uppercase text-text/50">No orders found in this view.</p>
+        <div className="text-center py-20 bg-surface/50 border border-border/30 rounded-sm space-y-5 max-w-md mx-auto">
+          <ShoppingBag size={36} strokeWidth={1.5} className="text-text/30 mx-auto" />
+          <div className="space-y-1.5">
+            <h3 className="font-heading italic text-2xl text-text font-light">No orders yet</h3>
+            <p className="font-body text-xs text-text/60 font-light">
+              Your purchased garments and order tracking will appear here once confirmed.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link
+              href="/products"
+              className="inline-block bg-text text-surface font-body text-[10px] tracking-[0.2em] uppercase py-3.5 px-8 rounded-xs font-medium hover:bg-primary transition-colors cursor-pointer"
+            >
+              Explore the collection
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="space-y-6">

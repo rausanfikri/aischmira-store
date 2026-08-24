@@ -44,7 +44,7 @@ export class ProductMapper {
       images: Array.isArray(v.images) && v.images.length > 0 ? (v.images as string[]) : images,
     }));
 
-    const availableStock = Number(rawAny.availableStock ?? rawAny.available_stock ?? variants[0]?.stock ?? 10);
+    const availableStock = Number(rawAny.availableStock ?? rawAny.available_stock ?? variants.reduce((acc, v) => acc + (v.stock || 0), 0));
     const reservedStock = Number(rawAny.reservedStock ?? rawAny.reserved_stock ?? 0);
 
     const statusRaw = String(rawAny.status || 'ACTIVE').toUpperCase();

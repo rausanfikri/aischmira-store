@@ -1,80 +1,47 @@
 import { Homepage } from "@/types";
 
-// Homepage menyatukan berbagai ID entitas, sehingga bertindak sebagai "View" layaknya page builder.
-// Placeholder images menggunakan picsum.photos — ganti dengan foto asli saat production.
 export const homepageData: Homepage = {
   heroBanner: {
     id: "hero_1",
-    title: "Timeless Elegance",
-    subtitle: "Discover our latest collection — crafted for the modern woman.",
-    imageUrl: "https://picsum.photos/seed/aischmira-hero/1920/1080",
-    ctaText: "Explore Collection",
-    ctaLink: "/collections",
+    title: "NEW COLLECTION",
+    subtitle: "FEMME • HER • SHE — Flagship 2026",
+    imageUrl: "/images/hero/hero-bg.png",
+    ctaText: "SHOP NOW",
+    ctaLink: "/products",
     position: "hero",
   },
   featuredCollections: ["col_she", "col_femme", "col_her"],
-  newArrivals: ["prod_7", "prod_1", "prod_2", "prod_3"],
+  newArrivals: ["prod_28", "prod_22", "prod_25", "prod_1"],
   promotionalBanners: [],
-  testimonials: [
-    {
-      id: "test_1",
-      author: "Sarah M.",
-      role: "Fashion Stylist",
-      content: "The quality of the silk is amazing. Truly luxury in every stitch.",
-      rating: 5,
-    },
-    {
-      id: "test_2",
-      author: "Rina A.",
-      role: "Creative Director",
-      content: "AISCHMIRA has become my go-to brand for editorial looks. Effortless and refined.",
-      rating: 5,
-    },
-    {
-      id: "test_3",
-      author: "Devina K.",
-      role: "Entrepreneur",
-      content: "Finally, a brand that truly understands the modern Indonesian woman.",
-      rating: 5,
-    },
-  ],
+  testimonials: [],
 };
 
-// Placeholder lookbook images — ganti dengan foto editorial asli saat production.
 export const lookbookImages = [
   {
     id: "look_1",
-    imageUrl: "https://picsum.photos/seed/aischmira-look-1/800/1000",
-    alt: "AISCHMIRA Lookbook — Summer Elegance",
+    imageUrl: "/images/products/she-dress/she-dress-hero-white-01.jpg",
+    alt: "AISCHMIRA SHE Basque Waist Silk Dress",
   },
   {
     id: "look_2",
-    imageUrl: "https://picsum.photos/seed/aischmira-look-2/600/900",
-    alt: "AISCHMIRA Lookbook — Editorial Detail",
+    imageUrl: "/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg",
+    alt: "AISCHMIRA Lifestyle Blush Pink Silk",
   },
   {
     id: "look_3",
-    imageUrl: "https://picsum.photos/seed/aischmira-look-3/900/600",
-    alt: "AISCHMIRA Lookbook — Street Style",
+    imageUrl: "/images/products/she-dress/she-dress-front-black-01.jpg",
+    alt: "AISCHMIRA Classic Noir Silk Silhouette",
   },
   {
     id: "look_4",
-    imageUrl: "https://picsum.photos/seed/aischmira-look-4/700/900",
-    alt: "AISCHMIRA Lookbook — Portrait",
-  },
-  {
-    id: "look_5",
-    imageUrl: "https://picsum.photos/seed/aischmira-look-5/800/600",
-    alt: "AISCHMIRA Lookbook — Campaign",
+    imageUrl: "/images/products/she-dress/she-dress-editorial-crimson-01.jpg",
+    alt: "AISCHMIRA Editorial Crimson Silk Silhouette",
   },
 ];
 
-// Placeholder Instagram preview images — ganti dengan foto Instagram asli saat production.
 export const instagramImages = [
-  { id: "ig_1", imageUrl: "https://picsum.photos/seed/aischmira-ig-1/600/600", alt: "AISCHMIRA on Instagram" },
-  { id: "ig_2", imageUrl: "https://picsum.photos/seed/aischmira-ig-2/600/600", alt: "AISCHMIRA on Instagram" },
-  { id: "ig_3", imageUrl: "https://picsum.photos/seed/aischmira-ig-3/600/600", alt: "AISCHMIRA on Instagram" },
-  { id: "ig_4", imageUrl: "https://picsum.photos/seed/aischmira-ig-4/600/600", alt: "AISCHMIRA on Instagram" },
-  { id: "ig_5", imageUrl: "https://picsum.photos/seed/aischmira-ig-5/600/600", alt: "AISCHMIRA on Instagram" },
-  { id: "ig_6", imageUrl: "https://picsum.photos/seed/aischmira-ig-6/600/600", alt: "AISCHMIRA on Instagram" },
+  { id: "ig_1", imageUrl: "/images/products/she-dress/she-dress-hero-white-01.jpg", alt: "AISCHMIRA on Instagram @aischmira" },
+  { id: "ig_2", imageUrl: "/images/products/she-dress/she-dress-front-black-01.jpg", alt: "AISCHMIRA on Instagram @aischmira" },
+  { id: "ig_3", imageUrl: "/images/products/she-dress/she-dress-editorial-crimson-01.jpg", alt: "AISCHMIRA on Instagram @aischmira" },
+  { id: "ig_4", imageUrl: "/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg", alt: "AISCHMIRA on Instagram @aischmira" },
 ];

@@ -171,8 +171,37 @@ export function Footer() {
 
         </div>
 
-        {/* 4. Bottom Bar: Copyright & Legal Policies */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between border-t border-border/40 pt-10 gap-4 font-body text-[10px] text-text/50 tracking-widest uppercase text-center md:text-left">
+        {/* 4. Payment & Shipping Methods */}
+        <div className="py-10 border-t border-border/30 grid grid-cols-1 md:grid-cols-2 gap-8 text-left font-body text-xs">
+          <div className="space-y-3">
+            <span className="font-body text-[9px] tracking-[0.25em] uppercase text-text/50 block font-semibold">
+              Payment Methods
+            </span>
+            <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wider text-text/70">
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">BCA</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">Mandiri</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">BNI</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">BRI</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">QRIS</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">Bank Transfer</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <span className="font-body text-[9px] tracking-[0.25em] uppercase text-text/50 block font-semibold">
+              Shipping Methods
+            </span>
+            <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wider text-text/70">
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">JNE Express</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">SiCepat</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">Paxel</span>
+              <span className="px-3 py-1.5 bg-surface border border-border/50 rounded-xs font-medium">Instant Courier</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 5. Bottom Bar: Copyright & Legal Policies */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between border-t border-border/40 pt-8 gap-4 font-body text-[10px] text-text/50 tracking-widest uppercase text-center md:text-left">
           <p>© 2026 AISCHMIRA. ALL RIGHTS RESERVED.</p>
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>

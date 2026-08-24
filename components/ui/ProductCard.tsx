@@ -142,15 +142,15 @@ export function ProductCard({
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 pt-1">
-          <span className="font-body text-xs sm:text-sm tracking-wider text-text font-light">
-            {formatter.format(price)}
-          </span>
+        <div className="flex items-center gap-2.5 pt-1">
           {compareAtPrice && compareAtPrice > price && (
-            <span className="font-body text-[11px] text-text-muted line-through font-light">
+            <span className="font-body text-xs text-text-muted line-through font-light">
               {formatter.format(compareAtPrice)}
             </span>
           )}
+          <span className="font-body text-xs sm:text-sm tracking-wider text-text font-medium">
+            {formatter.format(price)}
+          </span>
         </div>
       </div>
     </article>

@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import { authService } from "@/services/auth.service";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -42,11 +43,13 @@ export default function RegisterPage() {
       <div className="mb-6">
         <button
           type="button"
-          onClick={() => {
+          onClick={async () => {
             setIsLoading(true);
-            window.location.href = "/account/dashboard";
+            await authService.signInWithGoogle("/account/dashboard");
+            setIsLoading(false);
           }}
-          className="w-full py-3.5 px-4 bg-surface hover:bg-surface/80 border border-border/60 text-text font-body text-xs tracking-wider uppercase font-medium rounded-xs flex items-center justify-center gap-3 transition-colors shadow-xs"
+          disabled={isLoading}
+          className="w-full py-3.5 px-4 bg-surface hover:bg-surface/80 border border-border/60 text-text font-body text-xs tracking-wider uppercase font-medium rounded-xs flex items-center justify-center gap-3 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path
