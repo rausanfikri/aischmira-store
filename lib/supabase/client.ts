@@ -1,12 +1,8 @@
-import { createBrowserClient } from '@supabase/ssr';
+import { createBrowserClient } from "@supabase/ssr";
+import { getSupabaseConfig } from "@/lib/supabase/config";
 
-/**
- * Creates a browser-side Supabase client with cookie storage and automatic session persistence.
- * Safe for use in Client Components ("use client").
- */
 export function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
-
-  return createBrowserClient(supabaseUrl, supabaseAnonKey);
+  const config = getSupabaseConfig();
+  if (!config) return null;
+  return createBrowserClient(config.url, config.key);
 }

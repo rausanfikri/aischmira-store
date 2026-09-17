@@ -1,16 +1,13 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import "server-only";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { getSupabaseConfig } from "@/lib/supabase/config";
 
-/**
- * Creates a server-side Supabase client for Server Components, Route Handlers, and Server Actions.
- * Handles reading and setting HTTP cookies via Next.js headers.
- */
 export async function createClient() {
+  const config = getSupabaseConfig();
+  if (!config) return null;
   const cookieStore = await cookies();
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
-
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  return createServerClient(config.url, config.key, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -21,8 +18,7 @@ export async function createClient() {
             cookieStore.set(name, value, options)
           );
         } catch {
-          // Exception caught when called from a Server Component (where cookies cannot be mutated).
-          // Middleware will refresh and update session cookies when required.
+          // Read-only Server Components rely on proxy.ts to persist refreshed sessions.
         }
       },
     },
