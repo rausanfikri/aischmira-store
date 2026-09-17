@@ -18,21 +18,22 @@ Branch: `codex/editorial-storefront`. Pre-Phase-0 HEAD: `4b27943`. Audit and Pha
 - Existing catalog architecture identified.
 - Existing account architecture identified.
 - Existing broken legacy dependencies identified.
-- Phase-0 documentation prepared: master requirements, concise agent workflow and this persistent checkpoint. No source implementation performed.
+- Phase-0 documentation completed at `6380406`: master requirements, concise agent workflow and persistent checkpoint. No storefront implementation performed.
+- Phase 1: canonical contract and separate compatibility boundary, exact-money types, source mapping, runtime validation and read-only data-quality foundation implemented. See `docs/CANONICAL_PRODUCT_DATA_CONTRACT.md` and `docs/PRODUCT_DATA_QUALITY.md`.
 
 ## Current Phase
 
-**Phase 0 — Project Context & Documentation.**
+**Phase 1 — Canonical Product Data Contract.**
 
-Scope: only `MASTER_BRIEF.md`, `AGENTS.md`, `AISCHMIRA_STATUS.md`. No redesign, source repair, dependency installation, deletion, refactor, database migration or workbook changes.
+Scope: canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Existing catalog/types/services/workbook remain unchanged; no UI, routing, checkout, auth, database, dependency, image or legacy cleanup work.
 
-Status: Phase 0 documentation complete and validated. Git checkpoint identifier: the commit containing this update, titled `docs: establish phase 0 project context` (locate with `git log -1 --format=%h -- AISCHMIRA_STATUS.md`). This is a documentation checkpoint, not a snapshot of uncommitted migration work.
+Status: Phase 1 completed and validated within scope. Checkpoint: the commit containing this update, titled `feat(catalog): define canonical data contract` (locate with `git log -1 --format=%h -- AISCHMIRA_STATUS.md`). Phase 0 `6380406` is preserved. This checkpoint does not include unrelated uncommitted migration work or certify a working storefront.
 
 ## Next Phase
 
-**Phase 1 — Canonical Product Data Contract.** Not started or authorized by this checkpoint.
+**Phase 2 — Validated Product Import & Data Publication Pipeline.** Not started or authorized by this checkpoint.
 
-Resolve Q1–Q4 below and specify fields, hierarchy, provenance, aliases, SKU uniqueness, prices, missing-data rules and publication/orderability. Do not automatically include import implementation, database changes or UI in a contract-only phase.
+Use `types/canonical-catalog.ts` and `lib/catalog-contract.ts` with the documented contract. First verify formula prices, reconcile source/TS text drift explicitly and decide the operator/source workflow. Publication remains blocked; do not infer permission from a complete contract.
 
 ## Audit Evidence and Architecture Map
 
@@ -40,6 +41,8 @@ Resolve Q1–Q4 below and specify fields, hierarchy, provenance, aliases, SKU un
 | --- | --- |
 | Source | `data/MASTER PRODUCTS.xlsx`; `data/sku-master.ts`: 369 SKU rows, three legacy price fields |
 | New catalog | `types/catalog.ts` → `data/catalog.ts` + `data/product-media.ts` → `services/catalog.ts`; not consumed by storefront pages |
+| Phase-1 canonical boundary | `types/canonical-catalog.ts` + `lib/catalog-contract.ts`; old `types/catalog.ts` remains a compatibility model. No storefront wiring |
+| Evidence tooling | `scripts/read-product-workbook.ps1` + `scripts/canonical-support.mjs`; read-only, in-memory assessment, not production import/publish |
 | Mapping | 2 collections, 16 sub-collections, 6 categories, 27 product definitions, 106 color groups, 369 SKU |
 | No-SKU definitions | Femme Skirt Maxi, Her Top Sleeve Less, She Dress Hijab Friendly: empty source groups |
 | Media | 4 of 106 color groups mapped, all She Dress; 5 image references. Butter Yellow has no substitute image |
@@ -53,7 +56,7 @@ Resolve Q1–Q4 below and specify fields, hierarchy, provenance, aliases, SKU un
 
 ## Known Issues
 
-Do not fix these during Phase 0.
+Legacy application findings remain unfixed in Phase 1. Data-contract decisions superseded below are explicitly distinguished from implementation changes.
 
 ### Build and migration
 
@@ -64,11 +67,13 @@ Do not fix these during Phase 0.
 
 ### Data and commerce
 
-- Types use originalPrice/finalPrice; source uses marketplaceDefaultPrice, marketplaceFinalPrice and offlineBazaarPrice. Formal source mapping to START_PRICE/FINAL_PRICE remains unresolved.
-- Three product definitions have no SKU evidence or publication decision.
+- Legacy types still use originalPrice/finalPrice and source has three price columns. Phase 1 establishes the separate canonical START_PRICE/FINAL_PRICE boundary and approved K/L mapping; legacy consumers are not migrated.
+- Three definitions still lack source SKU. Their resolved contract is draft, nonorderable and not published as purchasable; no SKU was fabricated.
 - Hierarchy/media mappings are TypeScript, not an operator-managed no-source-edit publishing workflow. Old scripts include embedded source text rather than a formal workbook pipeline.
-- Multiple fabric values cause material omission; conflict handling is unspecified.
-- Scarf grouping distinguishes pattern, but media lookup uses product slug + color name; patterns may collide.
+- Legacy mapping omits material on fabric disagreement. Canonical FABRIC remains per SKU and conflicts explicitly block eligibility; current workbook has zero within-product conflicts.
+- Legacy Scarf media lookup can collide by color name. Canonical group identity includes product/color/pattern, and the evidence harness withholds ambiguous color-only media mappings; old UI is untouched.
+- NEW: all 369 price rows inherit cached formula values (48 K/L origin cells). Owner explicitly requires formula verification before publication; prices are not missing/invalid numerically, but are unverified.
+- NEW: 28 exact text differences against TS (12 FABRIC newlines, 11 SKU_NAME trailing-space differences, 5 substantive SKU_NAME differences). Source evidence is preserved; old dataset is not corrected. See data-quality report.
 - Gallery switching is not verified; legacy page passes global images separately from selector state.
 - Historical cart persisted more than SKU/quantity, coupled cart to auth/wishlist, fell back to first variant and could fall back to zero price. Do not reuse these behaviors.
 - Checkout UI makes customer information optional and retains unsupported delivery/gift/free-shipping claims, including a Rp3,000,000 threshold.
@@ -98,6 +103,8 @@ Do not fix these during Phase 0.
 - Premium/editorial, minimal homepage, white and #C4A434; no marketplace/admin-dashboard UI.
 - Required hierarchy and six categories; Long Set/Short Set belong to names. Preserve spelling/capitalization and source SKU provenance.
 - One actual SKU per row; FABRIC primary. Only START_PRICE (normal/original) and FINAL_PRICE (current selling); no OFFLINE_PRICE.
+- Phase 1 resolves Q1–Q3: K/L map directly to START_PRICE/FINAL_PRICE; existing hierarchy/naming stands unless source contradicts it; no-SKU definitions stay non-purchasable; literal `-` remains; pattern stays separate; FABRIC remains per SKU with explicit conflicts.
+- Exact whole-rupiah strings avoid floating-point money. Cached formula values are unverified and block publication by explicit owner decision. No Phase-1 snapshot is auto-published.
 - Catalog additions require no UI changes. Media follows color, never cross-color fallback; optimize images.
 - Cart persists SKU/quantity, re-resolves prices, requires name/active WhatsApp/shipping address, and shows explicit review.
 - WhatsApp: 6285121344848. Handoff is not order/payment/loyalty/sync confirmation.
@@ -112,15 +119,14 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 
 | ID | Unresolved decision | Needed before |
 | --- | --- | --- |
-| Q1 | May MARKETPLACE DEFAULT PRICE map directly to START_PRICE and MARKETPLACE FINAL PRICE to FINAL_PRICE? Any source exceptions? Meanings are settled; legacy source mapping is not. | Phase 1 price contract |
-| Q2 | Are proposed collection/sub-collection/product mappings and aliases authoritative? What source supports the three no-SKU definitions; should they be withheld pending evidence? | Phase 1 identity/publication contract |
-| Q3 | How should size `-` be presented, fabric conflicts represented, and scarf pattern/design exposed alongside color without changing SKU identity? | Phase 1 variant contract |
 | Q4 | Which source/operator workflow governs catalog, media and Bazaar updates: workbook import, database editing or a separate content tool? Who approves publication? | Data ownership contract, then publishing |
 | Q5 | What is the authoritative product/color/pattern-to-image mapping and publication policy for valid products lacking media? Cross-color fallback is forbidden. | Product/media phase |
 | Q6 | Which real auth methods should be supported? Is WhatsApp ownership/activity verification required beyond required-field/format validation? | Account and checkout respectively |
 | Q7 | Which operational source creates real order history, how are guest orders linked to accounts, and what are actual loyalty earning/usage/expiry rules and starting records? | Order/account/loyalty phases |
 | Q8 | Which Bazaar statuses/publication rules are needed; single-day or multi-day, which timezone, and does deactivation archive or hide an event? | Bazaar model implementation |
 | Q9 | Which existing public URLs must remain or redirect, including product slugs, /bag, /cart and legacy account routes? | Routing migration |
+
+Q1–Q3 were resolved by the Phase-1 owner instructions and are no longer clarification requests. Formula treatment is also resolved: block until verification. Obtaining that verification and reconciling reported text drift are Phase-2 evidence tasks, not permission to invent business values.
 
 ## Validation Record
 
@@ -139,9 +145,20 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 - Whitespace/diff validation performed for the documentation checkpoint; no application source, dependencies, database or workbook changed.
 - Application tests need not be rerun for prose. Previous application failures remain open, not fixed.
 
+### Phase-1 completion validation — 2026-09-17
+
+- Scoped strict type-check: `node scripts/check-canonical-types.mjs` — PASS, no emit, repository compiler settings.
+- Contract tests: `node --test scripts/canonical-contract.test.mjs` — 13 passed / 0 failed. Covers real source baseline, duplicate/changed/missing SKU, missing/invalid/extra prices, hierarchy, literal size, FABRIC conflict, color/pattern, media ownership and publication gates.
+- Scoped ESLint on both new TypeScript files and four MJS scripts — PASS. Existing legacy lint finding is not repaired.
+- `node scripts/check-canonical-data.mjs` — exit 1 as an intentional publication/data gate: 369 unverified formula-price rows, 28 exact source/TS text differences. Also reports 3 draft no-SKU definitions, 102 missing-media groups and 24 approved category aliases. Baseline 369 unique SKU / zero missing SKU / zero price-pair differences remains unchanged.
+- Repository-wide TypeScript diagnostics compared with the pre-change baseline using the TypeScript compiler API, no emit/incremental output: 106 before, 106 after, identical file/code/message entries; 0 new and 0 removed diagnostics. Legacy blockers remain.
+- SHA-256 hashes of workbook, sku-master.ts, data/catalog.ts, types/catalog.ts, services/catalog.ts and data/product-media.ts are unchanged.
+- Diff whitespace check passed. Only explicit Phase-1 files are checkpointed; pre-existing migration changes remain outside the commit.
+- No production build/browser checks: this phase does not repair or wire the storefront, and known repository-wide failures remain. No dependency installation, schema migration, workbook recalculation/edit, publication or deployment performed.
+
 ## Recommended Phase Order
 
-1. Phase 1 — Canonical Product Data Contract: decisions/specification first.
+1. Phase 1 — Canonical Product Data Contract: implemented; see validation checkpoint.
 2. Validated import and publishing pipeline with provenance and preview.
 3. Coherent application baseline using canonical contracts, one route slice at a time.
 4. Catalog hierarchy/routing, then product selection and color-specific media.

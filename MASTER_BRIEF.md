@@ -23,10 +23,12 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 - Top-level categories: **Outerwear, Tops, Bottoms, Dress, Pyjamas, Accessories**.
 - **Long Set** and **Short Set** are parts of product names, never categories.
 - Preserve approved spelling and capitalization, including **Priscilla**, **Tiffany**, **Rempah Revival**, **That Woman**, **Long Set**, and **Short Set**. Normalize URL slugs only; never apply text-transform to visible product/collection names.
-- Retain source names, source row identifiers and original SKUs for traceability. Record approved aliases in the canonical data audit during the data phase.
+- Retain source names, source row identifiers and original SKUs for traceability. Phase-1 aliases, field mapping and identity rules are recorded in `docs/CANONICAL_PRODUCT_DATA_CONTRACT.md`; measured findings are in `docs/PRODUCT_DATA_QUALITY.md`.
 - **One actual SKU = one data row.** SKU is the exact unique variant identifier; never substitute another variant on lookup failure.
 - Customers choose actual available variants, colors and sizes as applicable. Never generate combinations absent from source data.
-- **FABRIC** is the primary material/fabric field. Handle missing or conflicting values explicitly; do not invent descriptions.
+- **FABRIC** is the canonical fabric field, preserved per actual SKU row. Do not add MATERIAL as another canonical field. Report differences within one product explicitly; never silently select one value.
+- Phase-1 decisions: existing hierarchy/naming mappings are authoritative unless concrete source evidence contradicts them. Preserve literal size `-`; distinguish missing size explicitly. Keep Scarf pattern/design separate from color.
+- Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly remain representable definitions, but are not orderable or published as purchasable products until valid source SKU exists.
 - `data/MASTER PRODUCTS.xlsx` is source evidence. Do not edit it without explicit instruction. Reconcile imports against it and respect merged cells/provenance.
 - Missing remains missing. Products without a valid orderable SKU/price cannot enter checkout. No invented products, colors, sizes, fabric, descriptions, prices, discounts or media.
 
@@ -35,7 +37,9 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 - The only catalog price fields are **START_PRICE** and **FINAL_PRICE**.
 - `START_PRICE` is the normal/original price. `FINAL_PRICE` is the current selling price.
 - Do not use `OFFLINE_PRICE` or any offline/bazaar price in the storefront contract. Historical workbook columns remain untouched for traceability.
-- Read both prices directly from approved source columns. Never calculate either from an assumed discount. Record the mapping from legacy column names before implementation.
+- Approved mapping: MARKETPLACE DEFAULT PRICE → START_PRICE; MARKETPLACE FINAL PRICE → FINAL_PRICE. OFFLINE BAZAAR PRICE is excluded from the canonical price model.
+- Monetary values use exact whole-rupiah decimal strings, with integer arithmetic where needed; no floating-point money. Equal prices are valid. Invalid/unmappable source values are validation issues, never guessed prices.
+- Owner decision during Phase 1: cached formula prices remain unverified and block publication until formula verification. Matching legacy dataset values is not proof of freshness. Preserve formula/cell provenance without calculating storefront prices from offline values.
 - Re-resolve cart prices from canonical data before checkout. Never turn missing prices into zero or substitute a different variant's price.
 
 ## Media, accessibility and performance
@@ -78,5 +82,7 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 ## Delivery boundaries
 
 Work in small authorized phases and reuse suitable architecture without competing abstractions. Phase 0 is documentation only: no source changes, redesign, refactor, dependency installation, file deletion, database migration or workbook modification.
+
+Phase 1 is limited to the canonical contract, compatible TypeScript definitions, source mapping, validation/data-quality foundation and documentation. It does not authorize storefront migration, UI/routing/auth/checkout changes, database migrations, CMS/admin/Bazaar implementation, image optimization, dependency installation or deletion of legacy files.
 
 After each phase, run relevant validation, report exact results/limitations, update the status checkpoint and commit only reviewed in-scope changes. Code phases require appropriate lint, type-check, build, data/commerce and browser checks. A documentation checkpoint does not certify application readiness.
