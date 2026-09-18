@@ -48,7 +48,7 @@ Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline st
 
 ## Current Phase
 
-**Phase 2.3 ? COMPLETED within authorized scope. All acceptance checks passed. No publication performed.**
+**Phase 2.3 ? implementation acceptance PASS; remote handoff BLOCKED. Not complete end-to-end until the authorized push is verified. No publication performed.**
 
 Starting checkpoint: `0fcde526536729f616b4f65699d0e2e4f96e11e1` (Phase 2.1 + 2.2), verified equal to the remote origin/main before work. Work branch: `codex/phase-2-3-import`. Preflight local change was only the owner's deliberately replaced data/MASTER PRODUCTS.xlsx. Workbook is unchanged by the implementation and is included in this phase's checkpoint to make source fingerprints, generated output and validation reproducible from a fresh checkout. Its SHA-256 is recorded in docs/PRODUCT_DATA_QUALITY.md.
 
@@ -60,7 +60,11 @@ Current accepted snapshot: **497 source rows = 497 unique SKU = 497 canonical va
 
 Data outputs: data/generated/canonical-catalog.json and data/generated/reconciliation-report.json. Both are derived, never manually authored; their generation metadata fingerprints the three owning inputs. No UI, workbook contents, media files, database, dependency, BigSeller, payment or shipping changes.
 
-Checkpoint target title: `feat(data): add canonical workbook import`. Locate its reference with `git log -1 --format=%h --grep='^feat(data): add canonical workbook import$'`. Owner authorized a fast-forward push to origin/main after passing validation. Verify the actual push and HEAD/origin/main equality at handoff; this pre-commit record does not claim a push has already succeeded.
+Implementation checkpoint: **870418974d1aee3d3f8512ef592676d783eca1d3** (`feat(data): add canonical workbook import`), containing the 26 reviewed phase files. Working tree was clean after this commit. The current documentation checkpoint records the push failure without altering implementation/source data.
+
+Owner-authorized `git push origin HEAD:main` was attempted and **FAILED: GitHub HTTP 403**, `Permission to rausanfikri/aischmira-store.git denied to andini132002`. This is a remote account authorization failure, not an automatic approval-review rejection. Read-only Git Credential Manager account listing confirmed only andini132002 is stored; no credential was changed or token exposed.
+
+After the failed push, `git fetch origin main` verified **origin/main remains 0fcde526536729f616b4f65699d0e2e4f96e11e1**. HEAD does not equal origin/main. No remote delivery is claimed. The owner must activate a GitHub account with write permission to this repository (or grant the active account appropriate access). Then resume: fetch, verify ancestry, push HEAD:main, fetch and verify HEAD == origin/main plus clean working tree. Do not force-push, rewrite history or discard the source snapshot. This authorization for the normal push remains in effect.
 
 ## Next Phase
 
@@ -205,7 +209,7 @@ Phase-2.3 files (26 explicit checkpoint paths):
 - scripts/check-canonical-data.mjs; scripts/check-catalog-registries.mjs; scripts/check-canonical-types.mjs
 - scripts/canonical-contract.test.mjs; scripts/catalog-registry.test.mjs; scripts/catalog-import.test.mjs
 
-No unresolved blocker within the Phase-2.3 acceptance scope. The Current Data Follow-ups and pre-existing application integration defects remain visible; none were bypassed with fake data or automatic publication.
+No unresolved blocker in the implementation acceptance checks. Remote handoff is blocked by GitHub account write permission as recorded above, so end-to-end delivery is not complete. The Current Data Follow-ups and pre-existing application integration defects remain visible; none were bypassed with fake data or automatic publication.
 
 
 ### Phase 2.1 + 2.2 — 2026-09-18
