@@ -1,6 +1,6 @@
 # AISCHMIRA.STORE — Persistent Project Checkpoint
 
-Updated: 2026-09-17. Requirements: `MASTER_BRIEF.md`. Working process: `AGENTS.md`.
+Updated: 2026-09-18. Requirements: `MASTER_BRIEF.md`. Working process: `AGENTS.md`.
 
 ## Current State
 
@@ -8,7 +8,29 @@ Repository sedang dalam migrasi dan belum menjadi aplikasi storefront yang utuh.
 
 Legacy pages reference removed modules; new catalog/account foundations are not wired into them. Documentation readiness is not application readiness.
 
-Branch: `codex/editorial-storefront`. Pre-Phase-0 HEAD: `4b27943`. Audit and Phase-0 preflight showed 409 tracked deletions, 3 modified files and 8 untracked files; index empty. These are pre-existing migration changes, not Phase-0 implementation. Do not restore, delete or commit them implicitly.
+Branch: `codex/editorial-storefront`. Baseline source HEAD: `9f30864`. Working tree was clean at baseline-finalization preflight. The earlier Phase-0 preflight recorded 409 tracked deletions, 3 modified files and 8 untracked files; that is historical evidence, not the current working-tree state. Phase 0 recorded the AGENTS.md change; migration commit `9f30864` subsequently recorded 409 deletions, 2 modifications and 8 additions. These changes are no longer uncommitted.
+
+## Baseline and Git Relationship
+
+Baseline: **`9f30864` — `update all structure`**.
+
+Status: **REBUILD MIGRATION CHECKPOINT — NOT FULLY INTEGRATED**.
+
+Owner decision, 2026-09-18: preserve and document this relevant rebuild/migration checkpoint. Its architecture simplification aligns with the project direction, but integration is unfinished. It is not a Phase-2 result, a finished application, or evidence that the storefront works. The preceding read-only audit recommended `BASELINE_REVIEW_REQUIRED`; this decision establishes a documented rebuild baseline without declaring its blockers resolved.
+
+Verified linear Git relationship:
+
+```text
+4b27943  origin/main (also local main)
+   -> 6380406  Phase 0: docs: establish phase 0 project context
+   -> af1113c  Phase 1: feat(catalog): define canonical data contract
+   -> 9f30864  Migration checkpoint: update all structure
+   -> documentation checkpoint containing this baseline-finalization update
+```
+
+Remote: `https://github.com/rausanfikri/aischmira-store.git`. Read-only `git ls-remote --heads origin` on 2026-09-18 advertised only `refs/heads/main` at `4b27943470b48e9fa866187f1e4b27d5d2b58840`. Phase 0, Phase 1 and the migration checkpoint are available on the local working branch but not on any remote branch visible in that check. Do not infer availability on another device.
+
+Last documentation checkpoint: the commit containing this update, titled `docs: finalize rebuild baseline status`; locate it with `git log -1 --format=%h --grep='^docs: finalize rebuild baseline status$'`. Push: **NOT DONE**. This task authorizes only the documentation commit; remote handoff awaits a separate owner decision.
 
 ## Completed
 
@@ -23,15 +45,15 @@ Branch: `codex/editorial-storefront`. Pre-Phase-0 HEAD: `4b27943`. Audit and Pha
 
 ## Current Phase
 
-**Phase 1 — Canonical Product Data Contract.**
+**Baseline finalization before Phase 2. Phase 2 has NOT STARTED.**
 
-Scope: canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Existing catalog/types/services/workbook remain unchanged; no UI, routing, checkout, auth, database, dependency, image or legacy cleanup work.
+Phase 1 scope was canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Phase 1 did not implement UI, routing, checkout, auth, database, dependency, image or legacy cleanup work. The separate migration checkpoint must not be attributed to Phase 1 or Phase 2.
 
-Status: Phase 1 completed and validated within scope. Checkpoint: the commit containing this update, titled `feat(catalog): define canonical data contract` (locate with `git log -1 --format=%h -- AISCHMIRA_STATUS.md`). Phase 0 `6380406` is preserved. This checkpoint does not include unrelated uncommitted migration work or certify a working storefront.
+Status: Phase 1 completed and validated within scope at `af1113c` (`feat(catalog): define canonical data contract`); Phase 0 remains `6380406`. Migration changes were excluded from the Phase-1 commit and later recorded separately in `9f30864`. Current task: documentation-only baseline finalization, with no source fixes or Phase-2 implementation.
 
 ## Next Phase
 
-**Phase 2 — Validated Product Import & Data Publication Pipeline.** Not started or authorized by this checkpoint.
+**Phase 2 — Product Data Pipeline.** Not started. It may begin only after the baseline has been successfully handed off to the remote and continuation is authorized. This documentation checkpoint does not authorize starting Phase 2 or pushing.
 
 Use `types/canonical-catalog.ts` and `lib/catalog-contract.ts` with the documented contract. First verify formula prices, reconcile source/TS text drift explicitly and decide the operator/source workflow. Publication remains blocked; do not infer permission from a complete contract.
 
@@ -60,6 +82,13 @@ Legacy application findings remain unfixed in Phase 1. Data-contract decisions s
 
 ### Build and migration
 
+- Deleted modules are still referenced by retained consumers, including root layout, product/collection routes and account/cart pages. Catalog routes are not wired to the canonical contract; the new compatibility catalog service is also not consumed by those routes.
+- Account/cart consumers are not fully migrated. Nullable Supabase clients have not been handled by every consumer, including the OAuth callback.
+- Auth/proxy behavior requires review: the former middleware redirected unauthenticated account requests, while the new proxy does not preserve that behavior and account consumers remain unmigrated.
+- Loyalty service/schema mismatch remains: services/account.ts selects points_used, which is absent from the repository migration; live schema is unverified.
+- Several deleted routes, including privacy policy, terms and about/contact, lack a documented replacement or final removal decision.
+- data/catalog.ts remains a compatibility model, not the canonical product pipeline. Its source mapping is useful to Phase-1 evidence tooling but does not establish publication readiness.
+- Repository is not application-ready. Accepting this rebuild checkpoint does not resolve integration, TypeScript, lint, authentication or route blockers.
 - Audit found 58 unresolved local import references across 21 files. Pages do not consume new catalog/account services.
 - Type-check failed: missing modules, resulting implicit-any errors and nullable Supabase client dereference in auth callback.
 - ESLint: 1 error, 0 warnings; empty extending interface at `types/catalog.ts:19`, rule `@typescript-eslint/no-empty-object-type`.
@@ -129,6 +158,21 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 Q1–Q3 were resolved by the Phase-1 owner instructions and are no longer clarification requests. Formula treatment is also resolved: block until verification. Obtaining that verification and reconciling reported text drift are Phase-2 evidence tasks, not permission to invent business values.
 
 ## Validation Record
+
+### Baseline verification and documentation finalization — 2026-09-18
+
+The preceding read-only baseline audit executed the checks below against `9f30864`. Results are preserved unchanged; application checks were not rerun for this documentation-only finalization.
+
+| Check | Result |
+| --- | --- |
+| Scoped canonical type-check | PASS |
+| Phase 1 contract tests | PASS — 13/13 |
+| Repository TypeScript | FAIL — 106 diagnostics |
+| ESLint | FAIL — 1 error, 0 warning |
+| Build | NOT RUN |
+| Browser/live database verification | NOT RUN |
+
+The baseline audit also verified that workbook, sku-master.ts and Phase-1 contract/tooling were unchanged by the migration commit. Baseline-finalization preflight reconfirmed branch, clean working tree, commit ancestry and visible remote heads. Documentation validation covers required content, referenced paths, diff whitespace and the single-file scope; only AISCHMIRA_STATUS.md belongs in the documentation checkpoint. No source, product data, workbook, architecture or database changes are part of this task. No push or Phase-2 implementation is performed.
 
 ### Initial audit — 2026-09-17
 
