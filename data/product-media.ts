@@ -1,49 +1,27 @@
+import { mediaManifest } from "@/data/catalog-registry";
+import type { MediaMapping } from "@/types/catalog-registry";
 import type { ProductMedia } from "@/types/catalog";
 
-/**
- * Existing project photographs, associated with master colors by the original
- * media mapping. Butter Yellow deliberately has no image: its former white
- * photograph was an incorrect fallback. Never fall back to another color.
- */
-export const productMedia: Record<string, Record<string, ProductMedia[]>> = {
-  "she-dress": {
-    Black: [
-      {
-        src: "/images/products/she-dress/she-dress-front-black-01.jpg",
-        alt: "She Dress in Black, front view",
-        width: 731,
-        height: 1024,
-      },
-    ],
-    Maroon: [
-      {
-        src: "/images/products/she-dress/she-dress-editorial-crimson-01.jpg",
-        alt: "She Dress in Maroon",
-        width: 731,
-        height: 1024,
-      },
-    ],
-    "Baby Pink": [
-      {
-        src: "/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg",
-        alt: "She Dress in Baby Pink",
-        width: 731,
-        height: 1024,
-      },
-    ],
-    "Broken White": [
-      {
-        src: "/images/products/she-dress/she-dress-hero-white-01.jpg",
-        alt: "She Dress in Broken White, front view",
-        width: 731,
-        height: 1024,
-      },
-      {
-        src: "/images/products/she-dress/she-dress-lifestyle-ivory-01.jpg",
-        alt: "She Dress in Broken White, outdoor view",
-        width: 731,
-        height: 1024,
-      },
-    ],
-  },
-};
+/** Legacy shape adapter. All editorial associations live in product-media.json. */
+const toLegacy = (m: MediaMapping): ProductMedia => ({ src: m.reference, alt: m.alt, width: m.width, height: m.height });
+
+export function getProductMedia(productId: string, COLOR: string, PATTERN: string | null): ProductMedia[] {
+  return mediaManifest.media
+    .filter((m) => m.productId === productId && m.COLOR === COLOR && m.PATTERN === PATTERN)
+    .sort((a, b) => a.sortOrder - b.sortOrder).map(toLegacy);
+}
+
+export function getEditorialMedia(id: string): ProductMedia {
+  const media = mediaManifest.media.find((m) => m.id === id);
+  if (!media) throw new Error("Unknown editorial media ID: " + id);
+  return toLegacy(media);
+}
+
+/** Deprecated color-only view: omit ambiguous multi-pattern groups, never merge them. */
+export const productMedia: Record<string, Record<string, ProductMedia[]>> = {};
+for (const m of mediaManifest.media) {
+  const siblings = mediaManifest.media.filter((n) => n.productId === m.productId && n.COLOR === m.COLOR);
+  if (new Set(siblings.map((n) => n.PATTERN)).size !== 1) continue;
+  productMedia[m.productId] ??= {};
+  productMedia[m.productId][m.COLOR] = getProductMedia(m.productId, m.COLOR, m.PATTERN);
+}

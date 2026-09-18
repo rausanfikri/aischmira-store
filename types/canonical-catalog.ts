@@ -1,4 +1,4 @@
-/** Phase-1 canonical contract. types/catalog.ts remains the untouched legacy boundary. */
+/** Canonical metadata contract. types/catalog.ts remains the legacy compatibility boundary. */
 export const CATEGORY_NAMES = ["Outerwear", "Tops", "Bottoms", "Dress", "Pyjamas", "Accessories"] as const;
 export type CategoryName = typeof CATEGORY_NAMES[number];
 
@@ -21,6 +21,8 @@ export interface Product {
   subCollectionId: string;
   categoryId: string;
   publication: PublicationStatus;
+  /** Product-level supplied copy only; missing description is not synthesized. */
+  DESCRIPTION?: string | null;
   /** Definition evidence is independent of SKU evidence; empty products are representable. */
   definitionSource: string;
 }
@@ -29,6 +31,8 @@ export interface ProductColorPattern {
   productId: string;
   COLOR: string | null;
   PATTERN: string | null;
+  /** Optional opaque source code, not a guessed CSS/hex color. No source exists yet. */
+  COLOR_CODE?: string | null;
   patternStatus: "known" | "not-applicable" | "ambiguous";
 }
 export type SourceField = "COLLECTION" | "FABRIC" | "CATEGORY" | "TYPE" | "COLOR" | "SIZE" | "SKU_NO" | "SKU" | "SKU_NAME" | "START_PRICE" | "FINAL_PRICE";
@@ -46,7 +50,7 @@ export interface Provenance {
   sourceCollection: string | null;
   sourceCategory: string | null;
   sourceType: string | null;
-  mappingVersion: "phase-1-v1";
+  mappingVersion: "catalog-mapping-v1";
   /** Raw formula XML, including shared-formula references; null means a literal cell. */
   formulas: Record<SourceField, string | null>;
   priceEvidence: "literal" | "cached-unverified" | "cached-approved";
@@ -75,7 +79,7 @@ export interface Media {
   mappingSource: string;
 }
 export interface CanonicalCatalog {
-  version: "phase-1-v1";
+  version: "phase-2-v1";
   collections: Collection[];
   subCollections: SubCollection[];
   categories: Category[];

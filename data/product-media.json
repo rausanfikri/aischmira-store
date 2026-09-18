@@ -1,0 +1,75 @@
+{
+  "version": "product-media-v1",
+  "media": [
+    {
+      "id": "[\"[\\\"she-dress\\\",\\\"Black\\\",null]\",\"/images/products/she-dress/she-dress-front-black-01.jpg\"]",
+      "productId": "she-dress",
+      "COLOR": "Black",
+      "PATTERN": null,
+      "type": "image",
+      "reference": "/images/products/she-dress/she-dress-front-black-01.jpg",
+      "sortOrder": 0,
+      "primary": true,
+      "alt": "She Dress in Black, front view",
+      "width": 731,
+      "height": 1024,
+      "mappingSource": "Baseline aedee1e: data/product-media.ts; existing association, not visually recertified"
+    },
+    {
+      "id": "[\"[\\\"she-dress\\\",\\\"Maroon\\\",null]\",\"/images/products/she-dress/she-dress-editorial-crimson-01.jpg\"]",
+      "productId": "she-dress",
+      "COLOR": "Maroon",
+      "PATTERN": null,
+      "type": "image",
+      "reference": "/images/products/she-dress/she-dress-editorial-crimson-01.jpg",
+      "sortOrder": 0,
+      "primary": true,
+      "alt": "She Dress in Maroon",
+      "width": 731,
+      "height": 1024,
+      "mappingSource": "Baseline aedee1e: data/product-media.ts; existing association, not visually recertified"
+    },
+    {
+      "id": "[\"[\\\"she-dress\\\",\\\"Baby Pink\\\",null]\",\"/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg\"]",
+      "productId": "she-dress",
+      "COLOR": "Baby Pink",
+      "PATTERN": null,
+      "type": "image",
+      "reference": "/images/products/she-dress/she-dress-lifestyle-blush-pink-01.jpg",
+      "sortOrder": 0,
+      "primary": true,
+      "alt": "She Dress in Baby Pink",
+      "width": 731,
+      "height": 1024,
+      "mappingSource": "Baseline aedee1e: data/product-media.ts; existing association, not visually recertified"
+    },
+    {
+      "id": "[\"[\\\"she-dress\\\",\\\"Broken White\\\",null]\",\"/images/products/she-dress/she-dress-hero-white-01.jpg\"]",
+      "productId": "she-dress",
+      "COLOR": "Broken White",
+      "PATTERN": null,
+      "type": "image",
+      "reference": "/images/products/she-dress/she-dress-hero-white-01.jpg",
+      "sortOrder": 0,
+      "primary": true,
+      "alt": "She Dress in Broken White, front view",
+      "width": 731,
+      "height": 1024,
+      "mappingSource": "Baseline aedee1e: data/product-media.ts; existing association, not visually recertified"
+    },
+    {
+      "id": "[\"[\\\"she-dress\\\",\\\"Broken White\\\",null]\",\"/images/products/she-dress/she-dress-lifestyle-ivory-01.jpg\"]",
+      "productId": "she-dress",
+      "COLOR": "Broken White",
+      "PATTERN": null,
+      "type": "image",
+      "reference": "/images/products/she-dress/she-dress-lifestyle-ivory-01.jpg",
+      "sortOrder": 1,
+      "primary": false,
+      "alt": "She Dress in Broken White, outdoor view",
+      "width": 731,
+      "height": 1024,
+      "mappingSource": "Baseline aedee1e: data/product-media.ts; existing association, not visually recertified"
+    }
+  ]
+}

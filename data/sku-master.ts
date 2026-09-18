@@ -14,7 +14,8 @@ export interface SKUMasterItem {
 }
 
 /**
- * Authoritative AISCHMIRA SKU Master Dataset
+ * Transitional comparison/evidence dataset; workbook owns actual SKU data.
+ * Not an authoring source. Legacy compatibility consumers remain until migration.
  * Total Records: 369
  */
 export const skuMasterData: SKUMasterItem[] = [

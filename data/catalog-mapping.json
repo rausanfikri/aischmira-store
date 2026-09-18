@@ -1,0 +1,696 @@
+{
+  "version": "catalog-mapping-v1",
+  "collections": [
+    {
+      "id": "that-woman",
+      "slug": "that-woman",
+      "name": "That Woman",
+      "mediaId": "[\"[\\\"she-dress\\\",\\\"Black\\\",null]\",\"/images/products/she-dress/she-dress-front-black-01.jpg\"]"
+    },
+    {
+      "id": "rempah-revival",
+      "slug": "rempah-revival",
+      "name": "Rempah Revival"
+    }
+  ],
+  "subCollections": [
+    {
+      "id": "femme",
+      "slug": "femme",
+      "name": "Femme",
+      "collectionId": "that-woman"
+    },
+    {
+      "id": "her",
+      "slug": "her",
+      "name": "Her",
+      "collectionId": "that-woman"
+    },
+    {
+      "id": "she",
+      "slug": "she",
+      "name": "She",
+      "collectionId": "that-woman",
+      "mediaId": "[\"[\\\"she-dress\\\",\\\"Black\\\",null]\",\"/images/products/she-dress/she-dress-front-black-01.jpg\"]"
+    },
+    {
+      "id": "amara",
+      "slug": "amara",
+      "name": "Amara",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "aveline",
+      "slug": "aveline",
+      "name": "Aveline",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "bianca",
+      "slug": "bianca",
+      "name": "Bianca",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "briana",
+      "slug": "briana",
+      "name": "Briana",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "dasya",
+      "slug": "dasya",
+      "name": "Dasya",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "gendis",
+      "slug": "gendis",
+      "name": "Gendis",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "jolly",
+      "slug": "jolly",
+      "name": "Jolly",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "luna",
+      "slug": "luna",
+      "name": "Luna",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "priscilla",
+      "slug": "priscilla",
+      "name": "Priscilla",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "safira",
+      "slug": "safira",
+      "name": "Safira",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "scarf",
+      "slug": "scarf",
+      "name": "Scarf",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "tiffany",
+      "slug": "tiffany",
+      "name": "Tiffany",
+      "collectionId": "rempah-revival"
+    },
+    {
+      "id": "zamira",
+      "slug": "zamira",
+      "name": "Zamira",
+      "collectionId": "rempah-revival"
+    }
+  ],
+  "categories": [
+    {
+      "id": "outerwear",
+      "slug": "outerwear",
+      "name": "Outerwear"
+    },
+    {
+      "id": "tops",
+      "slug": "tops",
+      "name": "Tops"
+    },
+    {
+      "id": "bottoms",
+      "slug": "bottoms",
+      "name": "Bottoms"
+    },
+    {
+      "id": "dress",
+      "slug": "dress",
+      "name": "Dress",
+      "mediaId": "[\"[\\\"she-dress\\\",\\\"Black\\\",null]\",\"/images/products/she-dress/she-dress-front-black-01.jpg\"]"
+    },
+    {
+      "id": "pyjamas",
+      "slug": "pyjamas",
+      "name": "Pyjamas"
+    },
+    {
+      "id": "accessories",
+      "slug": "accessories",
+      "name": "Accessories"
+    }
+  ],
+  "products": [
+    {
+      "id": "femme-outer",
+      "slug": "femme-outer",
+      "name": "Femme Outer",
+      "collectionId": "that-woman",
+      "subCollectionId": "femme",
+      "categoryId": "outerwear",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Femme",
+          "type": "Outer",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Outerwear"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "femme-skirt",
+      "slug": "femme-skirt",
+      "name": "Femme Skirt",
+      "collectionId": "that-woman",
+      "subCollectionId": "femme",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Femme",
+          "type": "Skirt",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "femme-skirt-maxi",
+      "slug": "femme-skirt-maxi",
+      "name": "Femme Skirt Maxi",
+      "collectionId": "that-woman",
+      "subCollectionId": "femme",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": []
+    },
+    {
+      "id": "femme-tank-top",
+      "slug": "femme-tank-top",
+      "name": "Femme Tank Top",
+      "collectionId": "that-woman",
+      "subCollectionId": "femme",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Femme",
+          "type": "Tank Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "her-pants",
+      "slug": "her-pants",
+      "name": "Her Pants",
+      "collectionId": "that-woman",
+      "subCollectionId": "her",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Her",
+          "type": "Pants",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "her-top-long-sleeve",
+      "slug": "her-top-long-sleeve",
+      "name": "Her Top Long Sleeve",
+      "collectionId": "that-woman",
+      "subCollectionId": "her",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Her",
+          "type": "Long Sleeve Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "her-top-short-sleeve",
+      "slug": "her-top-short-sleeve",
+      "name": "Her Top Short Sleeve",
+      "collectionId": "that-woman",
+      "subCollectionId": "her",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Her",
+          "type": "Short Sleeve Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "her-top-sleeve-less",
+      "slug": "her-top-sleeve-less",
+      "name": "Her Top Sleeve Less",
+      "collectionId": "that-woman",
+      "subCollectionId": "her",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": []
+    },
+    {
+      "id": "she-dress",
+      "slug": "she-dress",
+      "name": "She Dress",
+      "collectionId": "that-woman",
+      "subCollectionId": "she",
+      "categoryId": "dress",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "She",
+          "type": "Dress",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Dress"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "she-dress-hijab-friendly",
+      "slug": "she-dress-hijab-friendly",
+      "name": "She Dress Hijab Friendly",
+      "collectionId": "that-woman",
+      "subCollectionId": "she",
+      "categoryId": "dress",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": []
+    },
+    {
+      "id": "amara-skirt",
+      "slug": "amara-skirt",
+      "name": "Amara Skirt",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "amara",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Amara",
+          "type": "Skirt",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aveline-shirt",
+      "slug": "aveline-shirt",
+      "name": "Aveline Shirt",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "aveline",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Aveline",
+          "type": "Shirt",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bianca-blazer",
+      "slug": "bianca-blazer",
+      "name": "Bianca Blazer",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "bianca",
+      "categoryId": "outerwear",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Bianca",
+          "type": "Blazer",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Outerwear"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bianca-obie",
+      "slug": "bianca-obie",
+      "name": "Bianca Obie",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "bianca",
+      "categoryId": "accessories",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Bianca",
+          "type": "Obie",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Accessories"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "briana-blouse",
+      "slug": "briana-blouse",
+      "name": "Briana Blouse",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "briana",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Briana",
+          "type": "Blouse",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dasya-top",
+      "slug": "dasya-top",
+      "name": "Dasya Top",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "dasya",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Dasya",
+          "type": "Blouse",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dasya-trousers",
+      "slug": "dasya-trousers",
+      "name": "Dasya Trousers",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "dasya",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Dasya",
+          "type": "Trousers",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gendis-top",
+      "slug": "gendis-top",
+      "name": "Gendis Top",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "gendis",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Gendis",
+          "type": "Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jolly-pyjama-long-set",
+      "slug": "jolly-pyjama-long-set",
+      "name": "Jolly Pyjama Long Set",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "jolly",
+      "categoryId": "pyjamas",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Jolly",
+          "type": "Long Sleeve Top + Pants",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Long Pyjama Set"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jolly-pyjama-short-set",
+      "slug": "jolly-pyjama-short-set",
+      "name": "Jolly Pyjama Short Set",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "jolly",
+      "categoryId": "pyjamas",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Jolly",
+          "type": "Short Sleeve Top + Shorts",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Short Pyjama Set"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "luna-pants-belt",
+      "slug": "luna-pants-belt",
+      "name": "Luna Pants & Belt",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "luna",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Luna",
+          "type": "Pants",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "priscilla-pants",
+      "slug": "priscilla-pants",
+      "name": "Priscilla Pants",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "priscilla",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Priscila",
+          "type": "Pleated Pants",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "safira-skirt",
+      "slug": "safira-skirt",
+      "name": "Safira Skirt",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "safira",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Safira",
+          "type": "Skirt",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "safira-top",
+      "slug": "safira-top",
+      "name": "Safira Top",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "safira",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Safira",
+          "type": "Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scarf",
+      "slug": "scarf",
+      "name": "Scarf",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "scarf",
+      "categoryId": "accessories",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Am Monogram",
+          "type": "Scarf",
+          "PATTERN": "Am Monogram",
+          "sourceCategories": [
+            "Accessories"
+          ]
+        },
+        {
+          "collection": "Floral Meadow",
+          "type": "Scarf",
+          "PATTERN": "Floral Meadow",
+          "sourceCategories": [
+            "Accessories"
+          ]
+        },
+        {
+          "collection": "Chili Chic",
+          "type": "Scarf",
+          "PATTERN": "Chili Chic",
+          "sourceCategories": [
+            "Accessories"
+          ]
+        },
+        {
+          "collection": "Garlic Bloom",
+          "type": "Scarf",
+          "PATTERN": "Garlic Bloom",
+          "sourceCategories": [
+            "Accessories"
+          ]
+        },
+        {
+          "collection": "Spice Blossom",
+          "type": "Scarf",
+          "PATTERN": "Spice Blossom",
+          "sourceCategories": [
+            "Accessories"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tiffany-trousers",
+      "slug": "tiffany-trousers",
+      "name": "Tiffany Trousers",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "tiffany",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Tifani",
+          "type": "Trousers",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Bottoms"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zamira-dress",
+      "slug": "zamira-dress",
+      "name": "Zamira Dress",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "zamira",
+      "categoryId": "dress",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "Zamira",
+          "type": "Long Dress",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Dress"
+          ]
+        }
+      ]
+    }
+  ],
+  "colorMetadata": []
+}

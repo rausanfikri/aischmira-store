@@ -1,14 +1,14 @@
 # Canonical Product Data Contract
 
-Version: `phase-1-v1` · Established: 2026-09-17 · Scope: Phase 1 only.
+Version: `phase-2-v1` · Updated: 2026-09-18 · Scope: Phase 2.1 + 2.2 metadata clarification and registries only.
 
-Authority: [MASTER_BRIEF](../MASTER_BRIEF.md) and explicit Phase-1 owner decisions. Evidence: [data quality summary](PRODUCT_DATA_QUALITY.md). This contract does not authorize publishing, database changes or storefront implementation.
+Authority: [MASTER_BRIEF](../MASTER_BRIEF.md) and explicit Phase-1 / Phase-2.1 owner decisions. Evidence: [data quality summary](PRODUCT_DATA_QUALITY.md). This contract does not authorize publishing, database changes or storefront implementation.
 
 ## 1. Boundary and compatibility
 
-Canonical types live in `types/canonical-catalog.ts`; runtime schema and pure assessment functions live in `lib/catalog-contract.ts`. `types/catalog.ts` remains a **legacy compatibility boundary**, because `data/catalog.ts`, `data/product-media.ts` and `services/catalog.ts` consume its originalPrice/material/nested-variant model. All four files and `data/sku-master.ts` are unchanged. They are not competing approved canonical models.
+Canonical types live in `types/canonical-catalog.ts`; runtime schema and pure assessment functions live in `lib/catalog-contract.ts`. `types/catalog.ts` remains a **legacy compatibility boundary**, because `data/catalog.ts`, `data/product-media.ts` and `services/catalog.ts` consume its originalPrice/material/nested-variant model. The compatibility catalog/media files now read JSON registries through minimal adapters. `data/sku-master.ts` remains transitional comparison/evidence and compatibility input, not an authoring source. These are not competing canonical models.
 
-Phase 2 must target the new contract, not extend legacy price/material fields. No route imports the new boundary in Phase 1. The read-only harness creates an in-memory evidence snapshot; it does not write a catalog, import into a database, publish records or migrate consumers. This avoids committing unrelated, pre-existing untracked catalog files as part of this checkpoint.
+Phase 2 must target the new contract, not extend legacy price/material fields. No route imports the new boundary in Phase 1. The read-only harness creates an in-memory evidence snapshot; it does not write a catalog, import into a database, publish records or migrate consumers. Phase 2.2 adapts this harness to source-group registries; it still does not implement source extraction improvements, import persistence or publication.
 
 ## 2. Hierarchy and entities
 
@@ -21,14 +21,14 @@ Category is a reusable registry; each product links to one category and one sub-
 | Collection | `id`, `slug`, `name`: string | All required, nonblank. Exact approved display name; slug is URL identity only |
 | SubCollection | Collection fields + `collectionId`: string | All required; existing collection parent |
 | Category | `id`, `slug`, `name` | All required; name is Outerwear, Tops, Bottoms, Dress, Pyjamas or Accessories |
-| Product | `id`, `slug`, `name`, `collectionId`, `subCollectionId`, `categoryId`, `definitionSource`: string; `publication`: PublicationStatus | All required. Definition may exist without SKU; that does not authorize sale |
-| ProductColorPattern | `id`, `productId`: string; `COLOR`, `PATTERN`: string or null; `patternStatus` | Keys required; null records absence. Status is known / not-applicable / ambiguous |
+| Product | `id`, `slug`, `name`, `collectionId`, `subCollectionId`, `categoryId`, `definitionSource`: string; `publication`: PublicationStatus | Listed identity/publication fields required; optional nullable `DESCRIPTION` belongs only to Product. Definition may exist without SKU; that does not authorize sale |
+| ProductColorPattern | `id`, `productId`: string; `COLOR`, `PATTERN`: string or null; `patternStatus` | Listed keys required; null records absence. Optional nullable `COLOR_CODE` has no current official source and remains absent. Status is known / not-applicable / ambiguous |
 | SkuVariant | `id`: string; `productId`, `colorPatternId`, `SKU`, `SIZE`, `FABRIC`: string or null; Price fields; Provenance | One source row per actual SKU. Nulls support rejected/incomplete staging evidence, not sale |
 | Price | `START_PRICE`, `FINAL_PRICE`: Rupiah or null | Both keys required; both valid non-null values required for purchasability. No other price fields |
 | Media | `id`, `productId`, `colorPatternId`, `reference`, `alt`, `mappingSource`: string; `type`; `sortOrder`; `primary`; `width`, `height` | All required; type=image, order nonnegative integer, primary boolean, dimensions positive integers |
-| CanonicalCatalog | `version`; arrays collections, subCollections, categories, products, colorPatterns, variants, media | All keys required, version=phase-1-v1; arrays may be empty for a draft dataset |
+| CanonicalCatalog | `version`; arrays collections, subCollections, categories, products, colorPatterns, variants, media | All keys required, version=phase-2-v1; arrays may be empty for a draft dataset |
 
-The runtime schema is strict: unknown fields fail rather than being silently discarded. A future schema change must be versioned. `any` is not used. Product descriptions and other fields not in this version remain source-only/pending, rather than invented or arbitrarily attached.
+The runtime schema is strict: unknown fields fail rather than being silently discarded. A future schema change must be versioned. `any` is not used. Version phase-2-v1 adds optional Product.DESCRIPTION and ProductColorPattern.COLOR_CODE and identifies registry provenance as catalog-mapping-v1. This is a schema change, not a formatting bump. Existing phase-1-v1 snapshots are not silently accepted as the new schema; the read-only harness regenerates evidence from unchanged source. No persisted canonical dataset or publication is migrated.
 
 ## 3. Identity, uniqueness and relationships
 
@@ -69,7 +69,7 @@ Media owns an exact product + color/pattern group, shared by that group's size/S
 
 Within a nonempty group, sortOrder is unique and exactly one image is primary. Missing media is an empty relationship with computed mediaStatus=missing. Existing order establishes provisional primary/sort metadata for the evidence snapshot, not a new photography claim.
 
-The existing color-only media map may be reused for assessment only when the product/color resolves to one pattern group. An ambiguous source map is reported and withheld. Never use a photo from another group as fallback. Parent validation cannot prove a photograph's visual identity; editorial/source verification is still required.
+The media manifest binds exact product/COLOR/PATTERN tuples. Compatibility lookups use that full tuple. The deprecated color-only export omits ambiguous multi-pattern groups rather than merging them. Never use a photo from another group as fallback. Parent validation cannot prove a photograph's visual identity; editorial/source verification is still required.
 
 Only image is approved in v1. Additional media types require a contract extension. Pipeline transformations and image optimization are outside Phase 1.
 
@@ -92,7 +92,7 @@ Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly remain produc
 
 ## 8. Provenance and source mapping
 
-Every variant requires provenance: workbook=`data/MASTER PRODUCTS.xlsx`, sheet=DASHBOARD, physical row >=3, mappingVersion=phase-1-v1, sourceSKU/SIZE/FABRIC/COLOR, sourceNumber/sourceName/sourceCollection/sourceCategory/sourceType (nullable exact values), `cells` and `formulas` maps for every SourceField, and priceEvidence.
+Every variant requires provenance: workbook=`data/MASTER PRODUCTS.xlsx`, sheet=DASHBOARD, physical row >=3, mappingVersion=catalog-mapping-v1, sourceSKU/SIZE/FABRIC/COLOR, sourceNumber/sourceName/sourceCollection/sourceCategory/sourceType (nullable exact values), `cells` and `formulas` maps for every SourceField, and priceEvidence.
 
 `cells` points to the actual value-bearing cell, including merge origin. `formulas` preserves raw formula XML/shared-formula metadata, or null for a literal. Source name does not overwrite approved product display naming.
 
@@ -118,7 +118,7 @@ The Phase-1 extractor verifies expected headers, reads only DASHBOARD SKU eviden
 
 ## 9. Approved hierarchy and naming registry
 
-That Woman contains Femme, Her and She. Rempah Revival contains Amara, Aveline, Bianca, Briana, Dasya, Gendis, Jolly, Luna, Priscilla, Safira, Scarf, Tiffany and Zamira. Existing IDs/slugs in data/catalog.ts remain mapping keys; no new business SKU is generated.
+That Woman contains Femme, Her and She. Rempah Revival contains Amara, Aveline, Bianca, Briana, Dasya, Gendis, Jolly, Luna, Priscilla, Safira, Scarf, Tiffany and Zamira. Existing IDs/slugs are preserved in data/catalog-mapping.json; IDs are explicit and independent of future slug changes. No business SKU is generated.
 
 | Canonical Product.name | Source COLLECTION / TYPE | Sub-Collection | Category |
 | --- | --- | --- | --- |
@@ -157,7 +157,9 @@ Source categories Long Pyjama Set and Short Pyjama Set map to Pyjamas (24 rows).
 Run from the repository root with existing dependencies; nothing is installed:
 
 ```text
+node scripts/check-catalog-registries.mjs
 node scripts/check-canonical-types.mjs
+node --test scripts/catalog-registry.test.mjs
 node --test scripts/canonical-contract.test.mjs
 node scripts/check-canonical-data.mjs
 ```
@@ -168,4 +170,36 @@ The data command requires Windows PowerShell and .NET ZIP/XML support, reads the
 
 Negative tests use disposable in-memory mutations of real source records, never saved fake products. No browser, auth, cart, routing, media optimization, database schema or publication implementation is part of this phase.
 
-Phase 2 must resolve formula verification, reconcile source/legacy text differences explicitly, choose the operator/source workflow, version import evidence and require successful validation before publication. Current draft snapshots are not purchase-ready even though all 369 SKU codes and price pairs reconcile with the prior audit.
+Phase 2 must resolve formula verification, reconcile source/legacy text differences explicitly, implement the approved workbook/registry ownership, version import evidence and require successful validation before publication. Current draft snapshots are not purchase-ready even though all 369 SKU codes and price pairs reconcile with the prior audit.
+
+## 11. Phase 2.1 + 2.2 ownership and registry contract
+
+| Owner | Responsibility |
+| --- | --- |
+| data/MASTER PRODUCTS.xlsx | Actual SKU, size, color, FABRIC and source marketplace prices; unchanged |
+| data/catalog-mapping.json | Approved collection/sub-collection/category/product IDs, exact naming, source-group mapping, Product DESCRIPTION and publication; optional color metadata |
+| data/product-media.json | Exact product/color/pattern-to-image associations, stable media IDs, type, order, primary, alt, dimensions and mapping provenance |
+| data/sku-master.ts | Transitional comparison/evidence only; retained for compatibility, not authoring |
+| Future canonical output | Generated by the later pipeline, never a manual authoring location |
+
+DESCRIPTION belongs to Product only, accepts missing/null/empty text and currently contains null for all products. No SKU/size description is introduced. Product publication is draft/published/archived, not stock; all current definitions remain draft. No inventory entity, SKU inventory status or storefront stock display is implied.
+
+COLOR_CODE is an optional nullable opaque metadata value on the exact product/color/pattern group. It has no official source today: colorMetadata is empty and no code is emitted. Do not guess hex/CSS values, generate codes from names, or treat a future supplied code as CSS. Actual COLOR remains workbook-owned.
+
+Catalog registry version: catalog-mapping-v1. Media manifest version: product-media-v1. Both are strict JSON schemas in lib/catalog-registry.ts with types in types/catalog-registry.ts. data/catalog-registry.ts validates and loads them. Registry records contain no SKU, size, FABRIC or price copies.
+
+Each Product has explicit sourceGroups with exact source collection/type, approved sourceCategories and explicit PATTERN (null for non-pattern groups). One source collection/type tuple maps to at most one Product. Scarf source collections carry explicit pattern values in data; no product-name conditional is needed. Current source-category aliases are the approved Long/Short Pyjama Set to Pyjamas mappings. New mappings require source evidence, not automatic title conversion.
+
+Definitions without SKU have empty sourceGroups and remain draft; no empty variant is created. Unknown source groups are reported. The read-only evidence harness resolves parent product directly from sourceGroups, independent of whether a SKU exists in legacy TS. The legacy comparison remains visible and can still fail the data gate.
+
+Collection/sub-collection/category mediaId preserves the existing editorial lead-image association; it is not a product-variant fallback. Media IDs and references were preserved from baseline aedee1e. Registry checks verify identity uniqueness, hierarchy, exact workbook color/pattern references, order/primary and case-exact file existence. They cannot visually certify photography.
+
+## 12. Editing and validation boundary
+
+Edit metadata in catalog-mapping.json and existing media associations in product-media.json, never in compatibility adapters. Preserve stable IDs and exact source keys. Product additions require actual workbook rows plus approved source-group metadata; definitions alone never grant orderability. Color codes/descriptions remain missing until supplied.
+
+Run check-catalog-registries for structural/source/media checks, scoped type-check and both test suites for regression, then check-canonical-data for publication/data quality. Registry PASS is not publication PASS: cached formula prices, missing media and legacy text differences remain explicit. Current data gate still returns exit 1.
+
+Tests compare compatibility output and workbook bytes against Git checkpoint aedee1eb416ab9022c61cd88a8267a646f3f156e, so that commit must be available locally. Negative tests change disposable in-memory copies only; no sample business records are stored. The locked baseline assertion is a migration regression check, not a permanent rule preventing future approved dataset changes.
+
+This phase does not add a full importer, batch store, generated output, database, UI or media conversion. The workbook reader is unchanged. Formula verification, richer extraction and import foundation belong to Phase 2.3 or later, under separate authorization.

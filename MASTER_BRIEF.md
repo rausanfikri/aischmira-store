@@ -1,6 +1,6 @@
 # AISCHMIRA.STORE — Master Brief
 
-Updated: 2026-09-17. Status: requirements baseline for the staged rebuild.
+Updated: 2026-09-18. Status: requirements baseline for the staged rebuild.
 
 ## Authority
 
@@ -30,6 +30,8 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 - Phase-1 decisions: existing hierarchy/naming mappings are authoritative unless concrete source evidence contradicts them. Preserve literal size `-`; distinguish missing size explicitly. Keep Scarf pattern/design separate from color.
 - Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly remain representable definitions, but are not orderable or published as purchasable products until valid source SKU exists.
 - `data/MASTER PRODUCTS.xlsx` is source evidence. Do not edit it without explicit instruction. Reconcile imports against it and respect merged cells/provenance.
+- Phase-2.1 owner decisions: DESCRIPTION belongs to Product only and stays missing until supplied; Product publication is draft/published/archived, never inventory. COLOR_CODE has no official source and may only be optional/nullable; never derive hex/CSS or internal codes from names.
+- Data ownership: workbook owns actual SKU/size/color/FABRIC/price; data/catalog-mapping.json owns approved identity/hierarchy/description/publication/optional color metadata; data/product-media.json owns exact media associations. sku-master.ts is transitional comparison/evidence only. Future canonical output is generated, not manually edited.
 - Missing remains missing. Products without a valid orderable SKU/price cannot enter checkout. No invented products, colors, sizes, fabric, descriptions, prices, discounts or media.
 
 ## Price contract
@@ -86,3 +88,5 @@ Work in small authorized phases and reuse suitable architecture without competin
 Phase 1 is limited to the canonical contract, compatible TypeScript definitions, source mapping, validation/data-quality foundation and documentation. It does not authorize storefront migration, UI/routing/auth/checkout changes, database migrations, CMS/admin/Bazaar implementation, image optimization, dependency installation or deletion of legacy files.
 
 After each phase, run relevant validation, report exact results/limitations, update the status checkpoint and commit only reviewed in-scope changes. Code phases require appropriate lint, type-check, build, data/commerce and browser checks. A documentation checkpoint does not certify application readiness.
+
+Phase 2.1 + 2.2 is limited to these metadata clarifications, structured catalog/media registries, minimal compatibility adapters, read-only validation and documentation. No full import pipeline, workbook/source value edits, UI, database, dependency installation or media optimization is authorized. Next implementation scope is Phase 2.3 only when separately requested.

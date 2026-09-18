@@ -12,6 +12,7 @@ const nodeRequire = createRequire(import.meta.url);
 const cache = new Map();
 export function loadTs(relative) {
   const filename = path.resolve(root, relative);
+  if (filename.endsWith('.json')) return JSON.parse(fs.readFileSync(filename, 'utf8'));
   if (cache.has(filename)) return cache.get(filename).exports;
   const loaded = { exports: {} };
   cache.set(filename, loaded);
@@ -20,8 +21,9 @@ export function loadTs(relative) {
     fileName: filename,
   }).outputText;
   const localRequire = (specifier) => {
-    if (specifier.startsWith('@/')) return loadTs(`${specifier.slice(2)}.ts`);
-    if (specifier.startsWith('.')) return loadTs(path.resolve(path.dirname(filename), `${specifier}.ts`));
+    const suffix = specifier.endsWith('.json') ? '' : '.ts';
+    if (specifier.startsWith('@/')) return loadTs(`${specifier.slice(2)}${suffix}`);
+    if (specifier.startsWith('.')) return loadTs(path.resolve(path.dirname(filename), `${specifier}${suffix}`));
     return nodeRequire(specifier);
   };
   vm.runInThisContext(`(function(require, exports, module) {${code}\n})`, { filename })(localRequire, loaded.exports, loaded);
@@ -36,34 +38,35 @@ export function readWorkbook() {
 
 /** Current data is evidence, never an automatic publication instruction. */
 export function createEvidenceSnapshot(workbook = readWorkbook()) {
-  const legacy = loadTs('data/catalog.ts');
+  const { catalogMapping: registry, mediaManifest } = loadTs('data/catalog-registry.ts');
+  const { resolveProductMapping } = loadTs('lib/catalog-registry.ts');
   const { skuMasterData } = loadTs('data/sku-master.ts');
   const { colorPatternIdentity, readRupiah } = loadTs('lib/catalog-contract.ts');
   const extractionIssues = [];
-  const skuParents = new Map();
-  for (const product of legacy.products) for (const color of product.colors) for (const variant of color.variants) {
-    if (skuParents.has(variant.sku)) extractionIssues.push({ code: 'DUPLICATE_MAPPING', SKU: variant.sku });
-    skuParents.set(variant.sku, { product, color });
-  }
   const named = ({ id, slug, name }) => ({ id, slug, name });
   const catalog = {
-    version: 'phase-1-v1',
-    collections: legacy.collections.map(named),
-    subCollections: legacy.subCollections.map((sub) => ({ ...named(sub), collectionId: sub.collectionId })),
-    categories: legacy.categories.map(named),
-    products: legacy.products.map((p) => ({ ...named(p), collectionId: p.collectionId, subCollectionId: p.subCollectionId, categoryId: p.categoryId,
-      publication: 'draft', definitionSource: 'data/catalog.ts#productDefinitions (owner-approved Phase 1 mapping)' })),
+    version: 'phase-2-v1',
+    collections: registry.collections.map(named),
+    subCollections: registry.subCollections.map((sub) => ({ ...named(sub), collectionId: sub.collectionId })),
+    categories: registry.categories.map(named),
+    products: registry.products.map((p) => ({ ...named(p), collectionId: p.collectionId, subCollectionId: p.subCollectionId, categoryId: p.categoryId,
+      DESCRIPTION: p.DESCRIPTION ?? null, publication: p.publication, definitionSource: `data/catalog-mapping.json#${p.id}` })),
     colorPatterns: [], variants: [], media: [],
   };
   for (const record of workbook.rows) {
     const f = record.fields;
-    const mapped = skuParents.get(f.SKU);
+    const mapped = resolveProductMapping(registry, f.COLLECTION, f.TYPE);
+    if (!mapped) extractionIssues.push({ code: 'UNMAPPED_SOURCE_GROUP', row: record.row, collection: f.COLLECTION, type: f.TYPE });
     // Pattern is explicit in the approved existing mapping, not inferred from color text.
-    const PATTERN = mapped?.color.pattern ?? null;
+    const PATTERN = mapped?.group.PATTERN ?? null;
     const colorId = mapped ? colorPatternIdentity(mapped.product.id, f.COLOR, PATTERN) : null;
     if (mapped && !catalog.colorPatterns.some((g) => g.id === colorId)) catalog.colorPatterns.push({
       id: colorId, productId: mapped.product.id, COLOR: f.COLOR, PATTERN,
-      patternStatus: mapped.product.id === 'scarf' ? (PATTERN === f.COLLECTION ? 'known' : 'ambiguous') : 'not-applicable',
+      patternStatus: PATTERN === null ? 'not-applicable' : 'known',
+      ...(() => {
+        const metadata = registry.colorMetadata.find((m) => colorPatternIdentity(m.productId, m.COLOR, m.PATTERN) === colorId);
+        return metadata && metadata.COLOR_CODE !== undefined ? { COLOR_CODE: metadata.COLOR_CODE } : {};
+      })(),
     });
     const prices = {};
     for (const field of ['START_PRICE', 'FINAL_PRICE']) {
@@ -76,7 +79,7 @@ export function createEvidenceSnapshot(workbook = readWorkbook()) {
       provenance: { workbook: workbook.workbook, sheet: workbook.sheet, row: record.row, cells: record.cells,
         sourceSKU: f.SKU, sourceSIZE: f.SIZE, sourceFABRIC: f.FABRIC, sourceCOLOR: f.COLOR,
         sourceNumber: f.SKU_NO, sourceName: f.SKU_NAME, sourceCollection: f.COLLECTION,
-        sourceCategory: f.CATEGORY, sourceType: f.TYPE, mappingVersion: 'phase-1-v1', formulas: record.formulas,
+        sourceCategory: f.CATEGORY, sourceType: f.TYPE, mappingVersion: registry.version, formulas: record.formulas,
         priceEvidence: record.formulas.START_PRICE || record.formulas.FINAL_PRICE ? 'cached-unverified' : 'literal' },
     });
     const tsRow = skuMasterData.find((r) => r.skuCode === f.SKU);
@@ -90,24 +93,15 @@ export function createEvidenceSnapshot(workbook = readWorkbook()) {
     if (mapped) {
       const category = catalog.categories.find((c) => c.id === mapped.product.categoryId);
       if (category?.name !== f.CATEGORY) {
-        const approved = f.COLLECTION === 'Jolly' && ['Long Pyjama Set', 'Short Pyjama Set'].includes(f.CATEGORY) && category?.name === 'Pyjamas';
+        const approved = mapped.group.sourceCategories.includes(f.CATEGORY);
         extractionIssues.push({ code: approved ? 'SOURCE_CATEGORY_ALIAS' : 'SOURCE_CATEGORY_CONFLICT', SKU: f.SKU, source: f.CATEGORY, canonical: category?.name });
       }
-      if (mapped.color.name !== f.COLOR) extractionIssues.push({ code: 'COLOR_MAPPING_CONFLICT', SKU: f.SKU });
     }
   }
   for (const row of skuMasterData) if (!workbook.rows.some((r) => r.fields.SKU === row.skuCode)) extractionIssues.push({ code: 'TS_SKU_NOT_IN_WORKBOOK', SKU: row.skuCode });
-  // Do not reuse a color-only media mapping across different patterns.
-  for (const p of legacy.products) for (const color of p.colors) {
-    const id = colorPatternIdentity(p.id, color.name, color.pattern ?? null);
-    if (color.media.length && p.colors.filter((other) => other.name === color.name).length > 1) {
-      extractionIssues.push({ code: 'AMBIGUOUS_LEGACY_MEDIA', product: p.id, color: color.name }); continue;
-    }
-    for (const [index, m] of color.media.entries()) catalog.media.push({
-      id: JSON.stringify([id, m.src]), productId: p.id, colorPatternId: id, type: 'image', reference: m.src,
-      sortOrder: index, primary: index === 0, alt: m.alt, width: m.width, height: m.height,
-      mappingSource: 'data/product-media.ts (existing association; photography identity not independently certified)',
-    });
+  for (const m of mediaManifest.media) {
+    const { COLOR, PATTERN, ...fields } = m;
+    catalog.media.push({ ...fields, colorPatternId: colorPatternIdentity(m.productId, COLOR, PATTERN) });
   }
   return { catalog, workbook, extractionIssues, skuMasterData };
 }

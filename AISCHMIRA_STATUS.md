@@ -31,7 +31,7 @@ Verified linear Git relationship:
 
 Remote: `https://github.com/rausanfikri/aischmira-store.git`. Before handoff on 2026-09-18, `git ls-remote --heads origin` advertised only `refs/heads/main` at `4b27943470b48e9fa866187f1e4b27d5d2b58840`. Owner-authorized `git push origin HEAD:main` then succeeded as a fast-forward from `4b27943` to `50e7d86`. After the push completed, `git fetch origin` confirmed HEAD and origin/main both at `50e7d866914cf33ba522e0405c9a1e74dea4ad86`, with a clean working tree. Phase 0, Phase 1, the migration checkpoint and baseline-finalization documentation are now available through origin/main. The other device must fetch/pull before continuing; its local state is not verified here.
 
-Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline status`). Baseline push: **SUCCESS — VERIFIED**. Last documentation checkpoint: the separate commit containing this handoff record, titled `docs: record baseline remote handoff`; locate it with `git log -1 --format=%h --grep='^docs: record baseline remote handoff$'`. The owner also authorizes pushing this documentation-only follow-up and verifying it against origin/main. No reset, rebase, merge, force push or history rewrite is part of the handoff.
+Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline status`). Baseline push: **SUCCESS — VERIFIED**. Baseline handoff documentation checkpoint: `aedee1e` (`docs: record baseline remote handoff`), verified equal to origin/main before Phase 2.1 + 2.2. No reset, rebase, merge, force push or history rewrite was part of that handoff. See Current Phase for the newer registry checkpoint.
 
 ## Completed
 
@@ -43,20 +43,26 @@ Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline st
 - Existing broken legacy dependencies identified.
 - Phase-0 documentation completed at `6380406`: master requirements, concise agent workflow and persistent checkpoint. No storefront implementation performed.
 - Phase 1: canonical contract and separate compatibility boundary, exact-money types, source mapping, runtime validation and read-only data-quality foundation implemented. See `docs/CANONICAL_PRODUCT_DATA_CONTRACT.md` and `docs/PRODUCT_DATA_QUALITY.md`.
+- Phase 2.1: owner-approved metadata clarified. Product DESCRIPTION is optional/nullable; publication remains draft/published/archived, not stock. COLOR_CODE is optional/nullable with no current official values. Canonical schema is phase-2-v1 for these actual additions; provenance names catalog-mapping-v1.
+- Phase 2.2: data/catalog-mapping.json and data/product-media.json own metadata and exact media associations. Strict registry schemas, relationship/file checks, compatibility adapters and regression tests are implemented. Workbook extraction and full import remain outside this checkpoint.
 
 ## Current Phase
 
-**Baseline remote handoff completed. Phase 2 has NOT STARTED.**
+**Phase 2.1 + 2.2 — COMPLETED within scope. Phase 2.3 has NOT STARTED.**
 
 Phase 1 scope was canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Phase 1 did not implement UI, routing, checkout, auth, database, dependency, image or legacy cleanup work. The separate migration checkpoint must not be attributed to Phase 1 or Phase 2.
 
-Status: Phase 1 completed and validated within scope at `af1113c` (`feat(catalog): define canonical data contract`); Phase 0 remains `6380406`. Migration changes were excluded from the Phase-1 commit and later recorded separately in `9f30864`. Current task: baseline handoff and its documentation only, with no source fixes or Phase-2 implementation.
+Starting checkpoint: `aedee1eb416ab9022c61cd88a8267a646f3f156e`, confirmed equal to origin/main with a clean working tree before Phase 2.1 + 2.2. The owner subsequently authorized resuming the interrupted uncommitted registry work without discarding it. No unrelated changes were included.
+
+Last Git checkpoint: the commit containing this update, titled `feat(data): establish canonical metadata registries`; locate with `git log -1 --format=%h --grep='^feat(data): establish canonical metadata registries$'`. The checkpoint is authorized for fast-forward push to origin/main; final handoff verification requires HEAD == origin/main and a clean working tree. This document does not claim a push before that operation succeeds.
+
+Phase 1 remains completed at `af1113c`; Phase 0 remains `6380406`; migration baseline remains `9f30864`. Registry completion does not certify a working storefront or publishable product data.
 
 ## Next Phase
 
-**Phase 2 — Product Data Pipeline.** Not started. The remote baseline handoff prerequisite is satisfied; wait for the owner's next explicit instruction before starting Phase 2. Successful synchronization does not resolve application or data-publication blockers.
+**Phase 2.3 — Source Extraction & Import Foundation.** Not started or authorized by this checkpoint. Stop after Phase 2.1 + 2.2 validation, commit and remote handoff; wait for the owner's next instruction. No full importer, generated canonical output, database, UI or publication is implemented here.
 
-Use `types/canonical-catalog.ts` and `lib/catalog-contract.ts` with the documented contract. First verify formula prices, reconcile source/TS text drift explicitly and decide the operator/source workflow. Publication remains blocked; do not infer permission from a complete contract.
+Use types/canonical-catalog.ts, lib/catalog-contract.ts, the two JSON registries and their documented ownership. Continue source extraction/import foundation only in the next authorized phase; formula verification, legacy text reconciliation, batch persistence and publication remain future work. Never infer publication permission from registry validity.
 
 ## Audit Evidence and Architecture Map
 
@@ -65,6 +71,7 @@ Use `types/canonical-catalog.ts` and `lib/catalog-contract.ts` with the document
 | Source | `data/MASTER PRODUCTS.xlsx`; `data/sku-master.ts`: 369 SKU rows, three legacy price fields |
 | New catalog | `types/catalog.ts` → `data/catalog.ts` + `data/product-media.ts` → `services/catalog.ts`; not consumed by storefront pages |
 | Phase-1 canonical boundary | `types/canonical-catalog.ts` + `lib/catalog-contract.ts`; old `types/catalog.ts` remains a compatibility model. No storefront wiring |
+| Phase-2.1/2.2 registries | data/catalog-mapping.json + data/product-media.json; types/catalog-registry.ts + lib/catalog-registry.ts; validated loader data/catalog-registry.ts. Read-only harness uses source-group identities, independent of legacy SKU membership |
 | Evidence tooling | `scripts/read-product-workbook.ps1` + `scripts/canonical-support.mjs`; read-only, in-memory assessment, not production import/publish |
 | Mapping | 2 collections, 16 sub-collections, 6 categories, 27 product definitions, 106 color groups, 369 SKU |
 | No-SKU definitions | Femme Skirt Maxi, Her Top Sleeve Less, She Dress Hijab Friendly: empty source groups |
@@ -99,9 +106,9 @@ Legacy application findings remain unfixed in Phase 1. Data-contract decisions s
 
 - Legacy types still use originalPrice/finalPrice and source has three price columns. Phase 1 establishes the separate canonical START_PRICE/FINAL_PRICE boundary and approved K/L mapping; legacy consumers are not migrated.
 - Three definitions still lack source SKU. Their resolved contract is draft, nonorderable and not published as purchasable; no SKU was fabricated.
-- Hierarchy/media mappings are TypeScript, not an operator-managed no-source-edit publishing workflow. Old scripts include embedded source text rather than a formal workbook pipeline.
+- Hierarchy/media authoring now uses JSON registries; compatibility TypeScript reads them. A full operator import/publishing workflow and generated output are not implemented yet. Legacy TS SKU values remain comparison/evidence and compatibility input only.
 - Legacy mapping omits material on fabric disagreement. Canonical FABRIC remains per SKU and conflicts explicitly block eligibility; current workbook has zero within-product conflicts.
-- Legacy Scarf media lookup can collide by color name. Canonical group identity includes product/color/pattern, and the evidence harness withholds ambiguous color-only media mappings; old UI is untouched.
+- Exact media lookup now uses product/color/pattern; the deprecated color-only adapter omits ambiguous multi-pattern groups. The manifest preserves only the five existing references; visual photography ownership is not independently recertified. UI is untouched.
 - NEW: all 369 price rows inherit cached formula values (48 K/L origin cells). Owner explicitly requires formula verification before publication; prices are not missing/invalid numerically, but are unverified.
 - NEW: 28 exact text differences against TS (12 FABRIC newlines, 11 SKU_NAME trailing-space differences, 5 substantive SKU_NAME differences). Source evidence is preserved; old dataset is not corrected. See data-quality report.
 - Gallery switching is not verified; legacy page passes global images separately from selector state.
@@ -149,8 +156,8 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 
 | ID | Unresolved decision | Needed before |
 | --- | --- | --- |
-| Q4 | Which source/operator workflow governs catalog, media and Bazaar updates: workbook import, database editing or a separate content tool? Who approves publication? | Data ownership contract, then publishing |
-| Q5 | What is the authoritative product/color/pattern-to-image mapping and publication policy for valid products lacking media? Cross-color fallback is forbidden. | Product/media phase |
+| Q4 | Product ownership is resolved: workbook for actual variants/prices; metadata and media JSON registries for editorial mapping. Who approves publication, what formula-verification evidence is accepted, and what operator workflow governs Bazaar? | Later import/publication and Bazaar work |
+| Q5 | Existing exact media associations are preserved in the JSON manifest. Who supplies/verifies additional photography mappings, and what is the publication policy for valid products lacking media? Cross-color fallback is forbidden. | Product/media phase |
 | Q6 | Which real auth methods should be supported? Is WhatsApp ownership/activity verification required beyond required-field/format validation? | Account and checkout respectively |
 | Q7 | Which operational source creates real order history, how are guest orders linked to accounts, and what are actual loyalty earning/usage/expiry rules and starting records? | Order/account/loyalty phases |
 | Q8 | Which Bazaar statuses/publication rules are needed; single-day or multi-day, which timezone, and does deactivation archive or hide an event? | Bazaar model implementation |
@@ -159,6 +166,19 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 Q1–Q3 were resolved by the Phase-1 owner instructions and are no longer clarification requests. Formula treatment is also resolved: block until verification. Obtaining that verification and reconciling reported text drift are Phase-2 evidence tasks, not permission to invent business values.
 
 ## Validation Record
+
+### Phase 2.1 + 2.2 — 2026-09-18
+
+- node scripts/check-catalog-registries.mjs: PASS, zero issues. Strict JSON schemas, duplicate IDs/source-group mappings, hierarchy, orphan/unmapped groups, exact workbook color/pattern media ownership, duplicate media/order/primary and case-exact file existence checked.
+- node scripts/check-canonical-types.mjs: PASS. Strict no-emit check expanded to registry types, validators, loader and both compatibility adapters.
+- node --test scripts/catalog-registry.test.mjs scripts/canonical-contract.test.mjs: PASS, 22/22. Includes 13 existing contract tests and 9 registry/regression tests; fixtures are disposable in-memory mutations, not stored business data.
+- Regression compares compatibility collections/sub-collections/categories/products/media and every legacy SKU/price against Git checkpoint aedee1e: equal. Workbook bytes equal baseline. Product naming, 369 unique SKU, 106 color/pattern groups, 27 definitions, 5 media references, and three draft no-SKU definitions preserved. Descriptions remain null; colorMetadata remains empty. Exact source-group mapping also succeeds when the legacy comparison array is temporarily empty in a test.
+- Scoped ESLint on changed/new TypeScript and MJS: PASS, no rule/configuration relaxation. A test-helper variable-name lint finding was corrected before the passing run. Repository-wide historical lint blocker in untouched types/catalog.ts remains outside scope; full-repository lint was not rerun.
+- Repository TypeScript rerun: FAIL, 106 diagnostic lines, matching the documented baseline count; no diagnostic in registry/data/canonical files. Legacy missing modules and nullable Supabase client remain unresolved. No application-readiness claim.
+- node scripts/check-canonical-data.mjs: exit 1, intentionally BLOCKED for publication/data quality. 369 workbook rows/unique SKU and 369 TS rows/unique SKU; zero missing SKU in either direction; zero price-pair differences; zero missing/invalid price values. Still 369 unverified formula-price rows (48 origin cells), 28 source/TS text differences, 3 no-SKU definitions and 102 missing-media groups. No prices were changed to bypass this gate.
+- Documentation reference, scope and diff whitespace checks: PASS. Only the 17 explicit Phase-2.1/2.2 files belong in this checkpoint; protected workbook/extractor/service/UI/media/database/dependency paths have no changes. No build/browser/live database checks: no UI integration was performed and repository-wide compile blockers remain. No dependency install, migration, media modification, source workbook edit or Phase-2.3 implementation.
+
+Known limitations: Windows PowerShell read-only extractor unchanged; row-based evidence IDs remain; no generated output, batch persistence or publication workflow; legacy comparison differences still fail the data gate. Regression tests require baseline commit aedee1e in local Git history. Registry validation cannot prove visual image ownership or validate formula freshness.
 
 ### Baseline verification and documentation finalization — 2026-09-18
 

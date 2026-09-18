@@ -10,16 +10,18 @@ const fields = ["COLLECTION", "FABRIC", "CATEGORY", "TYPE", "COLOR", "SIZE", "SK
 
 /** Runtime gate for externally supplied canonical data. Unknown fields (including prices) fail. */
 export const canonicalCatalogSchema: z.ZodType<CanonicalCatalog> = z.strictObject({
-  version: z.literal("phase-1-v1"),
+  version: z.literal("phase-2-v1"),
   collections: z.array(named),
   subCollections: z.array(named.extend({ collectionId: text })),
   categories: z.array(named.extend({ name: z.enum(CATEGORY_NAMES) })),
   products: z.array(named.extend({
     collectionId: text, subCollectionId: text, categoryId: text,
     publication: z.enum(["draft", "published", "archived"]), definitionSource: text,
+    DESCRIPTION: z.string().nullable().optional(),
   })),
   colorPatterns: z.array(z.strictObject({
     id: text, productId: text, COLOR: optionalSource, PATTERN: optionalSource,
+    COLOR_CODE: optionalSource.optional(),
     patternStatus: z.enum(["known", "not-applicable", "ambiguous"]),
   })),
   variants: z.array(z.strictObject({
@@ -32,7 +34,7 @@ export const canonicalCatalogSchema: z.ZodType<CanonicalCatalog> = z.strictObjec
       sourceSKU: optionalSource, sourceSIZE: optionalSource, sourceFABRIC: optionalSource, sourceCOLOR: optionalSource,
       sourceNumber: optionalSource, sourceName: optionalSource,
       sourceCollection: optionalSource, sourceCategory: optionalSource, sourceType: optionalSource,
-      mappingVersion: z.literal("phase-1-v1"),
+      mappingVersion: z.literal("catalog-mapping-v1"),
       formulas: z.record(z.enum(fields), text.nullable()),
       priceEvidence: z.enum(["literal", "cached-unverified", "cached-approved"]),
     }),
