@@ -21,16 +21,17 @@ Owner decision, 2026-09-18: preserve and document this relevant rebuild/migratio
 Verified linear Git relationship:
 
 ```text
-4b27943  origin/main (also local main)
+4b27943  previous origin/main (local main remains here)
    -> 6380406  Phase 0: docs: establish phase 0 project context
    -> af1113c  Phase 1: feat(catalog): define canonical data contract
    -> 9f30864  Migration checkpoint: update all structure
-   -> documentation checkpoint containing this baseline-finalization update
+   -> 50e7d86  docs: finalize rebuild baseline status (baseline handoff verified)
+   -> documentation checkpoint recording the successful remote handoff
 ```
 
-Remote: `https://github.com/rausanfikri/aischmira-store.git`. Read-only `git ls-remote --heads origin` on 2026-09-18 advertised only `refs/heads/main` at `4b27943470b48e9fa866187f1e4b27d5d2b58840`. Phase 0, Phase 1 and the migration checkpoint are available on the local working branch but not on any remote branch visible in that check. Do not infer availability on another device.
+Remote: `https://github.com/rausanfikri/aischmira-store.git`. Before handoff on 2026-09-18, `git ls-remote --heads origin` advertised only `refs/heads/main` at `4b27943470b48e9fa866187f1e4b27d5d2b58840`. Owner-authorized `git push origin HEAD:main` then succeeded as a fast-forward from `4b27943` to `50e7d86`. After the push completed, `git fetch origin` confirmed HEAD and origin/main both at `50e7d866914cf33ba522e0405c9a1e74dea4ad86`, with a clean working tree. Phase 0, Phase 1, the migration checkpoint and baseline-finalization documentation are now available through origin/main. The other device must fetch/pull before continuing; its local state is not verified here.
 
-Last documentation checkpoint: the commit containing this update, titled `docs: finalize rebuild baseline status`; locate it with `git log -1 --format=%h --grep='^docs: finalize rebuild baseline status$'`. Push: **NOT DONE**. This task authorizes only the documentation commit; remote handoff awaits a separate owner decision.
+Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline status`). Baseline push: **SUCCESS — VERIFIED**. Last documentation checkpoint: the separate commit containing this handoff record, titled `docs: record baseline remote handoff`; locate it with `git log -1 --format=%h --grep='^docs: record baseline remote handoff$'`. The owner also authorizes pushing this documentation-only follow-up and verifying it against origin/main. No reset, rebase, merge, force push or history rewrite is part of the handoff.
 
 ## Completed
 
@@ -45,15 +46,15 @@ Last documentation checkpoint: the commit containing this update, titled `docs: 
 
 ## Current Phase
 
-**Baseline finalization before Phase 2. Phase 2 has NOT STARTED.**
+**Baseline remote handoff completed. Phase 2 has NOT STARTED.**
 
 Phase 1 scope was canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Phase 1 did not implement UI, routing, checkout, auth, database, dependency, image or legacy cleanup work. The separate migration checkpoint must not be attributed to Phase 1 or Phase 2.
 
-Status: Phase 1 completed and validated within scope at `af1113c` (`feat(catalog): define canonical data contract`); Phase 0 remains `6380406`. Migration changes were excluded from the Phase-1 commit and later recorded separately in `9f30864`. Current task: documentation-only baseline finalization, with no source fixes or Phase-2 implementation.
+Status: Phase 1 completed and validated within scope at `af1113c` (`feat(catalog): define canonical data contract`); Phase 0 remains `6380406`. Migration changes were excluded from the Phase-1 commit and later recorded separately in `9f30864`. Current task: baseline handoff and its documentation only, with no source fixes or Phase-2 implementation.
 
 ## Next Phase
 
-**Phase 2 — Product Data Pipeline.** Not started. It may begin only after the baseline has been successfully handed off to the remote and continuation is authorized. This documentation checkpoint does not authorize starting Phase 2 or pushing.
+**Phase 2 — Product Data Pipeline.** Not started. The remote baseline handoff prerequisite is satisfied; wait for the owner's next explicit instruction before starting Phase 2. Successful synchronization does not resolve application or data-publication blockers.
 
 Use `types/canonical-catalog.ts` and `lib/catalog-contract.ts` with the documented contract. First verify formula prices, reconcile source/TS text drift explicitly and decide the operator/source workflow. Publication remains blocked; do not infer permission from a complete contract.
 
