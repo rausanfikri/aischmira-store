@@ -1,3 +1,4 @@
+import type { SourceField, SourceValues } from "./catalog-source";
 /** Canonical metadata contract. types/catalog.ts remains the legacy compatibility boundary. */
 export const CATEGORY_NAMES = ["Outerwear", "Tops", "Bottoms", "Dress", "Pyjamas", "Accessories"] as const;
 export type CategoryName = typeof CATEGORY_NAMES[number];
@@ -31,27 +32,19 @@ export interface ProductColorPattern {
   productId: string;
   COLOR: string | null;
   PATTERN: string | null;
-  /** Optional opaque source code, not a guessed CSS/hex color. No source exists yet. */
+  /** Official workbook hex, preserved exactly for this product/color/pattern. */
   COLOR_CODE?: string | null;
   patternStatus: "known" | "not-applicable" | "ambiguous";
 }
-export type SourceField = "COLLECTION" | "FABRIC" | "CATEGORY" | "TYPE" | "COLOR" | "SIZE" | "SKU_NO" | "SKU" | "SKU_NAME" | "START_PRICE" | "FINAL_PRICE";
 export interface Provenance {
   workbook: "data/MASTER PRODUCTS.xlsx";
-  sheet: "DASHBOARD";
+  sheet: "PRODUCTS";
+  sourceVersion: "products-workbook-v1";
+  sourceSha256: string;
   row: number;
   cells: Record<SourceField, string>;
-  sourceSKU: string | null;
-  sourceSIZE: string | null;
-  sourceFABRIC: string | null;
-  sourceCOLOR: string | null;
-  sourceNumber: string | null;
-  sourceName: string | null;
-  sourceCollection: string | null;
-  sourceCategory: string | null;
-  sourceType: string | null;
-  mappingVersion: "catalog-mapping-v1";
-  /** Raw formula XML, including shared-formula references; null means a literal cell. */
+  sourceValues: SourceValues;
+  mappingVersion: "catalog-mapping-v2";
   formulas: Record<SourceField, string | null>;
   priceEvidence: "literal" | "cached-unverified" | "cached-approved";
 }
@@ -79,7 +72,7 @@ export interface Media {
   mappingSource: string;
 }
 export interface CanonicalCatalog {
-  version: "phase-2-v1";
+  version: "phase-2.3-v1";
   collections: Collection[];
   subCollections: SubCollection[];
   categories: Category[];

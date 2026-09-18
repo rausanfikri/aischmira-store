@@ -1,79 +1,53 @@
-# Product Data Quality — Phase 1
+# Product Data Quality ? Phase 2.3
 
-Date: 2026-09-17. Scope: canonical product data only, not a repeated repository audit.
+Date: 2026-09-18. Current source: PRODUCTS in data/MASTER PRODUCTS.xlsx. Historical Phase-1/2.2 evidence is retained in Git checkpoint 0fcde52; its DASHBOARD/formula blockers do not describe this new source.
 
-Source: `data/MASTER PRODUCTS.xlsx`, DASHBOARD rows identified by SKU number/code/name; source headers/merged ranges inspected read-only. Comparison: unchanged `data/sku-master.ts` and approved hierarchy in `data/catalog.ts`. Contract: [Canonical Product Data Contract](CANONICAL_PRODUCT_DATA_CONTRACT.md).
+Workbook SHA-256 (unchanged throughout implementation):
+`96fb70c0cbc16626d0d93d121e0f2603529880519aa0c1d3beef04cb6471f41e`
 
-## Summary
+## Accepted snapshot
 
 | Check | Result |
 | --- | ---: |
-| Source SKU rows | 369 |
-| Unique source SKU | 369 |
-| TypeScript dataset rows / unique SKU | 369 / 369 |
-| Duplicate source SKU | 0 |
-| Missing source SKU | 0 |
-| Workbook SKU absent from TypeScript | 0 |
-| TypeScript SKU absent from workbook | 0 |
-| Marketplace price-pair differences | 0 |
-| Missing source price rows | 0 |
-| Invalid monetary values in stored results | 0 |
-| Formula-backed price rows, unverified | **369** |
-| Distinct price formula origin cells (K/L) | 48 |
-| Missing product identity / missing hierarchy | 0 / 0 |
-| Product definitions / definitions with actual SKU | 27 / 24 |
-| Definitions without SKU | 3 |
-| Within-product FABRIC conflicts | 0 |
-| Missing FABRIC / missing SIZE | 0 / 0 |
-| Literal size `-` | 23 |
-| Color/pattern groups | 106 |
-| Patterned groups (Scarf) | 23 |
-| Ambiguous color/pattern classifications found under approved mapping | 0 |
-| Groups with media / missing media | 4 / 102 |
-| Exact workbook–TypeScript text differences | **28** |
-| Approved source category aliases | 24 |
-| Draft products / published products | 27 / 0 |
-| Currently eligible / orderable variants | 0 / 0 |
+| Source rows / generated variants / unique SKU | 497 / 497 / 497 |
+| Missing SKU / duplicate SKU / duplicate selections | 0 / 0 / 0 |
+| Collections / sub-collections / canonical categories | 2 / 18 / 6 |
+| Product definitions / products with actual SKU | 29 / 26 |
+| Color/pattern groups / Scarf pattern groups | 128 / 23 |
+| Scarf patterns | 5 |
+| Literal size '-' | 23 |
+| Missing size / missing color / invalid hex | 0 / 0 / 0 |
+| Missing/invalid prices / inverted price pairs | 0 / 0 |
+| Literal price rows / formula cells | 497 / 0 |
+| Missing FABRIC / conflicting non-null product fabrics | 55 / 0 |
+| Media references / groups with media / groups missing media | 5 / 4 / 124 |
+| Draft / published / archived products | 29 / 0 / 0 |
+| Data-eligible / orderable variants | 497 / 0 |
+| Import errors | 0 |
 
-The original five numeric baseline results remain unchanged: 369 source rows, 369 unique SKU, 369 TS SKU, zero workbook SKU missing in TS and zero price-pair differences. New findings concern formula freshness and additional fields that the initial SKU/price comparison did not certify.
+The owning registry preserves 3 no-SKU definitions: Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly. Product DESCRIPTION remains null. Official hex values are retained exactly: Navy legitimately has #0C1758 and #0E1855 on different products; no within-group code conflict was found.
 
-## Publication blocker: cached formula prices
+## Reconciliation and visible incomplete data
 
-Both canonical price fields for all rows inherit cached formula values from 48 K/L origin cells. For example DASHBOARD K3 contains `CEILING((L3*1.01)-9000,10000)+9000`, and L3 contains `CEILING(((J3+1250)/(1-33%))-9000,10000)+9000`.
+The complete machine-readable [reconciliation report](../data/generated/reconciliation-report.json) contains source values, canonical values, conflicts/decisions and recommended actions. [Generated catalog](../data/generated/canonical-catalog.json) includes all accepted source rows and cell provenance.
 
-**Owner decision during Phase 1:** record these results as unverified and block publication until formula verification. No recalculation or workbook modification was performed. Matching TS values does not prove formula freshness. The extractor records original formula XML/cell origins; canonical price contains only START_PRICE and FINAL_PRICE, never offline price. No workbook formula is reproduced as storefront price calculation.
+- 42 approved category mappings: 24 Jolly rows to Pyjamas, 18 Be Me rows from Pants to Bottoms.
+- 18 explicit Be Me collection overrides: raw That Woman becomes canonical Rempah Revival by owner decision, with both values retained.
+- 47 source-subcollection mappings: 23 Scarf rows map designs to PATTERN under Scarf, 24 exact 'Jolly ' values map to Jolly. No blanket trim is applied.
+- 414 source product labels differ from their approved existing canonical display names; this is reported, not treated as fuzzy matching.
+- 55 FABRIC_MISSING warnings: Aveline 20, Luna 12, Scarf 23. Values remain null. The versioned contract makes this an incomplete warning without blocking catalog import or data eligibility.
+- 124 MEDIA_MISSING warnings and 3 draft NO_SKU warnings. Existing five media references remain intact; file spelling/existence checked, visual authenticity not recertified.
+- One advisory reference-list warning: LISTS!B8 contains 's'. Canonical categories come from the registry; the workbook is not edited.
+- ACTIVE on 497 source rows is provenance only. No product is published and no draft SKU is exposed as orderable through the compatibility adapter.
 
-Validator emits 369 PRICE_SOURCE_UNVERIFIED issues. This is an intentional data gate, not a new application compile failure or permission to substitute prices.
+## Comparison with prior checkpoint
 
-## Exact text differences
+The read-only audit compared exact SKU strings with workbook checkpoint 0fcde52: 307 retained, 190 newly present, 62 no longer present, net +128. All 307 retained SKU price pairs changed. This observation is history, not a SKU alias table. The owner approved the current workbook as active snapshot; the importer never reads legacy prices or requires membership in sku-master.ts.
 
-28 rows differ in one inspected text field between workbook and legacy TS:
+The former formula-backed prices are replaced with literal PRODUCTS J/K prices. The old 28 source/legacy text mismatches are not used as import blockers. The new source lacks old SKU number/name columns; those values are not fabricated. SOURCE SHA and raw A:N cells make the current evidence independently traceable.
 
-- 12 Safira rows: workbook FABRIC is `Cotton Toyobo\nPremium`; TS uses `Cotton Toyobo Premium`. Canonical evidence preserves the newline. This is source/TS formatting drift, **not** a within-product FABRIC conflict.
-- 11 Zamira SKU_NAME rows differ only by trailing whitespace.
-- 5 rows have substantive SKU_NAME differences, listed below. Exact SKU, actual SIZE field and price-pair checks still match; a mistaken size embedded in SKU_NAME must not redefine variant SIZE.
+## Validation and limits
 
-| SKU | Workbook SKU_NAME | Legacy TS SKU_NAME |
-| --- | --- | --- |
-| ZAMIRA-LONGDRESS-GREENLIME-L | AISCHMIRA Zamira Long Dress Green Lime (trailing space) | AISCHMIRA Long Dress Green Lime |
-| FEMME-TANKTOP-WOOD-S | AISCHMIRA Femme Tank Top Wood S | AISCHMIRA Femme Tank Top Wood XS |
-| HER-SHORTSLEEVETOP-WOOD-S | AISCHMIRA Her Short Sleeve Top Wood S | AISCHMIRA Her Short Sleeve Top Wood XS |
-| HER-SHORTSLEEVETOP-OAT-M | AISCHMIRA Her Short Sleeve Top Oat M | AISCHMIRA Her Short Sleeve Top Oat S |
-| HER-PANTS-WOOD-M | AISCHMIRA Her Pants Wood M | AISCHMIRA Her Pants Wood S |
+Acceptance commands and source ownership are documented in the [canonical contract](CANONICAL_PRODUCT_DATA_CONTRACT.md). The pipeline validates exact source schema, strict registries, source rows, identity/relationships, exact money, hex, nullable fabric, media references and deterministic output freshness. Negative tests mutate copies of real input in memory; persistence tests use temporary output files only.
 
-No old dataset was corrected. The source-only label is preserved in canonical provenance; product display names follow the approved naming registry. Phase 2 must explicitly reconcile these differences instead of treating the TS extract as byte-identical to the workbook.
-
-## Definitions, aliases and media
-
-- Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly remain draft definitions without variants, prices or purchase permission. No fictitious SKU was created.
-- Source Long Pyjama Set / Short Pyjama Set → Pyjamas for 24 Jolly rows is an approved alias, not an error or new category.
-- Scarf pattern comes from the approved source COLLECTION mapping and remains separate from COLOR. The group identity includes product, color and pattern. The legacy color-only media key must never be reused across ambiguous patterns.
-- Only four She Dress color groups have five mapped images; 102 groups have missing media. Existing image associations were carried as evidence, not visually recertified. Butter Yellow stays empty.
-
-## Reproducible checks and limits
-
-- `node scripts/check-canonical-types.mjs`: scoped strict TypeScript validation, no emit.
-- `node --test scripts/canonical-contract.test.mjs`: contract regression tests using actual source and transient mutated copies, no saved dummy catalog.
-- `node scripts/check-canonical-data.mjs`: JSON report; **exit 1 is expected for this source snapshot** due to unverified formula prices and source/legacy text differences. Approved category aliases alone do not fail the check.
-- This phase does not execute workbook formulas, verify live database data, publish products, repair legacy app imports, test UI, optimize media or modify authentication/checkout.
-- Workbook SHA-256 and legacy file hashes are checked before/after Phase 1. Actual execution results and repository-wide diagnostic comparison are recorded in `AISCHMIRA_STATUS.md`.
+Source/registry validation and import acceptance are not publication or storefront readiness. Existing application compile/integration blockers remain separate. No UI, database, checkout, photo optimization, CRUD interface, BigSeller, shipping or payment integration was performed.

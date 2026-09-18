@@ -8,7 +8,7 @@ Repository sedang dalam migrasi dan belum menjadi aplikasi storefront yang utuh.
 
 Legacy pages reference removed modules; new catalog/account foundations are not wired into them. Documentation readiness is not application readiness.
 
-Branch: `codex/editorial-storefront`. Baseline source HEAD: `9f30864`. Working tree was clean at baseline-finalization preflight. The earlier Phase-0 preflight recorded 409 tracked deletions, 3 modified files and 8 untracked files; that is historical evidence, not the current working-tree state. Phase 0 recorded the AGENTS.md change; migration commit `9f30864` subsequently recorded 409 deletions, 2 modifications and 8 additions. These changes are no longer uncommitted.
+Historical baseline branch: `codex/editorial-storefront`. Baseline source HEAD: `9f30864`. Working tree was clean at baseline-finalization preflight. The earlier Phase-0 preflight recorded 409 tracked deletions, 3 modified files and 8 untracked files; that is historical evidence, not the current working-tree state. Phase 0 recorded the AGENTS.md change; migration commit `9f30864` subsequently recorded 409 deletions, 2 modifications and 8 additions. These changes are no longer uncommitted.
 
 ## Baseline and Git Relationship
 
@@ -48,21 +48,33 @@ Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline st
 
 ## Current Phase
 
-**Phase 2.1 + 2.2 — COMPLETED within scope. Phase 2.3 has NOT STARTED.**
+**Phase 2.3 ? COMPLETED within authorized scope. All acceptance checks passed. No publication performed.**
 
-Phase 1 scope was canonical types/contract, pure validator, read-only source evidence tooling, tests and documentation. Phase 1 did not implement UI, routing, checkout, auth, database, dependency, image or legacy cleanup work. The separate migration checkpoint must not be attributed to Phase 1 or Phase 2.
+Starting checkpoint: `0fcde526536729f616b4f65699d0e2e4f96e11e1` (Phase 2.1 + 2.2), verified equal to the remote origin/main before work. Work branch: `codex/phase-2-3-import`. Preflight local change was only the owner's deliberately replaced data/MASTER PRODUCTS.xlsx. Workbook is unchanged by the implementation and is included in this phase's checkpoint to make source fingerprints, generated output and validation reproducible from a fresh checkout. Its SHA-256 is recorded in docs/PRODUCT_DATA_QUALITY.md.
 
-Starting checkpoint: `aedee1eb416ab9022c61cd88a8267a646f3f156e`, confirmed equal to origin/main with a clean working tree before Phase 2.1 + 2.2. The owner subsequently authorized resuming the interrupted uncommitted registry work without discarding it. No unrelated changes were included.
+Owner decisions are now recorded in MASTER_BRIEF.md and docs/CANONICAL_PRODUCT_DATA_CONTRACT.md. Source products-workbook-v1 replaces DASHBOARD; contract phase-2.3-v1 and registry catalog-mapping-v2 record exact raw A:N source values, cell/formula evidence, SHA-256, official hex and source status. Be Me's raw That Woman collection is explicitly overridden by the owner to Rempah Revival; no workbook edit or automatic SKU alias is made.
 
-Last Git checkpoint: the commit containing this update, titled `feat(data): establish canonical metadata registries`; locate with `git log -1 --format=%h --grep='^feat(data): establish canonical metadata registries$'`. The checkpoint is authorized for fast-forward push to origin/main; final handoff verification requires HEAD == origin/main and a clean working tree. This document does not claim a push before that operation succeeds.
+Implementation: read-only OOXML extraction, strict source/registry validation, pure reconciliation, canonical semantic checks, exact media file checks, deterministic generated output, rejection reports and freshness checks. CLI --write is required for generation. Errors never replace accepted canonical rows with a partial catalog. The loader refuses a failed/mismatched report. Compatibility catalog uses canonical output and orderability; legacy sku-master.ts remains unchanged historical evidence only.
 
-Phase 1 remains completed at `af1113c`; Phase 0 remains `6380406`; migration baseline remains `9f30864`. Registry completion does not certify a working storefront or publishable product data.
+Current accepted snapshot: **497 source rows = 497 unique SKU = 497 canonical variants; 2 collections, 18 sub-collections, 6 categories, 29 product definitions (26 with SKU), 128 color/pattern groups.** All prices are literal exact whole-rupiah values. Official COLOR_CODE is preserved. All 29 products remain draft, with **0 orderable variants**. Missing FABRIC remains null on 55 rows and is a nonblocking incomplete warning under the updated contract.
+
+Data outputs: data/generated/canonical-catalog.json and data/generated/reconciliation-report.json. Both are derived, never manually authored; their generation metadata fingerprints the three owning inputs. No UI, workbook contents, media files, database, dependency, BigSeller, payment or shipping changes.
+
+Checkpoint target title: `feat(data): add canonical workbook import`. Locate its reference with `git log -1 --format=%h --grep='^feat(data): add canonical workbook import$'`. Owner authorized a fast-forward push to origin/main after passing validation. Verify the actual push and HEAD/origin/main equality at handoff; this pre-commit record does not claim a push has already succeeded.
 
 ## Next Phase
 
-**Phase 2.3 — Source Extraction & Import Foundation.** Not started or authorized by this checkpoint. Stop after Phase 2.1 + 2.2 validation, commit and remote handoff; wait for the owner's next instruction. No full importer, generated canonical output, database, UI or publication is implemented here.
+**Phase 2.4 ? coherent canonical storefront integration**, only on separate authorization. Resolve existing application compile/integration failures and wire a small canonical read-only route/service slice, preserving draft/orderability gates. Do not infer publication from accepted import. Photo sourcing, publication policy and a future data-management persistence workflow remain separate decisions/tasks; no admin UI is authorized here.
 
-Use types/canonical-catalog.ts, lib/catalog-contract.ts, the two JSON registries and their documented ownership. Continue source extraction/import foundation only in the next authorized phase; formula verification, legacy text reconciliation, batch persistence and publication remain future work. Never infer publication permission from registry validity.
+## Current Data Follow-ups
+
+- 55 nullable FABRIC values remain incomplete by explicit owner instruction, not a Phase-2.3 import blocker.
+- 124 color/pattern groups lack media; 5 existing image references cover 4 She Dress groups. No fallback or visual recertification.
+- Three definitions still have no SKU and remain draft/nonorderable.
+- LISTS!B8 is 's', reported as advisory invalid category; canonical categories use the approved registry. Owner can correct a future workbook revision.
+- All products remain draft; publication owner/process and missing-media publication policy are still future concerns.
+- Import CLI currently requires Windows PowerShell/.NET plus installed Node dependencies. Pair replacement uses atomic individual files and matching-report guards, not a database transaction or multi-writer workflow.
+- The following architecture/blocker notes and earlier validation entries are historical unless superseded by this current phase. In particular, 369-row DASHBOARD/formula/text drift evidence is not the current import gate.
 
 ## Audit Evidence and Architecture Map
 
@@ -163,9 +175,38 @@ Resolve before dependent implementation; do not invent defaults. Independent in-
 | Q8 | Which Bazaar statuses/publication rules are needed; single-day or multi-day, which timezone, and does deactivation archive or hide an event? | Bazaar model implementation |
 | Q9 | Which existing public URLs must remain or redirect, including product slugs, /bag, /cart and legacy account routes? | Routing migration |
 
-Q1–Q3 were resolved by the Phase-1 owner instructions and are no longer clarification requests. Formula treatment is also resolved: block until verification. Obtaining that verification and reconciling reported text drift are Phase-2 evidence tasks, not permission to invent business values.
+Q1–Q3 were resolved by the Phase-1 owner instructions and are no longer clarification requests. Formula treatment is also resolved: block until verification. Phase 2.3 replaces old formula-backed source with approved literals. Formula verification applies only if future source versions reintroduce formulas. Historical legacy text drift is not a current-source blocker.
 
 ## Validation Record
+
+### Phase 2.3 ? 2026-09-18
+
+- Source workbook schema: PASS. Exact PRODUCTS A:N plus auxiliary sheet headers; all 497 rows retained. Unknown columns/sheets, missing headers, merges, unsupported cell types, formula/error cells and external links reject import with actionable diagnostics.
+- node scripts/check-catalog-registries.mjs: PASS, zero issues. Hierarchy, exact source groups, duplicate registry identities, exact media associations and case-exact files validated.
+- node scripts/check-canonical-data.mjs / importer --check: PASS. 497 unique SKU, no missing/duplicate SKU or duplicate product/color/pattern/size; prices/hex valid, official prices only, 55 null FABRIC retained. Zero import errors; 183 warnings (55 fabric, 124 media, 3 no-SKU definitions, 1 advisory LISTS category) and 521 explicit approved mapping records.
+- node --test scripts/canonical-contract.test.mjs scripts/catalog-registry.test.mjs scripts/catalog-import.test.mjs: PASS, **34/34**. Includes prior scoped tests updated for authorized source changes; new negative schema/identity/money/hex/metadata cases, exact repeat-output comparison, rejected-batch persistence, stale-output detection, unchanged workbook and checkout-line-ending fingerprint checks.
+- node scripts/check-canonical-types.mjs: PASS, strict no emit, covering all touched production TypeScript and compatibility adapters.
+- Scoped ESLint: PASS for all 16 touched TS/MJS files; no rule relaxations. Later changed importer/test files were rechecked after the final fingerprint correction.
+- Whole-repository TypeScript: FAIL, **124 diagnostics**, all outside touched canonical/registry/import files. In-memory compiler comparison against checkpoint 0fcde52 under the same current environment: baseline 124, current 124, **0 added / 0 removed**, identical file/code/message signatures. The historical 106 count excludes the 18 currently present generated .next validator diagnostics; no baseline cleanup was attempted.
+- Repeated accepted import/read-only freshness checks: byte-identical output. XLSX raw-byte SHA-256 unchanged throughout; JSON input fingerprints ignore formatting line endings while preserving business string values. Generated JSON is pinned to LF by .gitattributes.
+- Documentation links, content/scope review, Git diff whitespace and source-to-canonical row/price-field checks: PASS. Only START_PRICE and FINAL_PRICE exist on canonical variants.
+- Production build/browser/responsive/live integration checks: NOT RUN. No UI/routing changes; repository compilation remains blocked by unchanged legacy integration defects. Acceptance here is the scoped import foundation, not application readiness.
+
+Phase-2.3 files (26 explicit checkpoint paths):
+
+- .gitattributes
+- MASTER_BRIEF.md; AISCHMIRA_STATUS.md
+- docs/CANONICAL_PRODUCT_DATA_CONTRACT.md; docs/PRODUCT_DATA_QUALITY.md
+- data/MASTER PRODUCTS.xlsx (owner replacement, unchanged bytes); data/catalog-mapping.json; data/catalog.ts; data/canonical-catalog.ts
+- data/generated/canonical-catalog.json; data/generated/reconciliation-report.json
+- types/catalog-source.ts; types/canonical-catalog.ts; types/catalog-registry.ts
+- lib/catalog-import.ts; lib/catalog-contract.ts; lib/catalog-registry.ts
+- scripts/read-product-workbook.ps1; scripts/canonical-support.mjs; scripts/import-catalog.mjs
+- scripts/check-canonical-data.mjs; scripts/check-catalog-registries.mjs; scripts/check-canonical-types.mjs
+- scripts/canonical-contract.test.mjs; scripts/catalog-registry.test.mjs; scripts/catalog-import.test.mjs
+
+No unresolved blocker within the Phase-2.3 acceptance scope. The Current Data Follow-ups and pre-existing application integration defects remain visible; none were bypassed with fake data or automatic publication.
+
 
 ### Phase 2.1 + 2.2 — 2026-09-18
 

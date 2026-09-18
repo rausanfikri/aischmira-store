@@ -30,8 +30,8 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 - Phase-1 decisions: existing hierarchy/naming mappings are authoritative unless concrete source evidence contradicts them. Preserve literal size `-`; distinguish missing size explicitly. Keep Scarf pattern/design separate from color.
 - Femme Skirt Maxi, Her Top Sleeve Less and She Dress Hijab Friendly remain representable definitions, but are not orderable or published as purchasable products until valid source SKU exists.
 - `data/MASTER PRODUCTS.xlsx` is source evidence. Do not edit it without explicit instruction. Reconcile imports against it and respect merged cells/provenance.
-- Phase-2.1 owner decisions: DESCRIPTION belongs to Product only and stays missing until supplied; Product publication is draft/published/archived, never inventory. COLOR_CODE has no official source and may only be optional/nullable; never derive hex/CSS or internal codes from names.
-- Data ownership: workbook owns actual SKU/size/color/FABRIC/price; data/catalog-mapping.json owns approved identity/hierarchy/description/publication/optional color metadata; data/product-media.json owns exact media associations. sku-master.ts is transitional comparison/evidence only. Future canonical output is generated, not manually edited.
+- Phase-2.1 owner decisions: DESCRIPTION belongs to Product only and stays missing until supplied; Product publication is draft/published/archived, never inventory. Phase-2.3: PRODUCTS!G supplies official COLOR_CODE; validate six-digit hex and preserve it exactly per product/color/pattern, never derive it from names.
+- Data ownership: workbook owns actual SKU/size/color/COLOR_CODE/FABRIC/price and raw source status; data/catalog-mapping.json owns approved identity/hierarchy/Product description/publication; data/product-media.json owns exact media associations. sku-master.ts is transitional comparison/evidence only. data/generated/canonical-catalog.json is generated, never manually edited; reconciliation-report.json records the matching import result. Compatibility consumers use this canonical output, not legacy prices.
 - Missing remains missing. Products without a valid orderable SKU/price cannot enter checkout. No invented products, colors, sizes, fabric, descriptions, prices, discounts or media.
 
 ## Price contract
@@ -41,7 +41,7 @@ Older README, tasks, roadmap, architecture documents and ADRs are historical whe
 - Do not use `OFFLINE_PRICE` or any offline/bazaar price in the storefront contract. Historical workbook columns remain untouched for traceability.
 - Approved mapping: MARKETPLACE DEFAULT PRICE → START_PRICE; MARKETPLACE FINAL PRICE → FINAL_PRICE. OFFLINE BAZAAR PRICE is excluded from the canonical price model.
 - Monetary values use exact whole-rupiah decimal strings, with integer arithmetic where needed; no floating-point money. Equal prices are valid. Invalid/unmappable source values are validation issues, never guessed prices.
-- Owner decision during Phase 1: cached formula prices remain unverified and block publication until formula verification. Matching legacy dataset values is not proof of freshness. Preserve formula/cell provenance without calculating storefront prices from offline values.
+- Current source version requires literal values. Future formula-backed prices require an explicitly approved verification workflow; cached values and legacy equality are insufficient evidence. Never calculate storefront prices from offline values.
 - Re-resolve cart prices from canonical data before checkout. Never turn missing prices into zero or substitute a different variant's price.
 
 ## Media, accessibility and performance
@@ -90,3 +90,15 @@ Phase 1 is limited to the canonical contract, compatible TypeScript definitions,
 After each phase, run relevant validation, report exact results/limitations, update the status checkpoint and commit only reviewed in-scope changes. Code phases require appropriate lint, type-check, build, data/commerce and browser checks. A documentation checkpoint does not certify application readiness.
 
 Phase 2.1 + 2.2 is limited to these metadata clarifications, structured catalog/media registries, minimal compatibility adapters, read-only validation and documentation. No full import pipeline, workbook/source value edits, UI, database, dependency installation or media optimization is authorized. Next implementation scope is Phase 2.3 only when separately requested.
+
+## Phase 2.3 accepted reconciliation decisions
+
+- Current workbook schema is PRODUCTS A:N, version products-workbook-v1. Do not modify the workbook. Exact active SKU comes from its 497-row snapshot; absent historical SKUs are outside the active snapshot. No implicit SKU aliases or migrations.
+- Canonical contract phase-2.3-v1 and registry catalog-mapping-v2 preserve raw cells, values, formulas, source SHA-256 and row provenance. Identity uses explicit registry keys, never inferred product-name similarity.
+- Alice / Top belongs to That Woman / Alice / Tops. Be Me / Satin Pants belongs to Rempah Revival / Be Me / Bottoms. The latter explicitly overrides source collection That Woman and category Pants. Product display names for these new entries are exactly Top and Satin Pants; existing approved product names remain unchanged.
+- Long Pyjama Set and Short Pyjama Set map to Pyjamas. Five Scarf designs remain PATTERN values under the single Scarf product/sub-collection. Literal SIZE '-' remains valid. Exact source 'Jolly ' maps to existing Jolly identity; raw whitespace remains in provenance.
+- Missing FABRIC stays null. In phase-2.3-v1 FABRIC_MISSING is an incomplete warning, not a batch/eligibility blocker; conflicting non-null fabrics still block. No MATERIAL alias or inferred values.
+- COLOR_CODE is official workbook-owned six-digit hex, preserved without normalization across products. DESCRIPTION and publication remain Product metadata owned by the JSON registry. Empty source DESCRIPTION stays missing, and nonempty disagreement must be reconciled.
+- Source ACTIVE/INACTIVE/DRAFT is provenance only, never stock or canonical publication. All 29 product definitions remain draft; importer performs no publication.
+- Existing media registry remains authoritative despite empty workbook MEDIA. No cross-product/color/pattern fallback. New populated auxiliary metadata sheets need explicit reconciliation, not silent replacement.
+- Phase 2.3 authorizes extraction, reconciliation, generated output, validators/tests, compatibility adapters and documentation only. No UI, CMS/admin, database, payment/shipping/BigSeller integrations, design changes or invented business data.

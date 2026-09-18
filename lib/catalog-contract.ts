@@ -1,3 +1,5 @@
+import { SOURCE_COLUMNS } from "../types/catalog-source";
+import type { SourceField } from "../types/catalog-source";
 import { z } from "zod";
 import { CATEGORY_NAMES } from "../types/canonical-catalog";
 import type { CanonicalCatalog, CatalogAssessment, DataValidity, ValidationIssue } from "../types/canonical-catalog";
@@ -6,11 +8,11 @@ const text = z.string().min(1).refine((value) => value.trim().length > 0, "Blank
 const optionalSource = text.nullable();
 const price = z.string().regex(/^(0|[1-9][0-9]*)$/, "Whole rupiah digits required").nullable();
 const named = z.strictObject({ id: text, slug: text, name: text });
-const fields = ["COLLECTION", "FABRIC", "CATEGORY", "TYPE", "COLOR", "SIZE", "SKU_NO", "SKU", "SKU_NAME", "START_PRICE", "FINAL_PRICE"] as const;
+const fields = Object.keys(SOURCE_COLUMNS) as SourceField[];
 
 /** Runtime gate for externally supplied canonical data. Unknown fields (including prices) fail. */
 export const canonicalCatalogSchema: z.ZodType<CanonicalCatalog> = z.strictObject({
-  version: z.literal("phase-2-v1"),
+  version: z.literal("phase-2.3-v1"),
   collections: z.array(named),
   subCollections: z.array(named.extend({ collectionId: text })),
   categories: z.array(named.extend({ name: z.enum(CATEGORY_NAMES) })),
@@ -21,7 +23,7 @@ export const canonicalCatalogSchema: z.ZodType<CanonicalCatalog> = z.strictObjec
   })),
   colorPatterns: z.array(z.strictObject({
     id: text, productId: text, COLOR: optionalSource, PATTERN: optionalSource,
-    COLOR_CODE: optionalSource.optional(),
+    COLOR_CODE: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Expected exact six-digit hex").nullable().optional(),
     patternStatus: z.enum(["known", "not-applicable", "ambiguous"]),
   })),
   variants: z.array(z.strictObject({
@@ -29,12 +31,11 @@ export const canonicalCatalogSchema: z.ZodType<CanonicalCatalog> = z.strictObjec
     SKU: optionalSource, SIZE: optionalSource, FABRIC: optionalSource,
     START_PRICE: price, FINAL_PRICE: price,
     provenance: z.strictObject({
-      workbook: z.literal("data/MASTER PRODUCTS.xlsx"), sheet: z.literal("DASHBOARD"),
-      row: z.number().int().min(3), cells: z.record(z.enum(fields), text),
-      sourceSKU: optionalSource, sourceSIZE: optionalSource, sourceFABRIC: optionalSource, sourceCOLOR: optionalSource,
-      sourceNumber: optionalSource, sourceName: optionalSource,
-      sourceCollection: optionalSource, sourceCategory: optionalSource, sourceType: optionalSource,
-      mappingVersion: z.literal("catalog-mapping-v1"),
+      workbook: z.literal("data/MASTER PRODUCTS.xlsx"), sheet: z.literal("PRODUCTS"),
+      sourceVersion: z.literal("products-workbook-v1"), sourceSha256: z.string().regex(/^[0-9a-f]{64}$/),
+      row: z.number().int().min(2), cells: z.record(z.enum(fields), text),
+      sourceValues: z.record(z.enum(fields), z.string().nullable()),
+      mappingVersion: z.literal("catalog-mapping-v2"),
       formulas: z.record(z.enum(fields), text.nullable()),
       priceEvidence: z.enum(["literal", "cached-unverified", "cached-approved"]),
     }),
@@ -102,9 +103,9 @@ export function validateCanonicalCatalog(input: unknown): CatalogAssessment {
   for (const v of c.variants) {
     if (v.SKU === null) add("SKU_MISSING", v.id, "Actual SKU required", "incomplete");
     else if (c.variants.filter((r) => r.SKU === v.SKU).length > 1) add("DUPLICATE_SKU", v.id, `Duplicate exact SKU: ${v.SKU}`);
-    if (v.SKU !== v.provenance.sourceSKU) add("SKU_CHANGED", v.id, "Canonical SKU differs from source");
-    if (v.SIZE !== v.provenance.sourceSIZE) add("SIZE_CHANGED", v.id, "SIZE differs from exact source value");
-    if (v.FABRIC !== v.provenance.sourceFABRIC) add("FABRIC_CHANGED", v.id, "FABRIC differs from source");
+    if (v.SKU !== v.provenance.sourceValues.SKU) add("SKU_CHANGED", v.id, "Canonical SKU differs from source");
+    if (v.SIZE !== v.provenance.sourceValues.SIZE) add("SIZE_CHANGED", v.id, "SIZE differs from exact source value");
+    if (v.FABRIC !== v.provenance.sourceValues.FABRIC) add("FABRIC_CHANGED", v.id, "FABRIC differs from source");
     if (v.provenance.priceEvidence === "cached-unverified") add("PRICE_SOURCE_UNVERIFIED", v.id, "Cached formula prices require source approval/recalculation evidence", "incomplete");
     if (v.provenance.priceEvidence === "literal" && (v.provenance.formulas.START_PRICE || v.provenance.formulas.FINAL_PRICE))
       add("PRICE_EVIDENCE_CONFLICT", v.id, "Formula price cannot be labeled literal");
@@ -113,9 +114,14 @@ export function validateCanonicalCatalog(input: unknown): CatalogAssessment {
     const p = v.productId ? products.get(v.productId) : undefined;
     const color = v.colorPatternId ? colors.get(v.colorPatternId) : undefined;
     if (!p || !color || color.productId !== p.id) add("VARIANT_PARENT", v.id, "Missing or mismatched product/color parent", "incomplete");
-    if (color && color.COLOR !== v.provenance.sourceCOLOR) add("COLOR_CHANGED", v.id, "Color differs from source");
+    if (color && color.COLOR !== v.provenance.sourceValues.COLOR) add("COLOR_CHANGED", v.id, "Color differs from source");
+    if (color && color.COLOR_CODE !== v.provenance.sourceValues.COLOR_CODE) add("COLOR_CODE_CHANGED", v.id, "Official hex differs from source");
+    for (const field of ["START_PRICE", "FINAL_PRICE"] as const) {
+      const source = readRupiah(v.provenance.sourceValues[field]);
+      if (source.invalid || source.value !== v[field]) add("PRICE_CHANGED", v.id, `${field} differs from exact source amount`);
+    }
     if (v.SIZE === null) add("SIZE_MISSING", v.id, "Missing is distinct from literal '-'", "incomplete");
-    if (v.FABRIC === null) add("FABRIC_MISSING", v.id, "FABRIC is missing", "incomplete");
+    if (v.FABRIC === null) add("FABRIC_MISSING", v.id, "FABRIC is missing; preserve null for later data management", "incomplete", "warning");
     if (v.START_PRICE === null || v.FINAL_PRICE === null) add("PRICE_MISSING", v.id, "Both source prices required", "incomplete");
     if (v.START_PRICE !== null && v.FINAL_PRICE !== null && BigInt(v.FINAL_PRICE) > BigInt(v.START_PRICE))
       add("PRICE_RELATION", v.id, "FINAL_PRICE exceeds normal START_PRICE; review source instead of guessing");

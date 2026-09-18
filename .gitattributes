@@ -1,0 +1,2 @@
+# Generated snapshots must survive checkout byte-for-byte for --check.
+data/generated/*.json text eol=lf

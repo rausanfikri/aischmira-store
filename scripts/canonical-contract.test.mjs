@@ -15,19 +15,19 @@ function firstProductApprovedFixture() {
 }
 
 test('source baseline and approved naming remain intact', () => {
-  assert.equal(workbook.rows.length, 369);
-  assert.equal(new Set(catalog.variants.map((v) => v.SKU)).size, 369);
+  assert.equal(workbook.rows.length, 497);
+  assert.equal(new Set(catalog.variants.map((v) => v.SKU)).size, 497);
   assert.equal(catalog.variants.filter((v) => v.SIZE === '-').length, 23);
   assert.equal(extractionIssues.filter((i) => ['PRICE_PAIR_DIFFERENCE', 'WORKBOOK_SKU_MISSING_FROM_TS', 'TS_SKU_NOT_IN_WORKBOOK'].includes(i.code)).length, 0);
   assert.ok(catalog.products.some((p) => p.name === 'Jolly Pyjama Long Set'));
   assert.ok(catalog.products.some((p) => p.name === 'Jolly Pyjama Short Set'));
 });
-test('snapshot remains draft and unverified source prices cannot authorize sales', () => {
+test('snapshot remains draft despite literal approved source prices', () => {
   const result = validate(catalog);
-  assert.equal(result.variants.length, 369);
+  assert.equal(result.variants.length, 497);
   assert.equal(result.variants.filter((v) => v.orderable).length, 0);
-  assert.equal(result.issues.filter((i) => i.code === 'PRICE_SOURCE_UNVERIFIED').length, 369);
-  assert.equal(result.canPublishBatch, false);
+  assert.equal(result.issues.filter((i) => i.code === 'PRICE_SOURCE_UNVERIFIED').length, 0);
+  assert.equal(result.canPublishBatch, true);
 });
 test('unsupported definitions remain present, incomplete and nonorderable', () => {
   const result = validate(catalog);
@@ -61,7 +61,7 @@ test('offline/extra price and MATERIAL fields are rejected, not silently strippe
   }
 });
 test('invalid hierarchy and mismatched variant parents cannot be orderable', () => {
-  const c = firstProductApprovedFixture(); c.products[0].collectionId = c.collections[1].id;
+  const c = firstProductApprovedFixture(); c.products[0].collectionId = c.collections.find((x) => x.id !== c.products[0].collectionId).id;
   assert.ok(has(validate(c), 'HIERARCHY'));
   c.variants[0].productId = null;
   const result = validate(c); assert.ok(has(result, 'VARIANT_PARENT'));
@@ -76,7 +76,7 @@ test('literal dash survives; missing or transformed size is rejected', () => {
 test('FABRIC conflicts retain both values and block product variants', () => {
   const c = firstProductApprovedFixture();
   c.variants[0].FABRIC = c.variants.find((v) => v.FABRIC !== c.variants[0].FABRIC).FABRIC;
-  c.variants[0].provenance.sourceFABRIC = c.variants[0].FABRIC;
+  c.variants[0].provenance.sourceValues.FABRIC = c.variants[0].FABRIC;
   const result = validate(c); assert.ok(has(result, 'FABRIC_CONFLICT'));
   assert.equal(result.variants[0].dataEligible, false);
 });
@@ -99,7 +99,7 @@ test('media parent, primary and sort-order conflicts fail', () => {
   let c = copy(); c.media[0].productId = c.products.find((p) => p.id !== c.media[0].productId).id;
   assert.ok(has(validate(c), 'MEDIA_PARENT'));
   c = copy(); c.media[0].primary = false; assert.ok(has(validate(c), 'MEDIA_PRIMARY'));
-  c = copy(); const last = c.media.at(-1); last.sortOrder = c.media.at(-2).sortOrder;
+  c = copy(); const pair = c.media.filter((m) => c.media.some((other) => other.id !== m.id && other.colorPatternId === m.colorPatternId)); pair[1].sortOrder = pair[0].sortOrder;
   assert.ok(has(validate(c), 'MEDIA_ORDER'));
 });
 test('unknown malformed data fails closed rather than throwing or returning success', () => {

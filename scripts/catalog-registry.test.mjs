@@ -35,27 +35,27 @@ const has = (issues, code) => issues.some((i) => i.code === code);
 
 test('actual workbook and registry relations/files validate without publication claims', () => {
   assert.deepEqual(assessRegistries().issues, []);
-  assert.deepEqual([registry.collections.length, registry.subCollections.length, registry.categories.length, registry.products.length, snapshot.catalog.colorPatterns.length, snapshot.catalog.variants.length, manifest.media.length], [2, 16, 6, 27, 106, 369, 5]);
-  assert.equal(new Set(snapshot.catalog.variants.map((v) => v.SKU)).size, 369);
+  assert.deepEqual([registry.collections.length, registry.subCollections.length, registry.categories.length, registry.products.length, snapshot.catalog.colorPatterns.length, snapshot.catalog.variants.length, manifest.media.length], [2, 18, 6, 29, 128, 497, 5]);
+  assert.equal(new Set(snapshot.catalog.variants.map((v) => v.SKU)).size, 497);
 });
 
-test('compatibility output, every legacy SKU/price and exact naming equal the starting checkpoint', () => {
-  const before = baselineModule('data/catalog.ts'); const after = loadTs('data/catalog.ts');
-  for (const key of ['collections', 'subCollections', 'categories', 'products']) assert.deepEqual(after[key], before[key], key);
+test('legacy evidence/media are preserved; compatibility cannot expose draft SKU or stale prices', () => {
   assert.deepEqual(loadTs('data/sku-master.ts').skuMasterData, baselineModule('data/sku-master.ts').skuMasterData);
   assert.deepEqual(loadTs('data/product-media.ts').productMedia, baselineModule('data/product-media.ts').productMedia);
-  assert.deepEqual(fs.readFileSync(path.join(root, 'data/MASTER PRODUCTS.xlsx')), execFileSync('git', ['show', `${baseline}:data/MASTER PRODUCTS.xlsx`], { cwd: root, maxBuffer: 8 * 1024 * 1024, windowsHide: true }));
+  const after = loadTs('data/catalog.ts');
+  assert.equal(after.products.length, 29);
+  assert.equal(after.products.flatMap((p) => p.colors.flatMap((c) => c.variants)).length, 0);
 });
 
-test('all workbook source groups map without requiring membership in legacy SKU data', () => {
-  for (const row of rows) assert.ok(resolveProductMapping(registry, row.COLLECTION, row.TYPE));
+test('source groups map independently of legacy SKU membership', () => {
+  for (const row of rows) assert.ok(resolveProductMapping(registry, row.COLLECTION, row.SUB_COLLECTION, row.PRODUCT));
   const legacy = loadTs('data/sku-master.ts').skuMasterData;
   const held = legacy.splice(0, legacy.length);
   try {
     const result = createEvidenceSnapshot(workbook);
-    assert.equal(result.catalog.variants.length, 369);
+    assert.equal(result.catalog.variants.length, 497);
     assert.ok(result.catalog.variants.every((v) => v.productId !== null));
-    assert.equal(result.extractionIssues.filter((i) => i.code === 'WORKBOOK_SKU_MISSING_FROM_TS').length, 369);
+    assert.equal(result.issues.filter((i) => i.severity === 'error').length, 0);
   } finally { legacy.push(...held); }
 });
 
@@ -64,7 +64,7 @@ test('three unsupported definitions stay draft without manufactured variants', (
   assert.deepEqual(empty.map((p) => p.name), ['Femme Skirt Maxi', 'Her Top Sleeve Less', 'She Dress Hijab Friendly']);
   assert.ok(empty.every((p) => p.publication === 'draft'));
   assert.ok(registry.products.every((p) => p.DESCRIPTION === null));
-  assert.deepEqual(registry.colorMetadata, []);
+  assert.equal('colorMetadata' in registry, false);
 });
 
 test('duplicate IDs/source mappings and invalid hierarchy fail with actionable locations', () => {
@@ -72,7 +72,7 @@ test('duplicate IDs/source mappings and invalid hierarchy fail with actionable l
   assert.ok(has(validate(r, manifest, rows), 'DUPLICATE'));
   r = copy(registry); r.products[1].sourceGroups.push(copy(r.products[0].sourceGroups[0]));
   assert.ok(has(validate(r, manifest), 'DUPLICATE'));
-  assert.throws(() => resolveProductMapping(r, r.products[0].sourceGroups[0].collection, r.products[0].sourceGroups[0].type), /Ambiguous/);
+  assert.throws(() => resolveProductMapping(r, r.products[0].sourceGroups[0].collection, r.products[0].sourceGroups[0].subCollection, r.products[0].sourceGroups[0].product), /Ambiguous/);
   r = copy(registry); r.products[0].collectionId = r.collections[1].id;
   assert.ok(has(validate(r, manifest), 'HIERARCHY'));
   r = copy(registry); r.products[0].subCollectionId = 'missing';
@@ -85,7 +85,7 @@ test('duplicate IDs/source mappings and invalid hierarchy fail with actionable l
 test('unknown source groups and invalid statuses fail; SKU/price fields cannot be authored in registry', () => {
   let r = copy(registry); r.products[0].sourceGroups = [];
   assert.ok(has(validate(r, manifest, rows), 'UNMAPPED_SOURCE'));
-  r = copy(registry); r.products[0].sourceGroups[0].type = 'Unmapped source type';
+  r = copy(registry); r.products[0].sourceGroups[0].product = 'Unmapped source type';
   assert.ok(has(validate(r, manifest, rows), 'ORPHAN_SOURCE_GROUP'));
   for (const extra of [{ SKU: rows[0].SKU }, { START_PRICE: rows[0].START_PRICE }, { MATERIAL: rows[0].FABRIC }, { publication: 'in-stock' }]) {
     r = copy(registry); Object.assign(r.products[0], extra); assert.ok(has(validate(r, manifest), 'SCHEMA'));

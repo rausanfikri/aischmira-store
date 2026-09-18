@@ -1,5 +1,5 @@
 {
-  "version": "catalog-mapping-v1",
+  "version": "catalog-mapping-v2",
   "collections": [
     {
       "id": "that-woman",
@@ -110,6 +110,18 @@
       "slug": "zamira",
       "name": "Zamira",
       "collectionId": "rempah-revival"
+    },
+    {
+      "id": "alice",
+      "slug": "alice",
+      "name": "Alice",
+      "collectionId": "that-woman"
+    },
+    {
+      "id": "be-me",
+      "slug": "be-me",
+      "name": "Be Me",
+      "collectionId": "rempah-revival"
     }
   ],
   "categories": [
@@ -157,12 +169,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Femme",
-          "type": "Outer",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Outerwear"
-          ]
+          ],
+          "subCollection": "Femme",
+          "product": "Outer"
         }
       ]
     },
@@ -177,12 +190,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Femme",
-          "type": "Skirt",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Femme",
+          "product": "Skirt"
         }
       ]
     },
@@ -208,12 +222,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Femme",
-          "type": "Tank Top",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Femme",
+          "product": "Tank Top"
         }
       ]
     },
@@ -228,12 +243,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Her",
-          "type": "Pants",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Her",
+          "product": "Pants"
         }
       ]
     },
@@ -248,12 +264,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Her",
-          "type": "Long Sleeve Top",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Her",
+          "product": "Long Sleeve Top"
         }
       ]
     },
@@ -268,12 +285,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Her",
-          "type": "Short Sleeve Top",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Her",
+          "product": "Short Sleeve Top"
         }
       ]
     },
@@ -299,12 +317,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "She",
-          "type": "Dress",
+          "collection": "That Woman",
           "PATTERN": null,
           "sourceCategories": [
             "Dress"
-          ]
+          ],
+          "subCollection": "She",
+          "product": "Dress"
         }
       ]
     },
@@ -330,12 +349,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Amara",
-          "type": "Skirt",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Amara",
+          "product": "Skirt"
         }
       ]
     },
@@ -350,12 +370,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Aveline",
-          "type": "Shirt",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Aveline",
+          "product": "Shirt"
         }
       ]
     },
@@ -370,12 +391,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Bianca",
-          "type": "Blazer",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Outerwear"
-          ]
+          ],
+          "subCollection": "Bianca",
+          "product": "Blazer"
         }
       ]
     },
@@ -390,12 +412,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Bianca",
-          "type": "Obie",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Bianca",
+          "product": "Obie"
         }
       ]
     },
@@ -410,12 +433,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Briana",
-          "type": "Blouse",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Briana",
+          "product": "Blouse"
         }
       ]
     },
@@ -430,12 +454,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Dasya",
-          "type": "Blouse",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Dasya",
+          "product": "Blouse"
         }
       ]
     },
@@ -450,12 +475,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Dasya",
-          "type": "Trousers",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Dasya",
+          "product": "Trousers"
         }
       ]
     },
@@ -470,12 +496,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Gendis",
-          "type": "Top",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Gendis",
+          "product": "Top"
         }
       ]
     },
@@ -490,12 +517,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Jolly",
-          "type": "Long Sleeve Top + Pants",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Long Pyjama Set"
-          ]
+          ],
+          "subCollection": "Jolly ",
+          "product": "Long Sleeve Top + Pants"
         }
       ]
     },
@@ -510,12 +538,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Jolly",
-          "type": "Short Sleeve Top + Shorts",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Short Pyjama Set"
-          ]
+          ],
+          "subCollection": "Jolly ",
+          "product": "Short Sleeve Top + Shorts"
         }
       ]
     },
@@ -530,12 +559,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Luna",
-          "type": "Pants",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Luna",
+          "product": "Pants"
         }
       ]
     },
@@ -550,12 +580,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Priscila",
-          "type": "Pleated Pants",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Priscilla",
+          "product": "Pleated Pants"
         }
       ]
     },
@@ -570,12 +601,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Safira",
-          "type": "Skirt",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Safira",
+          "product": "Skirt"
         }
       ]
     },
@@ -590,12 +622,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Safira",
-          "type": "Top",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Tops"
-          ]
+          ],
+          "subCollection": "Safira",
+          "product": "Top"
         }
       ]
     },
@@ -610,44 +643,49 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Am Monogram",
-          "type": "Scarf",
+          "collection": "Rempah Revival",
           "PATTERN": "Am Monogram",
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Am Monogram",
+          "product": "Scarf"
         },
         {
-          "collection": "Floral Meadow",
-          "type": "Scarf",
+          "collection": "Rempah Revival",
           "PATTERN": "Floral Meadow",
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Floral Meadow",
+          "product": "Scarf"
         },
         {
-          "collection": "Chili Chic",
-          "type": "Scarf",
+          "collection": "Rempah Revival",
           "PATTERN": "Chili Chic",
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Chili Chic",
+          "product": "Scarf"
         },
         {
-          "collection": "Garlic Bloom",
-          "type": "Scarf",
+          "collection": "Rempah Revival",
           "PATTERN": "Garlic Bloom",
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Garlic Bloom",
+          "product": "Scarf"
         },
         {
-          "collection": "Spice Blossom",
-          "type": "Scarf",
+          "collection": "Rempah Revival",
           "PATTERN": "Spice Blossom",
           "sourceCategories": [
             "Accessories"
-          ]
+          ],
+          "subCollection": "Spice Blossom",
+          "product": "Scarf"
         }
       ]
     },
@@ -662,12 +700,13 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Tifani",
-          "type": "Trousers",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Bottoms"
-          ]
+          ],
+          "subCollection": "Tiffany",
+          "product": "Trousers"
         }
       ]
     },
@@ -682,15 +721,58 @@
       "publication": "draft",
       "sourceGroups": [
         {
-          "collection": "Zamira",
-          "type": "Long Dress",
+          "collection": "Rempah Revival",
           "PATTERN": null,
           "sourceCategories": [
             "Dress"
+          ],
+          "subCollection": "Zamira",
+          "product": "Long Dress"
+        }
+      ]
+    },
+    {
+      "id": "alice-top",
+      "slug": "alice-top",
+      "name": "Top",
+      "collectionId": "that-woman",
+      "subCollectionId": "alice",
+      "categoryId": "tops",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "That Woman",
+          "subCollection": "Alice",
+          "product": "Top",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Tops"
           ]
         }
       ]
+    },
+    {
+      "id": "be-me-satin-pants",
+      "slug": "be-me-satin-pants",
+      "name": "Satin Pants",
+      "collectionId": "rempah-revival",
+      "subCollectionId": "be-me",
+      "categoryId": "bottoms",
+      "DESCRIPTION": null,
+      "publication": "draft",
+      "sourceGroups": [
+        {
+          "collection": "That Woman",
+          "subCollection": "Be Me",
+          "product": "Satin Pants",
+          "PATTERN": null,
+          "sourceCategories": [
+            "Pants"
+          ],
+          "collectionOverrideReason": "Owner Phase 2.3 decision: Be Me belongs to Rempah Revival, overriding workbook That Woman."
+        }
+      ]
     }
-  ],
-  "colorMetadata": []
+  ]
 }

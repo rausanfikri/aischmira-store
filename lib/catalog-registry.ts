@@ -6,7 +6,7 @@ import { colorPatternIdentity } from "./catalog-contract";
 const text = z.string().min(1).refine((v) => v.trim().length > 0, "Blank text");
 const named = z.strictObject({ id: text, slug: text, name: text, mediaId: text.optional() });
 export const catalogMappingSchema: z.ZodType<CatalogMapping> = z.strictObject({
-  version: z.literal("catalog-mapping-v1"),
+  version: z.literal("catalog-mapping-v2"),
   collections: z.array(named),
   subCollections: z.array(named.extend({ collectionId: text })),
   categories: z.array(named.extend({ name: z.enum(CATEGORY_NAMES) })),
@@ -14,12 +14,10 @@ export const catalogMappingSchema: z.ZodType<CatalogMapping> = z.strictObject({
     id: text, slug: text, name: text, collectionId: text, subCollectionId: text, categoryId: text,
     DESCRIPTION: z.string().nullable().optional(), publication: z.enum(["draft", "published", "archived"]),
     sourceGroups: z.array(z.strictObject({
-      collection: text, type: text, PATTERN: text.nullable(), sourceCategories: z.array(text).min(1),
+      collection: text, subCollection: text, product: text, collectionOverrideReason: text.optional(), PATTERN: text.nullable(), sourceCategories: z.array(text).min(1),
     })),
   })),
-  colorMetadata: z.array(z.strictObject({
-    productId: text, COLOR: text, PATTERN: text.nullable(), COLOR_CODE: text.nullable().optional(),
-  })),
+
 });
 export const mediaManifestSchema: z.ZodType<MediaManifest> = z.strictObject({
   version: z.literal("product-media-v1"),
@@ -32,11 +30,11 @@ export const mediaManifestSchema: z.ZodType<MediaManifest> = z.strictObject({
 });
 
 /** Exact approved source-group lookup; deliberately independent of SKU membership. */
-export function resolveProductMapping(registry: CatalogMapping, collection: string | null, type: string | null) {
+export function resolveProductMapping(registry: CatalogMapping, collection: string | null, subCollection: string | null, sourceProduct: string | null) {
   const matches = registry.products.flatMap((product) => product.sourceGroups
-    .filter((group) => group.collection === collection && group.type === type)
+    .filter((group) => group.collection === collection && group.subCollection === subCollection && group.product === sourceProduct)
     .map((group) => ({ product, group })));
-  if (matches.length > 1) throw new Error(`Ambiguous source group: ${JSON.stringify([collection, type])}`);
+  if (matches.length > 1) throw new Error(`Ambiguous source group: ${JSON.stringify([collection, subCollection, sourceProduct])}`);
   return matches[0];
 }
 
@@ -60,7 +58,7 @@ export function validateCatalogRegistries(mappingInput: unknown, mediaInput: unk
     unique(entries.map((e) => e.id), source, `${key}.id`);
     unique(entries.map((e) => e.slug), source, `${key}.slug`);
   }
-  const groups = r.products.flatMap((p) => p.sourceGroups.map((g) => JSON.stringify([g.collection, g.type])));
+  const groups = r.products.flatMap((p) => p.sourceGroups.map((g) => JSON.stringify([g.collection, g.subCollection, g.product])));
   unique(groups, source, "products.sourceGroups");
   for (const sub of r.subCollections) if (!r.collections.some((c) => c.id === sub.collectionId)) add("HIERARCHY", source, sub.id, "Unknown collection");
   for (const p of r.products) {
@@ -70,19 +68,18 @@ export function validateCatalogRegistries(mappingInput: unknown, mediaInput: unk
   }
   const known = new Set<string>();
   if (rows) for (const p of r.products) for (const g of p.sourceGroups) {
-    if (!rows.some((row) => row.COLLECTION === g.collection && row.TYPE === g.type))
-      add("ORPHAN_SOURCE_GROUP", source, p.id, `No workbook rows for ${JSON.stringify([g.collection, g.type])}`);
+    if (!rows.some((row) => row.COLLECTION === g.collection && row.SUB_COLLECTION === g.subCollection && row.PRODUCT === g.product))
+      add("ORPHAN_SOURCE_GROUP", source, p.id, `No workbook rows for ${JSON.stringify([g.collection, g.subCollection, g.product])}`);
   }
   const ambiguousGroups = new Set(groups).size !== groups.length;
   if (rows && !ambiguousGroups) for (const row of rows) {
-    const resolved = resolveProductMapping(r, row.COLLECTION, row.TYPE);
-    if (!resolved) add("UNMAPPED_SOURCE", source, "products.sourceGroups", JSON.stringify([row.COLLECTION, row.TYPE]));
+    const resolved = resolveProductMapping(r, row.COLLECTION, row.SUB_COLLECTION, row.PRODUCT);
+    if (!resolved) add("UNMAPPED_SOURCE", source, "products.sourceGroups", JSON.stringify([row.COLLECTION, row.SUB_COLLECTION, row.PRODUCT]));
     else known.add(colorPatternIdentity(resolved.product.id, row.COLOR, resolved.group.PATTERN));
   }
   for (const entry of [...r.collections, ...r.subCollections, ...r.categories]) if (entry.mediaId && !media.some((m) => m.id === entry.mediaId)) add("MEDIA_REFERENCE", source, entry.id, "Unknown editorial media ID");
   const groupId = (m: { productId: string; COLOR: string; PATTERN: string | null }) => colorPatternIdentity(m.productId, m.COLOR, m.PATTERN);
-  unique(r.colorMetadata.map(groupId), source, "colorMetadata");
-  for (const m of [...r.colorMetadata, ...media]) {
+  for (const m of media) {
     const file = "reference" in m ? "data/product-media.json" : source;
     const p = r.products.find((p) => p.id === m.productId);
     if (!p || !p.sourceGroups.some((g) => g.PATTERN === m.PATTERN)) add("MEDIA_PARENT", file, groupId(m), "Unknown product/pattern");
