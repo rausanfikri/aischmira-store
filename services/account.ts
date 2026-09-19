@@ -13,7 +13,7 @@ const orderSchema = z.object({
 });
 const loyaltySchema = z.object({
   points_balance: z.number().int().nullable(), lifetime_points: z.number().int().nullable(),
-  points_used: z.number().int().nonnegative().nullable(),
+  points_used: z.number().int().nonnegative().nullable().optional(),
 });
 const transactionSchema = z.object({
   id: z.string().uuid(), amount: z.number().int(), type: z.enum(["EARNED", "REDEEMED", "EXPIRED"]),
@@ -74,7 +74,7 @@ export async function getAccountLoyalty(): Promise<AccountData<AccountLoyalty | 
     const client = await createClient();
     if (!client) return unavailable("Your loyalty points are temporarily unavailable.");
     const [account, ledger] = await Promise.all([
-      client.from("loyalty_accounts").select("points_balance,lifetime_points,points_used").eq("customer_id", session.user.id).maybeSingle(),
+      client.from("loyalty_accounts").select("points_balance,lifetime_points").eq("customer_id", session.user.id).maybeSingle(),
       client.from("loyalty_transactions").select("id,amount,type,description,created_at").eq("customer_id", session.user.id).order("created_at", { ascending: false }).limit(100),
     ]);
     if (account.error || ledger.error) return unavailable("Your loyalty information could not be loaded. Please try again later.");
@@ -86,7 +86,7 @@ export async function getAccountLoyalty(): Promise<AccountData<AccountLoyalty | 
     return { status: "ready", data: {
       available: parsed?.success ? parsed.data.points_balance : null,
       earned: parsed?.success ? parsed.data.lifetime_points : null,
-      used: parsed?.success ? parsed.data.points_used : null,
+      used: parsed?.success ? parsed.data.points_used ?? null : null,
       transactions: transactions.data.map((entry) => ({ id: entry.id, amount: entry.amount, type: entry.type, description: entry.description, createdAt: entry.created_at })),
     } };
   } catch { return unavailable("Your loyalty information is temporarily unavailable."); }

@@ -4,6 +4,18 @@ Updated: 2026-09-18. Status: requirements baseline for the staged rebuild.
 
 ## Authority
 
+### Owner-authorized storefront prototype — 2026-09-19
+
+The current task authorizes a complete working demo across storefront, bag, WhatsApp review, basic account and Bazaar, plus commit/push to the current work branch only (no merge to main). These explicit decisions supersede conflicting earlier phase boundaries for this task:
+
+- Latest PRODUCTS values own demo collection/sub-collection/product/category display, FABRIC, official color/hex, size, SKU, prices and source status. The application projects exact sourceValues from the freshly verified canonical snapshot, rather than historical display aliases. Current result: 30 source product groups, 497 unique SKU, 2 collections, 22 sub-collections, 8 literal source categories. Five Scarf source sub-collections remain separate; Be Me stays in source That Woman; Pants, Long Pyjama Set and Short Pyjama Set are preserved as supplied source categories for this demo. This does not silently migrate the historical production registry.
+- Valid ACTIVE workbook variants may enter the clearly labeled demo bag/WhatsApp request despite draft publication or missing production photography. Production publication remains draft. No replacement SKU, fabricated price or stock claim.
+- Demo product descriptions, editorial copy, local CSS colour studies and an illustrative Bazaar event are authorized. Keep DEMO metadata and visible preview/event/visual labels; never describe them as production evidence. No invented orders or loyalty transactions.
+- Account preview may keep a demo profile in tab memory. Real authentication uses configured Supabase; unconfigured/unavailable states remain explicit. Do not persist personal checkout data to browser storage.
+- Bazaar demo uses one local event date, same-day start/end time, IANA timezone and demo/published/inactive status in JSON. Published production events and venue details require supplied data. Validate Maps URLs; no arbitrary embed HTML.
+- Instagram, Facebook, Threads, TikTok, YouTube and X all use the supplied handle @aischmira; no unsupplied account URLs are asserted.
+- No production-readiness claim, production deployment, payment/shipping API, BigSeller, complex CMS or database migration is authorized by this prototype task.
+
 This file is the source of truth for business and product requirements. New explicit owner instructions take precedence; record accepted decisions here. `AISCHMIRA_STATUS.md` records implementation evidence and open questions; `AGENTS.md` defines the working process. A requirement is not a claim that a feature is implemented.
 
 Older README, tasks, roadmap, architecture documents and ADRs are historical wherever they conflict with this brief. Do not revive excluded features from them. Do not invent answers to unresolved decisions.

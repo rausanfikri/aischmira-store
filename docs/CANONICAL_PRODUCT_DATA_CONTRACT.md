@@ -1,5 +1,13 @@
 # Canonical Product Data Contract
 
+## Storefront demo projection — 2026-09-19
+
+The owner's newer prototype instruction supersedes historical registry display mappings for the demo UI. `services/storefront.ts` projects each verified variant's exact PRODUCTS `sourceValues` into the application model (`types/storefront.ts`), grouped by COLLECTION/SUB_COLLECTION/PRODUCT/CATEGORY. It does not read legacy prices or create a second imported dataset. Current source yields 30 source product groups and 497 exact SKU (historical registry: 26 SKU-bearing product definitions). All factual names, source categories, sizes, colors, official hex, nullable fabric, exact prices and STATUS remain source-owned. URLs alone are normalized and checked for product collisions.
+
+The successful `node scripts/import-catalog.mjs --check` establishes snapshot freshness against the workbook. After workbook changes, use the existing preview/reconciliation/`--write`/`--check` workflow; new identities still need explicit registry reconciliation, with no UI edits. Do not manually edit generated files or the source workbook. Historical registry mappings/publication are retained as evidence, not used as demo display authority.
+
+Only this visibly labeled demo allows valid ACTIVE rows into bag/review while production publication remains draft. Missing production media uses a local CSS colour study, never another variant's photograph. `data/demo-content.json` owns replaceable DEMO description/editorial/Bazaar content. Empty production FABRIC remains empty. Exact integer arithmetic and server-side SKU/price re-resolution apply to the WhatsApp review. No real order/payment is recorded by this flow.
+
 Version: **phase-2.3-v1** ? Source: **products-workbook-v1** ? Registry: **catalog-mapping-v2** ? Updated: 2026-09-18.
 
 Authority: [MASTER_BRIEF](../MASTER_BRIEF.md) and the owner's Phase-2.3 decisions. This replaces the DASHBOARD source contract; old versions remain in Git history, not parallel active sources. [Quality results](PRODUCT_DATA_QUALITY.md). No publication or UI implementation is implied.

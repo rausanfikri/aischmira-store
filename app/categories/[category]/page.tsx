@@ -1,54 +1,15 @@
-import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { services } from "@/services";
-import { categoriesData } from "@/data/categories";
-import { ProductCatalogClient } from "@/components/products/ProductCatalogClient";
-
-interface CategoryPageProps {
-  params: Promise<{
-    category: string;
-  }>;
-}
-
-export async function generateStaticParams() {
-  return categoriesData.map((c) => ({
-    category: c.slug,
-  }));
-}
-
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const { category: slug } = await params;
-  const category = categoriesData.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
-
-  if (!category) {
-    return {
-      title: "Category Not Found | AISCHMIRA",
-    };
-  }
-
-  return {
-    title: `${category.name} Collection | AISCHMIRA Flagship`,
-    description: category.description,
-  };
-}
-
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { category: slug } = await params;
-  const category = categoriesData.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
-
-  if (!category) {
-    notFound();
-  }
-
-  const productsRes = await services.product.getProducts();
-  const products = productsRes.isSuccess ? productsRes.value : [];
-
-  return (
-    <ProductCatalogClient
-      initialProducts={products}
-      initialCategory={category.slug}
-      pageTitle={category.name}
-      pageSubtitle={category.description}
-    />
-  );
-}
+import { products, categories, slugify } from "@/services/storefront";
+import { ProductGrid } from "@/components/ProductGrid";
+export async function generateMetadata({ params }: {
+    params: Promise<{
+        category: string;
+    }>;
+}) { return { title: (await params).category.replaceAll("-", " ") }; }
+export default async function Page({ params }: {
+    params: Promise<{
+        category: string;
+    }>;
+}) { const slug = (await params).category; const name = categories.find(c => slugify(c) === slug); if (!name)
+    notFound(); const selected = products.filter(p => p.category === name); return <section className="section"><Link href="/categories">← Categories</Link><h1>{name}</h1><nav className="filter-links" aria-label="Sub-collections">{[...new Set(selected.map(p => p.subCollection))].map(s => <Link key={s} href={`/sub-collections/${slugify(name)}--${slugify(s)}`}>{s}</Link>)}</nav><ProductGrid products={selected}/></section>; }

@@ -1,12 +1,60 @@
 # AISCHMIRA.STORE — Persistent Project Checkpoint
 
-Updated: 2026-09-18. Requirements: `MASTER_BRIEF.md`. Working process: `AGENTS.md`.
+Updated: 2026-09-19. Requirements: `MASTER_BRIEF.md`. Working process: `AGENTS.md`.
 
 ## Current State
 
-Repository sedang dalam migrasi dan belum menjadi aplikasi storefront yang utuh.
+Working storefront prototype implemented and locally validated. This is a presentation/demo checkpoint, not production readiness. Earlier migration blockers below are historical wherever superseded by this section.
 
-Legacy pages reference removed modules; new catalog/account foundations are not wired into them. Documentation readiness is not application readiness.
+## Current Prototype Phase - 2026-09-19
+
+Owner authorized the complete working storefront demo, replacing conflicting older phase boundaries. Start: `31e5d97`, clean worktree on existing `codex/phase-2-3-import` (tracking the same origin branch). No branch switch, merge, main push or workbook edit.
+
+### REAL DATA
+
+- Latest PRODUCTS reread through the existing read-only extractor/import freshness check: **497 rows = 497 unique SKU**, all source ACTIVE. Workbook SHA-256 unchanged: `96fb70c0cbc16626d0d93d121e0f2603529880519aa0c1d3beef04cb6471f41e`.
+- **30 source product groups, 2 collections, 22 sub-collections, 8 exact source categories** in the application. These differ from the historical registry's 26 SKU-bearing products because the five Scarf source sub-collections are separate source groups. No product/SKU invented.
+- `services/storefront.ts` projects the existing verified canonical provenance into `types/storefront.ts`. Exact workbook COLLECTION/SUB_COLLECTION/PRODUCT/CATEGORY/FABRIC/COLOR/COLOR_CODE/SIZE/SKU/START_PRICE/FINAL_PRICE/STATUS take precedence over historical display mappings. Be Me remains source That Woman; source Pants/Long Pyjama Set/Short Pyjama Set remain literal demo categories.
+- Five existing media references remain restricted to their exact product/color/pattern. Official hex and prices remain source-owned. The source workbook, registries, generated catalog/report and historical SKU master are unchanged.
+
+### DEMO DATA
+
+- `data/demo-content.json` contains marked DEMO product description, editorial statement and an illustrative Bazaar event. Local CSS colour studies use actual supplied product/color context and display a demo visual label; no external random image dependency or substituted product photograph.
+- Site-wide prototype notice and noindex metadata. Valid ACTIVE source variants can enter the demo bag/review despite production drafts; all canonical product publication remains draft. WhatsApp message explicitly says DEMO ORDER REQUEST.
+- Demo account profile stays only in tab memory and is lost on reload. No fake authentication success, historical orders, points or loyalty transactions. JSON event has demo/published/inactive semantics, date, same-day start/end, IANA timezone, nullable image/Maps fields; schema rejects invalid dates/times and unsafe links.
+
+### Implemented experience
+
+- Editorial homepage, products, collections, exact categories, sub-collection routes, product detail with color-specific gallery/reset/thumbnails and actual SKU size selection.
+- Bag add/change quantity/remove/persistence (SKU + quantity only); invalid/unknown rows block checkout and can be removed. Exact whole-rupiah integer totals. Prototype input limit 999 units per line is a validation limit, not inventory.
+- Required name/active WhatsApp number/shipping address, server-side exact SKU/price/status re-resolution, explicit review, encoded handoff to `https://wa.me/6285121344848`. Personal data is not persisted to localStorage; opening WhatsApp does not confirm an order/payment.
+- Login/register wired to configured Supabase with explicit unconfigured/error states; demo profile available without a backend. Account orders/loyalty use owner-scoped services when configured, with empty/unavailable states. Real profile editing remains pending persistence verification. OAuth callback now handles missing client and restricts redirect to account paths. Missing schema field points_used is no longer queried or fabricated.
+- Bazaar and Visit Us routes read JSON content. Event photography, actual venue and Maps remain pending; demo event visibly says it is illustrative. Social handle @aischmira shown for the six supplied platforms.
+- Removed broken legacy UI dependencies by replacing retained routes; excluded saved-looks route returns 404. System typography avoids build-time font network dependency. Removed random remote image allowlist. No dependency installation or database migration.
+
+### Validation
+
+- Repository TypeScript (`tsc --noEmit --incremental false`): PASS. ESLint: PASS, zero findings. Production `next build`: PASS, 53 generated pages. Initial stale .next/dev/types references to old deleted routes were removed from the verified generated-cache directory; no source files were removed.
+- Existing contract/registry/import tests: **34/34 PASS**. New storefront/commerce/Bazaar tests: **6/6 PASS**. Source identity and all 497 facts, exact media association, malformed/unknown bags, integer totals, required contact, source inactive gate and unsafe event data covered.
+- `node scripts/import-catalog.mjs --check`: PASS; accepted snapshot remains fresh. Workbook fingerprint unchanged.
+- HTTP route smoke: **78/78 return 200**, covering all 30 product routes, collection/category/sub-collection routes and core account/commerce/event pages. Unknown product returns 404.
+- Chrome checks: exact Broken White gallery + second thumbnail, Butter Yellow demo empty-photo state, size selection, exact SHE-DRESS-BUTTERYELLOW-M, add to bag, quantity 2 and Rp1.718.000 subtotal, persistence after reload, required customer form, server review and complete encoded WhatsApp link. Final browser recheck confirmed customer form values remain after review, quantity changes invalidate the review link, and removal returns an empty bag. No WhatsApp message sent.
+- Demo profile form and memory-only save, account empty order state, Bazaar demo labels inspected. Mobile modal Escape restores focus to Menu. DOM overflow checks PASS at 1440/1280/1024/768/430/390/375/360 for homepage, listing, detail, checkout, Bazaar and account profile. Landscape 844x390 checked. Desktop homepage and mobile checkout inspected visually; this is not a full accessibility or performance audit.
+- Browser extension reported asynchronous-listener channel warnings; no application failure was established from those warnings. Live Supabase authentication/profile persistence/orders/loyalty, actual WhatsApp delivery and production deployment were not tested.
+
+### PENDING PRODUCTION DATA
+
+- 55 missing FABRIC rows; production descriptions/stories; 124 color/pattern groups without production media; photography ownership not independently recertified.
+- Real Bazaar event/venue/address/images/Maps; production account configuration, profile writes, order ingestion and loyalty records.
+- Production publication policy and reconciliation of literal workbook demo hierarchy with long-term production identity. Existing importer remains Windows PowerShell/.NET-based and requires explicit registry reconciliation for new identities; no complex CMS/import infrastructure was added.
+- Release SEO/accessibility/performance/security and real integration testing are a later phase. No payment/shipping/BigSeller features introduced.
+
+### Checkpoint and next phase
+
+Implementation checkpoint: commit containing this prototype section, planned subject `feat: build workbook storefront prototype`. Work branch `codex/phase-2-3-import`; remote push verification will be recorded after commit. Only reviewed task files belong to this checkpoint.
+
+Next recommended work: owner demo review, then supply production media/descriptions/Bazaar details and configure/verify account persistence in a separately authorized phase. Stop after this prototype checkpoint and branch push.
+
 
 Historical baseline branch: `codex/editorial-storefront`. Baseline source HEAD: `9f30864`. Working tree was clean at baseline-finalization preflight. The earlier Phase-0 preflight recorded 409 tracked deletions, 3 modified files and 8 untracked files; that is historical evidence, not the current working-tree state. Phase 0 recorded the AGENTS.md change; migration commit `9f30864` subsequently recorded 409 deletions, 2 modifications and 8 additions. These changes are no longer uncommitted.
 
@@ -46,7 +94,7 @@ Baseline-finalization checkpoint: `50e7d86` (`docs: finalize rebuild baseline st
 - Phase 2.1: owner-approved metadata clarified. Product DESCRIPTION is optional/nullable; publication remains draft/published/archived, not stock. COLOR_CODE is optional/nullable with no current official values. Canonical schema is phase-2-v1 for these actual additions; provenance names catalog-mapping-v1.
 - Phase 2.2: data/catalog-mapping.json and data/product-media.json own metadata and exact media associations. Strict registry schemas, relationship/file checks, compatibility adapters and regression tests are implemented. Workbook extraction and full import remain outside this checkpoint.
 
-## Current Phase
+## Historical Phase 2.3
 
 **Phase 2.3 ? implementation acceptance PASS; remote handoff BLOCKED. Not complete end-to-end until the authorized push is verified. No publication performed.**
 
@@ -66,7 +114,7 @@ Owner-authorized `git push origin HEAD:main` was attempted and **FAILED: GitHub 
 
 After the failed push, `git fetch origin main` verified **origin/main remains 0fcde526536729f616b4f65699d0e2e4f96e11e1**. HEAD does not equal origin/main. No remote delivery is claimed. The owner must activate a GitHub account with write permission to this repository (or grant the active account appropriate access). Then resume: fetch, verify ancestry, push HEAD:main, fetch and verify HEAD == origin/main plus clean working tree. Do not force-push, rewrite history or discard the source snapshot. This authorization for the normal push remains in effect.
 
-## Next Phase
+## Historical Next Phase
 
 **Phase 2.4 ? coherent canonical storefront integration**, only on separate authorization. Resolve existing application compile/integration failures and wire a small canonical read-only route/service slice, preserving draft/orderability gates. Do not infer publication from accepted import. Photo sourcing, publication policy and a future data-management persistence workflow remain separate decisions/tasks; no admin UI is authorized here.
 

@@ -1,5 +1,1 @@
-import BagPage from "../bag/page";
-
-export default function CartPage() {
-  return <BagPage />;
-}
+export { default, metadata } from "../bag/page";

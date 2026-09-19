@@ -1,21 +1,5 @@
-import { Metadata } from "next";
-import { services } from "@/services";
-import { ProductCatalogClient } from "@/components/products/ProductCatalogClient";
-
-export const metadata: Metadata = {
-  title: "Catalog — All Silhouettes | AISCHMIRA",
-  description: "Browse the complete AISCHMIRA fashion catalog, featuring luxury outerwear, tops, bottoms, dresses, pyjamas, and artisanal accessories.",
-};
-
-export default async function ProductsPage() {
-  const productsRes = await services.product.getProducts();
-  const products = productsRes.isSuccess ? productsRes.value : [];
-
-  return (
-    <ProductCatalogClient
-      initialProducts={products}
-      pageTitle="All Silhouettes"
-      pageSubtitle="The complete editorial collection of timeless garments and accessories."
-    />
-  );
-}
+import Link from "next/link";
+import { products, categories, slugify } from "@/services/storefront";
+import { ProductGrid } from "@/components/ProductGrid";
+export const metadata = { title: "Shop the collection" };
+export default function Page() { return <section className="section"><p className="eyebrow">The complete edit</p><h1>The collection</h1><p className="intro">Explore {products.length} product stories, drawn from our latest collection.</p><nav className="filter-links" aria-label="Shop by category">{categories.map(c => <Link key={c} href={`/categories/${slugify(c)}`}>{c}</Link>)}</nav><ProductGrid products={products}/></section>; }

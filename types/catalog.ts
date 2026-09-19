@@ -16,7 +16,7 @@ export interface SubCollection extends Collection {
   collectionId: string;
 }
 
-export interface Category extends Collection {}
+export type Category = Collection;
 
 export interface ProductVariant {
   /** The original master-data identifier, never generated from a display name. */

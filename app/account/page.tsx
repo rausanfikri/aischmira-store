@@ -1,5 +1,3 @@
-import AccountDashboardPage from "./dashboard/page";
-
-export default function AccountPage() {
-  return <AccountDashboardPage />;
-}
+import Link from "next/link";
+import { getAccountSession } from "@/services/account";
+export default async function Page() { const session = await getAccountSession(); return <><h2>Welcome to your personal space.</h2><p>{session.status === "authenticated" ? session.user.email : session.status === "unconfigured" ? "Production account services are not configured. A demo profile is available for this presentation." : session.status === "unavailable" ? "Account services are temporarily unavailable." : "Sign in to access your account."}</p><div className="filter-links"><Link href="/account/profile">Your profile ↗</Link><Link href="/account/orders">Order history ↗</Link><Link href="/login">Sign in / demo account ↗</Link></div></>; }

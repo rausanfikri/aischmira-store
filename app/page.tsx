@@ -1,35 +1,6 @@
-import { services } from "@/services";
-import { Hero } from "@/components/sections/Hero";
-import { CategoriesSection } from "@/components/sections/CategoriesSection";
-import { NewCollections } from "@/components/sections/NewCollections";
-import { ProductShowcase } from "@/components/sections/ProductShowcase";
-import { BrandStatement } from "@/components/sections/BrandStatement";
-
-export default async function Home() {
-  const [featuredProductsRes, featuredCollectionsRes] = await Promise.all([
-    services.product.getFeaturedProducts(8),
-    services.collection.getFeaturedCollections(3),
-  ]);
-
-  const featuredProducts = featuredProductsRes.isSuccess ? featuredProductsRes.value : [];
-  const featuredCollections = featuredCollectionsRes.isSuccess ? featuredCollectionsRes.value : [];
-
-  return (
-    <>
-      {/* 1. Minimal Editorial Hero: NEW COLLECTION FEMME, HER, SHE */}
-      <Hero />
-
-      {/* 2. 6-Category Visual Exploration Grid */}
-      <CategoriesSection />
-
-      {/* 3. Featured Signature Collections (FEMME, HER, SHE) */}
-      <NewCollections collections={featuredCollections} />
-
-      {/* 4. Curated New Arrivals / Showcase */}
-      <ProductShowcase products={featuredProducts} />
-
-      {/* 5. Minimal Brand Philosophy & Statement */}
-      <BrandStatement />
-    </>
-  );
-}
+import Link from "next/link";
+import { products, collections, slugify } from "@/services/storefront";
+import { ProductGrid } from "@/components/ProductGrid";
+import { StoreMedia } from "@/components/StoreMedia";
+import demo from "@/data/demo-content.json";
+export default function Home() { const lead = products.find(p => p.variants.some(v => v.media.length)) || products[0]; const variant = lead.variants.find(v => v.media.length) || lead.variants[0]; return <><section className="hero"><div className="hero-copy"><p className="eyebrow">The AISCHMIRA edit</p><h1>A quieter kind<br />of statement.</h1><p>{demo.brandStatement}</p><Link className="button" href="/products">Discover the collection <span>↗</span></Link><span className="hero-note">Thoughtfully styled. Unmistakably you.</span></div><Link className="hero-image" href={`/products/${lead.slug}`}><StoreMedia variant={variant} name={lead.name} priority/><span>{lead.subCollection} / {lead.name}</span></Link></section><section className="section"><div className="section-heading"><div><p className="eyebrow">Distinct perspectives</p><h2>The collections</h2></div></div><div className="collection-grid">{collections.map((c, i) => <Link className="collection-panel" key={c} href={`/collections/${slugify(c)}`}><span>0{i + 1}</span><h3>{c}</h3><span>Explore collection ↗</span></Link>)}</div></section><section className="section"><div className="section-heading"><div><p className="eyebrow">A closer look</p><h2>Selected pieces</h2></div><Link href="/products">View all ↗</Link></div><ProductGrid products={[lead, ...products.filter(p => p !== lead).slice(0, 3)]}/></section></>; }

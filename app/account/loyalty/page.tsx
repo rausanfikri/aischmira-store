@@ -1,5 +1,4 @@
-import MembershipPage from "../membership/page";
-
-export default function LoyaltyPage() {
-  return <MembershipPage />;
-}
+import { getAccountSession, getAccountLoyalty } from "@/services/account";
+export default async function Page() { const session = await getAccountSession(); if (session.status === "unavailable") return <p>Account services are temporarily unavailable. Please try again later.</p>;
+    if (session.status !== "authenticated")
+    return <><h2>Loyalty</h2><p>No demo points or transactions. Sign in to view recorded loyalty information when services are available.</p></>; const result = await getAccountLoyalty(); return <><h2>Loyalty</h2>{result.status === "unavailable" ? <p>{result.message}</p> : result.data ? <><p>Available: {result.data.available ?? "Not recorded"}</p><p>Earned: {result.data.earned ?? "Not recorded"}</p><p>Used: {result.data.used ?? "Not recorded"}</p>{result.data.transactions.map(t => <p key={t.id}>{t.description}: {t.amount}</p>)}</> : <p>No loyalty record yet.</p>}</>; }

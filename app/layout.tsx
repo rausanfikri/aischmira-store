@@ -1,80 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import Link from "next/link";
 import "@/styles/globals.css";
-import { SiteLayout } from "@/components/layout/SiteLayout";
-import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://aischmira.store"),
-  title: "AISCHMIRA | Elegant Women's Fashion",
-  description:
-    "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
-  authors: [{ name: "AISCHMIRA" }],
-  keywords: ["fashion wanita", "baju muslim", "modest fashion", "aischmira", "busana elegan"],
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-    ],
-    apple: [
-      { url: "/favicon.png" },
-    ],
-    shortcut: "/favicon.png",
-  },
-  openGraph: {
-    siteName: "AISCHMIRA",
-    title: "AISCHMIRA | Elegant Women's Fashion",
-    description:
-      "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
-    images: [
-      {
-        url: "/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "AISCHMIRA — Elegant Women's Fashion",
-      },
-    ],
-    type: "website",
-    locale: "id_ID",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AISCHMIRA | Elegant Women's Fashion",
-    description:
-      "Crafted to comfort. Designed to stand out. Discover timeless fashion for modern women.",
-    images: ["/logo.png"],
-  },
-  alternates: {
-    canonical: "https://aischmira.store",
-  },
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="id-ID"
-      className={`${inter.variable} ${cormorant.variable} h-full antialiased`}
-    >
-      <body className="min-h-full font-body bg-background text-text">
-        <SiteLayout>{children}</SiteLayout>
-        <FloatingWhatsApp />
-      </body>
-    </html>
-  );
-}
+import { Header } from "@/components/Header";
+export const metadata: Metadata = { title: { default: "AISCHMIRA · Quiet confidence", template: "%s | AISCHMIRA" }, description: "Explore the AISCHMIRA collection. Storefront prototype.", robots: { index: false, follow: false } };
+export default function RootLayout({ children }: {
+    children: React.ReactNode;
+}) { return <html lang="en"><body><Header /><main id="main">{children}</main><footer><Link className="wordmark" href="/">AISCHMIRA</Link><p>Considered pieces. Everyday presence.</p><div className="footer-links"><Link href="/products">Explore the collection</Link><Link href="/bazaar">Visit us</Link><Link href="/account">Your account</Link></div><p className="muted">Instagram · Facebook · Threads · TikTok · YouTube · X<br />@aischmira</p><small>© AISCHMIRA · Working storefront prototype</small></footer></body></html>; }
